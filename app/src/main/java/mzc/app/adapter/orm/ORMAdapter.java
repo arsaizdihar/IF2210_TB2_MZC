@@ -17,8 +17,12 @@ public class ORMAdapter implements IMainAdapter {
         Configuration cfg = new Configuration();
         cfg.configure();
 
-        cfg.setProperty("hibernate.connection.url",
-                System.getenv().getOrDefault("DATABASE_URL", "jdbc:mysql://root:root@localhost:3306/mzc"));
+        System.out.println(cfg.getProperty("hibernate.connection.url"));
+
+        if (cfg.getProperty("hibernate.connection.url") == null) {
+            cfg.setProperty("hibernate.connection.url",
+                    System.getenv().getOrDefault("DATABASE_URL", "jdbc:mysql://root:root@localhost:3306/mzc"));
+        }
 
         SessionFactory sessionFactory = cfg.buildSessionFactory();
         session = sessionFactory.openSession();

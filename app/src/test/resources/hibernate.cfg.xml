@@ -5,7 +5,8 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1;NON_KEYWORDS=KEY,VALUE</property>
         <!-- We use dialect to provide information about which
            database we are using, we are using mysql -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
