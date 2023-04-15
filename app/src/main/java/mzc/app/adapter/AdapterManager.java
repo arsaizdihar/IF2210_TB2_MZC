@@ -10,13 +10,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AdapterManager {
-    @Getter IMainAdapter adapter;
+    @Getter
+    @NonNull IMainAdapter adapter;
 
     public AdapterManager() {
         adapter = new JSONAdapter();
     }
 
-    public void setAdapter(IMainAdapter adapter) {
+    public AdapterManager(@NonNull IMainAdapter adapter) {
+        this.adapter = adapter;
+    }
+
+    public void setAdapter(@NonNull IMainAdapter adapter) {
         if (adapter != this.adapter) {
             this.adapter.close();
             this.adapter = adapter;
