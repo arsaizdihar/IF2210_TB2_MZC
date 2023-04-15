@@ -14,7 +14,13 @@ public class ORMAdapter implements IMainAdapter {
     private final Session session;
 
     public ORMAdapter() {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Configuration cfg = new Configuration();
+        cfg.configure();
+
+        cfg.setProperty("hibernate.connection.url",
+                System.getenv().getOrDefault("DATABASE_URL", "jdbc:mysql://root:root@localhost:3306/mzc"));
+
+        SessionFactory sessionFactory = cfg.buildSessionFactory();
         session = sessionFactory.openSession();
         member = new MemberAdapter(session);
         bill = new BillAdapter(session);

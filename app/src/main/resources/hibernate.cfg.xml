@@ -6,9 +6,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/mzc</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
+        <property name="connection.url">jdbc:mysql://root:root@localhost:3306/mzc</property>
         <!-- We use dialect to provide information about which
            database we are using, we are using mysql -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
