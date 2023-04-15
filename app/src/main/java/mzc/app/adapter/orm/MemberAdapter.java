@@ -2,24 +2,30 @@ package mzc.app.adapter.orm;
 
 import lombok.NonNull;
 import mzc.app.adapter.base.IMemberAdapter;
+import mzc.app.model.Bill;
 import mzc.app.model.Member;
 import org.hibernate.Session;
 
-class MemberAdapter implements IMemberAdapter {
-    private final Session session;
+import java.util.Set;
 
+class MemberAdapter extends ModelAdapter<Member> implements IMemberAdapter {
     public MemberAdapter(Session session) {
-        this.session = session;
+        super(session);
     }
 
     @Override
     public Member getById(long id) {
-        return session.get(Member.class, id);
+        return super.getById(id);
+    }
+
+    @NonNull
+    @Override
+    protected Class<Member> getType() {
+        return Member.class;
     }
 
     @Override
-    public void persist(@NonNull Member member) {
-        session.persist(member);
+    public Set<Bill> getBills(@NonNull Member member) {
+        return member.getBills();
     }
-
 }

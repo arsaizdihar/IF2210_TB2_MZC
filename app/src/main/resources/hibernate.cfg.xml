@@ -18,6 +18,9 @@
         <property name="show_sql">true</property>
 
         <mapping class="mzc.app.model.Member" />
+        <mapping class="mzc.app.model.Product" />
+        <mapping class="mzc.app.model.Bill" />
+        <mapping class="mzc.app.model.ProductBill" />
 
     </session-factory>
 </hibernate-configuration>

@@ -1,11 +1,11 @@
 package mzc.app.adapter.base;
 
 import lombok.NonNull;
+import mzc.app.model.Bill;
 import mzc.app.model.Member;
 
-public interface IMemberAdapter {
+import java.util.Set;
 
-    public Member getById(long id);
-
-    public void persist(@NonNull Member member);
+public interface IMemberAdapter extends IBasicAdapter<Member> {
+    Set<Bill> getBills(@NonNull Member member);
 }

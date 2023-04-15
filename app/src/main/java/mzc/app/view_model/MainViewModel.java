@@ -11,6 +11,10 @@ public class MainViewModel extends BaseViewModel {
     @FXML
     protected void onHelloButtonClick() {
         Member member = this.getAdapter().getMember().getById(1L);
-        welcomeText.setText(member.getName());
+        if (member != null) {
+            welcomeText.setText(member.getName());
+            System.out.println(this.getAdapter().getMember().getBills(member));
+        }
+
     }
 }

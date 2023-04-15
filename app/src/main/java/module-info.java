@@ -9,8 +9,9 @@ module mzc.app {
     requires lombok;
     requires org.hibernate.orm.core;
     requires java.naming;
+    requires com.google.gson;
 
     opens mzc.app.view_model to javafx.fxml;
-    opens mzc.app.model to org.hibernate.orm.core;
+    opens mzc.app.model to org.hibernate.orm.core, com.google.gson;
     exports mzc.app;
 }
