@@ -12,6 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 18
+    - env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       uses: actions/setup-java@v3
       with:
         java-version: '18'
