@@ -19,11 +19,6 @@ public abstract class FileCustomerAdapter<T extends IFileDataLoader<Customer>> e
     }
 
     @Override
-    public Customer getById(long id) {
-        return super.getById(id);
-    }
-
-    @Override
     public List<Bill> getBills(@NonNull Customer customer) {
         if (customer.isBillsLoaded()) return customer.getBills();
         customer.setBillsLoaded(true);
@@ -35,10 +30,5 @@ public abstract class FileCustomerAdapter<T extends IFileDataLoader<Customer>> e
     @Override
     public List<Customer> getRegisteredCustomer() {
         return getData().values().stream().filter(c -> c.getType() != CustomerType.BASIC).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Customer> getAll() {
-        return new ArrayList<>(getData().values());
     }
 }

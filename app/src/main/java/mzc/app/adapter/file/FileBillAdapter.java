@@ -34,7 +34,7 @@ public abstract class FileBillAdapter <T extends IFileDataLoader<Bill>> extends 
 
     @Override
     public @NonNull List<Bill> getAll() {
-        return loadAllCustomers(new ArrayList<>(getData().values()));
+        return loadAllCustomers(super.getAll());
     }
 
     @Override

@@ -3,6 +3,7 @@ package mzc.app.view_model;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import mzc.app.model.Customer;
+import mzc.app.model.Product;
 
 public class MainViewModel extends BaseViewModel {
     @FXML
@@ -17,8 +18,10 @@ public class MainViewModel extends BaseViewModel {
             System.out.println(this.getAdapter().getCustomer().getBills(customer));
         }
 
-        Customer newCustomer = new Customer("Ken", "2321");
-        getAdapter().getCustomer().persist(newCustomer);
+//        Customer newCustomer = new Customer("Ken", "2321");
+//        Product newProduct = new Product(0, "test", 1000, 500, "Test", "test");
+//        getAdapter().getCustomer().persist(newCustomer);
+//        getAdapter().getProduct().persist(newProduct);
 
     }
 }

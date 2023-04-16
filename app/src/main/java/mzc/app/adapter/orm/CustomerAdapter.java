@@ -15,11 +15,6 @@ class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter
         super(session);
     }
 
-    @Override
-    public Customer getById(long id) {
-        return super.getById(id);
-    }
-
     @NonNull
     @Override
     protected Class<Customer> getType() {
@@ -36,10 +31,5 @@ class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter
         Query<Customer> query = session.createQuery("FROM Customer C WHERE C.type <> :basic", Customer.class);
         query.setParameter("basic", CustomerType.BASIC);
         return query.list();
-    }
-
-    @Override
-    public List<Customer> getAll() {
-        return session.createQuery("SELECT c FROM Customer c", Customer.class).list();
     }
 }

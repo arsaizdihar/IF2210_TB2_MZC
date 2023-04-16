@@ -10,6 +10,4 @@ public interface ICustomerAdapter extends IBasicAdapter<Customer> {
     List<Bill> getBills(@NonNull Customer customer);
 
     List<Customer> getRegisteredCustomer();
-
-    List<Customer> getAll();
 }

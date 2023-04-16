@@ -19,6 +19,7 @@
         <mapping class="mzc.app.model.Product" />
         <mapping class="mzc.app.model.Bill" />
         <mapping class="mzc.app.model.ProductBill" />
+        <mapping class="mzc.app.model.ProductHistory" />
 
     </session-factory>
 </hibernate-configuration>

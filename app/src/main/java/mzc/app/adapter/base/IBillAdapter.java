@@ -10,7 +10,5 @@ public interface IBillAdapter extends IBasicAdapter<Bill> {
 
     @NonNull List<Bill> getByCustomerId(@NonNull Long memberId);
 
-    @NonNull List<Bill> getAll();
-
     @NonNull List<ProductBill> getProducts(Bill bill);
 }

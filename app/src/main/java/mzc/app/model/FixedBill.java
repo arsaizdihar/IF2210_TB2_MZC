@@ -10,14 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Bill")
-@Getter @Setter @NoArgsConstructor
-public class Bill extends BaseModel {
+@Table(name = "FixedBill")
+@Getter
+@Setter @NoArgsConstructor
+public class FixedBill extends BaseModel {
     @Transient
     private transient boolean productsLoaded = false;
 
     @OneToMany(mappedBy = "bill")
-    private transient List<ProductBill> products = new ArrayList<>();
+    private transient List<ProductHistoryBill> products = new ArrayList<>();
 
     @Setter(AccessLevel.NONE)
     @Column(insertable = false, updatable = false)
@@ -27,11 +28,11 @@ public class Bill extends BaseModel {
     @JoinColumn(name = "customerId", nullable = false)
     private transient Customer customer;
 
-    public Bill(Customer customer) {
+    public FixedBill(Customer customer) {
         setCustomer(customer);
     }
 
-    public boolean equals(Bill b) {
+    public boolean equals(FixedBill b) {
         return this.id == b.id && this.customerId == b.customerId;
     }
 

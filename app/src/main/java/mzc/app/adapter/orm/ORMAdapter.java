@@ -15,7 +15,7 @@ public class ORMAdapter implements IMainAdapter {
     private final @NonNull BillAdapter bill;
     @Getter
     private final @NonNull ProductAdapter product;
-    private final Session session;
+    private final @NonNull Session session;
 
     public ORMAdapter() {
         Configuration cfg = new Configuration();
