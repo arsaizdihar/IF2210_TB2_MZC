@@ -1,4 +1,4 @@
-package mzc.app.adapter.json;
+package mzc.app.adapter.file;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,14 +7,14 @@ import mzc.app.model.BaseModel;
 
 import java.util.Map;
 
-abstract class ModelAdapter<T extends BaseModel> {
-    @Getter(lazy = true, value = AccessLevel.PROTECTED) private final Map<String, T> data = loadData();
+public abstract class FileModelAdapter<T extends BaseModel, U extends IFileDataLoader<T>> {
 
-    protected abstract @NonNull Class<T> getType();
+    @Getter(lazy = true, value = AccessLevel.PROTECTED)
+    private final Map<String, T> data = getLoader().loadData(getType());
 
-    private @NonNull Map<String, T> loadData() {
-        return JSONLoader.loadDataFromFile(getType());
-    }
+    abstract protected U getLoader();
+
+    abstract protected Class<T> getType();
 
     public T getById(Long id) {
         return getData().get(Long.toString(id));
@@ -35,6 +35,6 @@ abstract class ModelAdapter<T extends BaseModel> {
     }
 
     public void commit() {
-        JSONLoader.saveDataToFile(getData(), getType());
+        getLoader().commit(getData(), getType());
     }
 }

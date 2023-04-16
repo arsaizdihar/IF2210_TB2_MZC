@@ -5,6 +5,7 @@ import lombok.NonNull;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
+import mzc.app.adapter.xml.XMLAdapter;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class AdapterManager {
 //        use LinkedHashMap to make map still ordered
         Map<String, Class<? extends IMainAdapter>> map = new LinkedHashMap<>();
         map.put("JSON", JSONAdapter.class);
+        map.put("XML", XMLAdapter.class);
         map.put("ORM", ORMAdapter.class);
         return map;
     }

@@ -3,7 +3,10 @@ package mzc.app.adapter.json;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import mzc.app.adapter.base.AdapterConfig;
+import mzc.app.adapter.file.IFileDataLoader;
 import mzc.app.model.BaseModel;
 
 import java.io.FileReader;
@@ -15,10 +18,11 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JSONLoader {
+@NoArgsConstructor
+class JSONLoader<T extends BaseModel> implements IFileDataLoader<T> {
     private static final Gson gson = new Gson();
 
-    public static <T extends BaseModel> Map<String, T> loadDataFromFile(Class<T> model) {
+    public @NonNull Map<String, T> loadData(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (JsonReader reader = new JsonReader(new FileReader(absolutePath))) {
@@ -38,7 +42,8 @@ public class JSONLoader {
         }
     }
 
-    public static <T extends BaseModel> void saveDataToFile(Map<String, T> data, Class<T> model) {
+    @Override
+    public void commit(Map<String, T> data, Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (FileWriter writer = new FileWriter(absolutePath)) {

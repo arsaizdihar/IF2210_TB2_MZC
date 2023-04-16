@@ -11,8 +11,9 @@ module mzc.app {
     requires java.naming;
     requires com.google.gson;
     requires org.apache.commons.io;
+    requires com.fasterxml.jackson.dataformat.xml;
 
     opens mzc.app.view_model to javafx.fxml;
-    opens mzc.app.model to org.hibernate.orm.core, com.google.gson;
+    opens mzc.app.model to org.hibernate.orm.core, com.google.gson, com.fasterxml.jackson.databind;
     exports mzc.app;
 }

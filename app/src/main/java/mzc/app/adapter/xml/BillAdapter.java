@@ -1,12 +1,12 @@
-package mzc.app.adapter.json;
+package mzc.app.adapter.xml;
 
 import lombok.NonNull;
 import mzc.app.adapter.file.FileBillAdapter;
 import mzc.app.adapter.file.FileProductBillAdapter;
 import mzc.app.model.Bill;
 
-class BillAdapter extends FileBillAdapter<JSONLoader<Bill>> {
-    private static final JSONLoader<Bill> loader = new JSONLoader<>();
+class BillAdapter extends FileBillAdapter<XMLLoader<Bill>> {
+    private static final XMLLoader<Bill> loader = new XMLLoader<>();
     private final ProductBillAdapter productBillAdapter;
     public BillAdapter(ProductAdapter productAdapter) {
         this.productBillAdapter = new ProductBillAdapter(productAdapter);
@@ -18,7 +18,7 @@ class BillAdapter extends FileBillAdapter<JSONLoader<Bill>> {
     }
 
     @Override
-    protected JSONLoader<Bill> getLoader() {
+    protected XMLLoader<Bill> getLoader() {
         return loader;
     }
 }

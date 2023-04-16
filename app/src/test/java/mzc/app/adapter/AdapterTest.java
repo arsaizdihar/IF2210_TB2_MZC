@@ -5,6 +5,7 @@ import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
+import mzc.app.adapter.xml.XMLAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
 import mzc.app.model.CustomerType;
@@ -31,7 +32,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {JSONAdapter.class, ORMAdapter.class})
+    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, ORMAdapter.class})
     public void testCustomer(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         ICustomerAdapter customerAdapter = adapter.getCustomer();
@@ -68,7 +69,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {ORMAdapter.class, JSONAdapter.class})
+    @ValueSource(classes = {ORMAdapter.class, JSONAdapter.class, XMLAdapter.class})
     public void testBill(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         Customer c = new  Customer();

@@ -1,18 +1,14 @@
 package mzc.app.adapter.json;
 
 import lombok.NonNull;
-import mzc.app.adapter.base.IProductAdapter;
+import mzc.app.adapter.file.FileProductAdapter;
 import mzc.app.model.Product;
 
-class ProductAdapter extends ModelAdapter<Product> implements IProductAdapter {
+class ProductAdapter extends FileProductAdapter<JSONLoader<Product>> {
+    private static final @NonNull JSONLoader<Product> loader = new JSONLoader<>();
 
     @Override
-    public Product getById(long id) {
-        return super.getById(id);
-    }
-
-    @Override
-    protected @NonNull Class<Product> getType() {
-        return Product.class;
+    protected JSONLoader<Product> getLoader() {
+        return loader;
     }
 }

@@ -1,19 +1,19 @@
-package mzc.app.adapter.json;
+package mzc.app.adapter.xml;
 
 import lombok.NonNull;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.adapter.file.FileCustomerAdapter;
 import mzc.app.model.Customer;
 
-class CustomerAdapter extends FileCustomerAdapter<JSONLoader<Customer>> {
-    private static final JSONLoader<Customer> loader = new JSONLoader<>();
+class CustomerAdapter extends FileCustomerAdapter<XMLLoader<Customer>> {
+    private static final XMLLoader<Customer> loader = new XMLLoader<>();
 
     CustomerAdapter(@NonNull IBillAdapter billAdapter) {
         super(billAdapter);
     }
 
     @Override
-    protected JSONLoader<Customer> getLoader() {
+    protected XMLLoader<Customer> getLoader() {
         return loader;
     }
 
