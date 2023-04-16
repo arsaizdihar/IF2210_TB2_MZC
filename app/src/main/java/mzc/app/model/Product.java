@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Product extends BaseModel {
     @Column
-    private int stock;
+    private int stock = 0;
 
     @Column
     private String name;

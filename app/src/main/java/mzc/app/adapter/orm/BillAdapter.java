@@ -6,9 +6,9 @@ import jakarta.persistence.criteria.Root;
 import lombok.NonNull;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.model.Bill;
+import mzc.app.model.ProductBill;
 import org.hibernate.Session;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 
 class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
@@ -34,6 +34,11 @@ class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     @Override
     public @NonNull List<Bill> getAll() {
         return session.createQuery("SELECT b FROM Bill b", Bill.class).list();
+    }
+
+    @Override
+    public @NonNull List<ProductBill> getProducts(Bill bill) {
+        return bill.getProducts();
     }
 
     @NonNull

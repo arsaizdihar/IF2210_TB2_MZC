@@ -8,6 +8,8 @@ public interface IMainAdapter {
 
     @NonNull IBillAdapter getBill();
 
+    @NonNull IProductAdapter getProduct();
+
     void close();
 
     void clearData();

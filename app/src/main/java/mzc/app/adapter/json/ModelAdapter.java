@@ -1,14 +1,14 @@
 package mzc.app.adapter.json;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.model.BaseModel;
-import mzc.app.model.Customer;
 
 import java.util.Map;
 
 abstract class ModelAdapter<T extends BaseModel> {
-    @Getter(lazy = true) private final Map<String, T> data = loadData();
+    @Getter(lazy = true, value = AccessLevel.PROTECTED) private final Map<String, T> data = loadData();
 
     protected abstract @NonNull Class<T> getType();
 

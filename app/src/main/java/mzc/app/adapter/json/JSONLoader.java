@@ -3,8 +3,6 @@ package mzc.app.adapter.json;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import lombok.Getter;
-import lombok.Setter;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.model.BaseModel;
 
@@ -19,6 +17,7 @@ import java.util.Map;
 
 public class JSONLoader {
     private static final Gson gson = new Gson();
+
     public static <T extends BaseModel> Map<String, T> loadDataFromFile(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();

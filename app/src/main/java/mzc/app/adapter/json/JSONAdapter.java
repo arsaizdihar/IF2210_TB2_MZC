@@ -12,10 +12,13 @@ import java.io.IOException;
 public class JSONAdapter implements IMainAdapter {
     @Getter private final @NonNull CustomerAdapter customer;
     @Getter private final @NonNull BillAdapter bill;
+    @Getter private final @NonNull ProductAdapter product;
 
     public JSONAdapter() {
-        this.bill = new BillAdapter();
+        this.product = new ProductAdapter();
+        this.bill = new BillAdapter(product);
         this.customer = new CustomerAdapter(bill);
+        this.bill.setCustomerAdapter(this.customer);
     }
 
     @Override

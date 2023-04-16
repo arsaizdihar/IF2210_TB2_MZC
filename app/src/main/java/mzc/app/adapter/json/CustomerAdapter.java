@@ -1,6 +1,7 @@
 package mzc.app.adapter.json;
 
 import lombok.NonNull;
+import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
@@ -12,9 +13,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter {
-    private final @NonNull BillAdapter billAdapter;
+    private final @NonNull IBillAdapter billAdapter;
 
-    CustomerAdapter(@NonNull BillAdapter billAdapter) {
+    CustomerAdapter(@NonNull IBillAdapter billAdapter) {
         this.billAdapter = billAdapter;
     }
 

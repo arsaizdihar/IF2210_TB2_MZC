@@ -15,6 +15,8 @@ import java.util.Set;
 @Table(name = "Bill")
 @Getter @Setter @NoArgsConstructor
 public class Bill extends BaseModel {
+    @Transient
+    private transient boolean productsLoaded = false;
 
     @OneToMany(mappedBy = "bill")
     private transient List<ProductBill> products = new ArrayList<>();
@@ -25,7 +27,7 @@ public class Bill extends BaseModel {
 
     @Column boolean isFixed = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "customerId", nullable = false)
     private transient Customer customer;
 
