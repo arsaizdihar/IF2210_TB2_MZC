@@ -7,6 +7,7 @@ import mzc.app.model.Product;
 import mzc.app.model.ProductBill;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class FileProductBillAdapter <T extends IFileDataLoader<ProductBill>> extends FileModelAdapter<ProductBill, T> implements IProductBillAdapter {
     private final @NonNull IProductAdapter productAdapter;
@@ -21,7 +22,7 @@ public abstract class FileProductBillAdapter <T extends IFileDataLoader<ProductB
     }
 
     public List<ProductBill> getByBillId(long billId) {
-        var result = getData().values().stream().filter(p -> p.getBillId() == billId).toList();
+        List<ProductBill> result = getData().values().stream().filter(p -> p.getBillId() == billId).collect(Collectors.toList());
         result.forEach(p -> p.setProduct(productAdapter.getById(p.getId())));
         return result;
     }

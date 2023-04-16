@@ -1,8 +1,11 @@
 package mzc.app.adapter;
 
+import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
 import org.junit.jupiter.api.*;
+
+import java.util.Map;
 
 public class AdapterManagerTest {
     private static AdapterManager adapterManager;
@@ -39,7 +42,7 @@ public class AdapterManagerTest {
 
     @Test
     public void testList() {
-        var res = AdapterManager.getAvailableAdapters();
+        Map<String, Class<? extends IMainAdapter>> res = AdapterManager.getAvailableAdapters();
         Assertions.assertEquals(res.get("JSON"), JSONAdapter.class);
         Assertions.assertEquals(res.get("ORM"), ORMAdapter.class);
     }

@@ -1,8 +1,9 @@
 package mzc.app.adapter.orm;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import lombok.NonNull;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.model.Bill;

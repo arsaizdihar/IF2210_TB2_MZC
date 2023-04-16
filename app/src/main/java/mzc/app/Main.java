@@ -5,12 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
-import mzc.app.adapter.AdapterManager;
-import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.utils.ViewLoader;
 import mzc.app.utils.ViewModelFactory;
-import org.kordamp.bootstrapfx.BootstrapFX;
-import java.util.Map;
 
 public class Main extends Application {
     @SneakyThrows
@@ -22,7 +18,7 @@ public class Main extends Application {
 //            System.out.println(adapter);
 //        }
         Scene scene = new Scene(parent, 320, 240);
-        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setTitle("MZC");
         stage.setScene(scene);
         stage.show();

@@ -10,6 +10,7 @@ import mzc.app.model.ProductBill;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class FileBillAdapter <T extends IFileDataLoader<Bill>> extends FileModelAdapter<Bill, T> implements IBillAdapter {
     @Setter
@@ -19,7 +20,7 @@ public abstract class FileBillAdapter <T extends IFileDataLoader<Bill>> extends 
 
     @Override
     public Bill getById(long id) {
-        var res = super.getById(id);
+        Bill res = super.getById(id);
         if (res != null) {
             res.setCustomer(customerAdapter.getById(res.getId()));
         }
@@ -28,7 +29,7 @@ public abstract class FileBillAdapter <T extends IFileDataLoader<Bill>> extends 
 
     @Override
     public @NonNull List<Bill> getByCustomerId(@NonNull Long customerId) {
-        return loadAllCustomers(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).toList());
+        return loadAllCustomers(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).collect(Collectors.toList()));
     }
 
     @Override
@@ -39,7 +40,7 @@ public abstract class FileBillAdapter <T extends IFileDataLoader<Bill>> extends 
     @Override
     public @NonNull List<ProductBill> getProducts(Bill bill) {
         if (bill.isProductsLoaded()) return bill.getProducts();
-        var result = getProductBillAdapter().getByBillId(bill.getId());
+        List<ProductBill> result = getProductBillAdapter().getByBillId(bill.getId());
         bill.setProductsLoaded(true);
         bill.setProducts(result);
         return result;

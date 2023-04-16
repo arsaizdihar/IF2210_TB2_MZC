@@ -23,7 +23,7 @@ public class OBJLoader<T extends BaseModel> implements IFileDataLoader<T> {
              ObjectInputStream objectInputStream
                      = new ObjectInputStream(fileInputStream);) {
             @SuppressWarnings("unchecked")
-            var res = (Map<String, T>) objectInputStream.readObject();
+            Map<String, T> res = (Map<String, T>) objectInputStream.readObject();
             return res;
         } catch (IOException | ClassNotFoundException e) {
             try {

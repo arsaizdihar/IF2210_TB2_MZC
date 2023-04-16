@@ -6,6 +6,7 @@ import mzc.app.model.Bill;
 import mzc.app.model.Customer;
 import mzc.app.model.CustomerType;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter
 
     @Override
     public List<Customer> getRegisteredCustomer() {
-        var query = session.createQuery("FROM Customer C WHERE C.type <> :basic", Customer.class);
+        Query<Customer> query = session.createQuery("FROM Customer C WHERE C.type <> :basic", Customer.class);
         query.setParameter("basic", CustomerType.BASIC);
         return query.list();
     }
