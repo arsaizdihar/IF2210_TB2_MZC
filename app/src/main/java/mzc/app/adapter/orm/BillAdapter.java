@@ -20,7 +20,7 @@ class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     }
 
     @Override
-    public @NonNull List<Bill> getByCustomerId(@NonNull Long customerId) {
+    public @NonNull List<Bill> getByCustomerId(long customerId) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Bill> cr = cb.createQuery(Bill.class);
         Root<Bill> root = cr.from(Bill.class);

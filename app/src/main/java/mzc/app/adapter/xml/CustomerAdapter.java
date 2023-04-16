@@ -1,5 +1,6 @@
 package mzc.app.adapter.xml;
 
+import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.adapter.file.FileCustomerAdapter;
@@ -13,7 +14,7 @@ class CustomerAdapter extends FileCustomerAdapter<XMLLoader<Customer>> {
     }
 
     @Override
-    protected XMLLoader<Customer> getLoader() {
+    protected @NonNull XMLLoader<Customer> getLoader() {
         return loader;
     }
 

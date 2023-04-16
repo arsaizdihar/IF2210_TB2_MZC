@@ -1,5 +1,6 @@
 package mzc.app.adapter.xml;
 
+import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.base.IProductAdapter;
 import mzc.app.adapter.file.FileProductBillAdapter;
@@ -13,7 +14,7 @@ class ProductBillAdapter extends FileProductBillAdapter<XMLLoader<ProductBill>> 
     }
 
     @Override
-    protected XMLLoader<ProductBill> getLoader() {
+    protected @NonNull XMLLoader<ProductBill> getLoader() {
         return loader;
     }
 }

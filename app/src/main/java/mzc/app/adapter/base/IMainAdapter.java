@@ -10,6 +10,10 @@ public interface IMainAdapter {
 
     @NonNull IProductAdapter getProduct();
 
+    @NonNull IProductHistoryAdapter getProductHistory();
+
+    @NonNull IFixedBillAdapter getFixedBill();
+
     void close();
 
     void clearData();

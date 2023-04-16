@@ -15,7 +15,7 @@ public abstract class FileModelAdapter<T extends BaseModel, U extends IFileDataL
     @Getter(lazy = true, value = AccessLevel.PROTECTED)
     private final Map<String, T> data = getLoader().loadData(getType());
 
-    abstract protected U getLoader();
+    abstract protected @NonNull U getLoader();
 
     abstract protected Class<T> getType();
 

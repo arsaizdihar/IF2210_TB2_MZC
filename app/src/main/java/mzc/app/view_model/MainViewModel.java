@@ -18,10 +18,10 @@ public class MainViewModel extends BaseViewModel {
             System.out.println(this.getAdapter().getCustomer().getBills(customer));
         }
 
-//        Customer newCustomer = new Customer("Ken", "2321");
-//        Product newProduct = new Product(0, "test", 1000, 500, "Test", "test");
-//        getAdapter().getCustomer().persist(newCustomer);
-//        getAdapter().getProduct().persist(newProduct);
+        Customer newCustomer = new Customer("Ken", "2321");
+        Product newProduct = new Product(0, "test", 1000, 500, "Test", "test");
+        getAdapter().getCustomer().persist(newCustomer);
+        getAdapter().getProduct().persist(newProduct);
 
     }
 }

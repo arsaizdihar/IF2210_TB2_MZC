@@ -7,7 +7,6 @@ import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.ProductBill;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ public abstract class FileBillAdapter <T extends IFileDataLoader<Bill>> extends 
     }
 
     @Override
-    public @NonNull List<Bill> getByCustomerId(@NonNull Long customerId) {
+    public @NonNull List<Bill> getByCustomerId(long customerId) {
         return loadAllCustomers(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).collect(Collectors.toList()));
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IBillAdapter extends IBasicAdapter<Bill> {
 
-    @NonNull List<Bill> getByCustomerId(@NonNull Long memberId);
+    @NonNull List<Bill> getByCustomerId(long memberId);
 
     @NonNull List<ProductBill> getProducts(Bill bill);
 }

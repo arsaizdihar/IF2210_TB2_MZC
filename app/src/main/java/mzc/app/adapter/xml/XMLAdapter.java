@@ -12,14 +12,23 @@ import java.io.IOException;
 public class XMLAdapter implements IMainAdapter {
     @Getter
     private final @NonNull CustomerAdapter customer;
-    @Getter private final @NonNull BillAdapter bill;
-    @Getter private final @NonNull ProductAdapter product;
+    @Getter
+    private final @NonNull BillAdapter bill;
+    @Getter
+    private final @NonNull ProductAdapter product;
+    @Getter
+    private final @NonNull ProductHistoryAdapter productHistory;
+    @Getter
+    private final @NonNull FixedBillAdapter fixedBill;
 
     public XMLAdapter() {
         this.product = new ProductAdapter();
         this.bill = new BillAdapter(product);
         this.customer = new CustomerAdapter(bill);
         this.bill.setCustomerAdapter(this.customer);
+        this.productHistory = new ProductHistoryAdapter();
+        this.fixedBill = new FixedBillAdapter(productHistory);
+        this.fixedBill.setCustomerAdapter(this.customer);
     }
 
     @Override
