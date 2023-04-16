@@ -28,9 +28,6 @@ public abstract class FileCustomerAdapter<T extends IFileDataLoader<Customer>> e
         if (customer.isBillsLoaded()) return customer.getBills();
         customer.setBillsLoaded(true);
         List<Bill> result = billAdapter.getByCustomerId(customer.getId());
-
-        System.out.println("\n\nRESULT");
-        System.out.println(result);
         customer.setBills(result);
         return result;
     }

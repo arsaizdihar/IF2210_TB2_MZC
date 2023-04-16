@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
+import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
 import mzc.app.adapter.xml.XMLAdapter;
 
@@ -35,6 +36,7 @@ public class AdapterManager {
         Map<String, Class<? extends IMainAdapter>> map = new LinkedHashMap<>();
         map.put("JSON", JSONAdapter.class);
         map.put("XML", XMLAdapter.class);
+        map.put("OBJ", OBJAdapter.class);
         map.put("ORM", ORMAdapter.class);
         return map;
     }

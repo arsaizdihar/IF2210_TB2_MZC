@@ -40,7 +40,7 @@ public class XMLLoader<T extends BaseModel> implements IFileDataLoader<T> {
             try {
                 Files.createDirectories(path.getParent());
                 try (FileWriter writer = new FileWriter(absolutePath)) {
-                    writer.write("{}");
+                    writer.write("");
                 }
             } catch (IOException e2) {
                 throw new RuntimeException(e2);
