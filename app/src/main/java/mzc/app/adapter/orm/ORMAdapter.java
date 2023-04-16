@@ -5,19 +5,20 @@ import lombok.NonNull;
 import mzc.app.adapter.base.IMainAdapter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+
+import java.util.List;
 
 public class ORMAdapter implements IMainAdapter {
 
-    @Getter private final @NonNull MemberAdapter member;
+    @Getter private final @NonNull CustomerAdapter customer;
     @Getter private final @NonNull BillAdapter bill;
     private final Session session;
 
     public ORMAdapter() {
         Configuration cfg = new Configuration();
         cfg.configure();
-
-        System.out.println(cfg.getProperty("hibernate.connection.url"));
 
         if (cfg.getProperty("hibernate.connection.url") == null) {
             cfg.setProperty("hibernate.connection.url",
@@ -26,12 +27,16 @@ public class ORMAdapter implements IMainAdapter {
 
         SessionFactory sessionFactory = cfg.buildSessionFactory();
         session = sessionFactory.openSession();
-        member = new MemberAdapter(session);
+        customer = new CustomerAdapter(session);
         bill = new BillAdapter(session);
     }
 
     @Override
     public void close() {
         session.close();
+    }
+
+    @Override
+    public void clearData() {
     }
 }

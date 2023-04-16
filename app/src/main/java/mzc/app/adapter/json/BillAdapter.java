@@ -4,8 +4,9 @@ import lombok.NonNull;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.model.Bill;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
@@ -15,13 +16,13 @@ class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     }
 
     @Override
-    public void persist(@NonNull Bill member) {
-
+    public @NonNull List<Bill> getByCustomerId(@NonNull Long customerId) {
+        return getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).toList();
     }
 
     @Override
-    public @NonNull Set<Bill> getByMemberId(@NonNull Long memberId) {
-        return getData().values().stream().filter((v) -> Objects.equals(v.getMemberId(), memberId)).collect(Collectors.toSet());
+    public @NonNull List<Bill> getAll() {
+        return new ArrayList<>(getData().values());
     }
 
     @Override

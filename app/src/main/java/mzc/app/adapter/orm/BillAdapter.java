@@ -8,9 +8,8 @@ import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.model.Bill;
 import org.hibernate.Session;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
 
@@ -24,12 +23,17 @@ class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     }
 
     @Override
-    public @NonNull Set<Bill> getByMemberId(@NonNull Long memberId) {
+    public @NonNull List<Bill> getByCustomerId(@NonNull Long customerId) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Bill> cr = cb.createQuery(Bill.class);
         Root<Bill> root = cr.from(Bill.class);
-        cr.select(root).where(cb.equal(root.get("memberId"), memberId));
-        return new LinkedHashSet<>(session.createQuery(cr).list());
+        cr.select(root).where(cb.equal(root.get("customerId"), customerId));
+        return session.createQuery(cr).list();
+    }
+
+    @Override
+    public @NonNull List<Bill> getAll() {
+        return session.createQuery("SELECT b FROM Bill b", Bill.class).list();
     }
 
     @NonNull

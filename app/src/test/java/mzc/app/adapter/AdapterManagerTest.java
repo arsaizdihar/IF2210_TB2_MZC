@@ -25,6 +25,19 @@ public class AdapterManagerTest {
     }
 
     @Test
+    public void testSet() {
+        adapterManager = new AdapterManager(new JSONAdapter());
+        adapterManager.setAdapter(new ORMAdapter());
+        Assertions.assertTrue(adapterManager.getAdapter() instanceof ORMAdapter);
+    }
+
+    @Test
+    public void testConstructor() {
+        adapterManager = new AdapterManager();
+        Assertions.assertNotNull(adapterManager.getAdapter());
+    }
+
+    @Test
     public void testList() {
         var res = AdapterManager.getAvailableAdapters();
         Assertions.assertEquals(res.get("JSON"), JSONAdapter.class);

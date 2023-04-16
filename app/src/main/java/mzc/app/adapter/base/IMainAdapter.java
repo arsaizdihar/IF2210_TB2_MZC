@@ -4,9 +4,11 @@ import lombok.NonNull;
 
 public interface IMainAdapter {
 
-    @NonNull IMemberAdapter getMember();
+    @NonNull ICustomerAdapter getCustomer();
 
     @NonNull IBillAdapter getBill();
 
     void close();
+
+    void clearData();
 }

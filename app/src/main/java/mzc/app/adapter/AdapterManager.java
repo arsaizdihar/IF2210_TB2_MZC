@@ -14,7 +14,7 @@ public class AdapterManager {
     @NonNull IMainAdapter adapter;
 
     public AdapterManager() {
-        adapter = new ORMAdapter();
+        adapter = new JSONAdapter();
     }
 
     public AdapterManager(@NonNull IMainAdapter adapter) {

@@ -1,31 +1,33 @@
 package mzc.app.adapter.json;
 
+import lombok.Getter;
 import lombok.NonNull;
-import mzc.app.adapter.base.IBillAdapter;
+import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.base.IMainAdapter;
-import mzc.app.adapter.base.IMemberAdapter;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 public class JSONAdapter implements IMainAdapter {
-    private final MemberAdapter memberAdapter;
-    private final BillAdapter billAdapter;
+    @Getter private final @NonNull CustomerAdapter customer;
+    @Getter private final @NonNull BillAdapter bill;
 
     public JSONAdapter() {
-        this.billAdapter = new BillAdapter();
-        this.memberAdapter = new MemberAdapter(billAdapter);
-    }
-
-    @Override
-    public @NonNull IMemberAdapter getMember() {
-        return this.memberAdapter;
-    }
-
-    @Override
-    public @NonNull IBillAdapter getBill() {
-        return billAdapter;
+        this.bill = new BillAdapter();
+        this.customer = new CustomerAdapter(bill);
     }
 
     @Override
     public void close() {
 
+    }
+
+    @Override
+    public void clearData() {
+        try {
+            FileUtils.deleteDirectory(new File(AdapterConfig.getBaseDataPath()));
+        } catch (IOException ignored) {
+        }
     }
 }

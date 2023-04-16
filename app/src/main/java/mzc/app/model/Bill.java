@@ -1,11 +1,14 @@
 package mzc.app.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,13 +17,28 @@ import java.util.Set;
 public class Bill extends BaseModel {
 
     @OneToMany(mappedBy = "bill")
-    private Set<ProductBill> products = new HashSet<>();
+    private transient List<ProductBill> products = new ArrayList<>();
 
-    @Column
-    private Long memberId;
+    @Setter(AccessLevel.NONE)
+    @Column(insertable = false, updatable = false)
+    private long customerId;
 
-    @ManyToOne()
-    @JoinColumn(name = "memberId", nullable = false)
-    @MapsId("memberId")
-    private Member member;
+    @Column boolean isFixed = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerId", nullable = false)
+    private transient Customer customer;
+
+    public Bill(Customer customer) {
+        setCustomer(customer);
+    }
+
+    public boolean equals(Bill b) {
+        return this.id == b.id && this.isFixed == b.isFixed && this.customerId == b.customerId;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        this.customerId = customer.getId();
+    }
 }

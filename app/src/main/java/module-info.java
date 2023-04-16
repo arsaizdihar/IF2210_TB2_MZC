@@ -10,6 +10,7 @@ module mzc.app {
     requires org.hibernate.orm.core;
     requires java.naming;
     requires com.google.gson;
+    requires org.apache.commons.io;
 
     opens mzc.app.view_model to javafx.fxml;
     opens mzc.app.model to org.hibernate.orm.core, com.google.gson;
