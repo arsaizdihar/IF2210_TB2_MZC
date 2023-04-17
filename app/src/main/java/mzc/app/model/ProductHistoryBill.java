@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mzc.app.annotation.EqualCheck;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter @NoArgsConstructor
 public class ProductHistoryBill extends BaseModel {
+    @EqualCheck
     @Setter(AccessLevel.NONE)
     @Column(insertable = false, updatable = false)
     private long productId;
@@ -20,6 +22,7 @@ public class ProductHistoryBill extends BaseModel {
     @JoinColumn(name = "productId", referencedColumnName = "id")
     private transient ProductHistory product;
 
+    @EqualCheck
     @Setter(AccessLevel.NONE)
     @Column(insertable = false, updatable = false)
     private long billId;
@@ -28,6 +31,7 @@ public class ProductHistoryBill extends BaseModel {
     @JoinColumn(name = "billId", referencedColumnName = "id")
     private transient FixedBill bill;
 
+    @EqualCheck
     @Column
     private int amount;
 

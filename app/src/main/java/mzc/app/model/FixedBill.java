@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mzc.app.annotation.EqualCheck;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class FixedBill extends BaseModel {
     @OneToMany(mappedBy = "bill")
     private transient List<ProductHistoryBill> products = new ArrayList<>();
 
+    @EqualCheck
     @Setter(AccessLevel.NONE)
     @Column(insertable = false, updatable = false)
     private long customerId;
@@ -30,10 +32,6 @@ public class FixedBill extends BaseModel {
 
     public FixedBill(Customer customer) {
         setCustomer(customer);
-    }
-
-    public boolean equals(FixedBill b) {
-        return this.id == b.id && this.customerId == b.customerId;
     }
 
     public void setCustomer(Customer customer) {

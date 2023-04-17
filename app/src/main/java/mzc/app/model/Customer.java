@@ -3,6 +3,7 @@ package mzc.app.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mzc.app.annotation.EqualCheck;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,21 +13,26 @@ import java.util.List;
 @Table(name = "Customer")
 @Getter @Setter @NoArgsConstructor
 public class Customer extends BaseModel {
+    @EqualCheck
     @Column
     private String name = "";
 
+    @EqualCheck
     @Column
     private String phone = "";
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private transient List<Bill> bills = new ArrayList<>();
 
+    @EqualCheck
     @Column
     private CustomerType type = CustomerType.BASIC;
 
+    @EqualCheck
     @Column
     private boolean isDeactivated = false;
 
+    @EqualCheck
     @Column
     private int points = 0;
 
@@ -42,9 +48,5 @@ public class Customer extends BaseModel {
         this.name = name;
         this.phone = phone;
         this.type = type;
-    }
-
-    public boolean equals(Customer c) {
-        return this.id == c.id && this.name.equals(c.name) && this.phone.equals(c.phone) && this.type.equals(c.type) && this.points == c.points;
     }
 }

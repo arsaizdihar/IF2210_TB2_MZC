@@ -3,6 +3,7 @@ package mzc.app.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mzc.app.annotation.EqualCheck;
 
 import javax.persistence.*;
 
@@ -10,12 +11,15 @@ import javax.persistence.*;
 @Table(name = "ProductHistory")
 @Getter @Setter @NoArgsConstructor
 public class ProductHistory extends BaseModel {
+    @EqualCheck
     @Column
     private String name;
 
+    @EqualCheck
     @Column
     private int price;
 
+    @EqualCheck
     @Column
     private int buyPrice;
 
