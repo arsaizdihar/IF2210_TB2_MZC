@@ -1,21 +1,19 @@
 package mzc.app.adapter.json;
 
-import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.adapter.file.FileCustomerAdapter;
 import mzc.app.model.Customer;
-import mzc.app.model.Product;
+import org.jetbrains.annotations.NotNull;
 
 class CustomerAdapter extends FileCustomerAdapter<JSONLoader<Customer>> {
-    private static final @NonNull JSONLoader<Customer> loader = new JSONLoader<>();
+    private static final @NotNull JSONLoader<Customer> loader = new JSONLoader<>();
 
-    CustomerAdapter(@NonNull IBillAdapter billAdapter) {
+    CustomerAdapter(@NotNull IBillAdapter billAdapter) {
         super(billAdapter);
     }
 
     @Override
-    protected @NonNull JSONLoader<Customer> getLoader() {
+    protected @NotNull JSONLoader<Customer> getLoader() {
         return loader;
     }
 

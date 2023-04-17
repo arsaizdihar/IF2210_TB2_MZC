@@ -1,10 +1,9 @@
 package mzc.app.adapter.obj;
 
-import lombok.NonNull;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.file.IFileDataLoader;
 import mzc.app.model.BaseModel;
-import mzc.app.model.Customer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -15,7 +14,7 @@ import java.util.Map;
 
 public class OBJLoader<T extends BaseModel> implements IFileDataLoader<T> {
     @Override
-    public @NonNull Map<String, T> loadData(Class<T> model) {
+    public @NotNull Map<String, T> loadData(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (FileInputStream fileInputStream

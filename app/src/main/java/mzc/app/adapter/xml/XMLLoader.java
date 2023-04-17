@@ -1,15 +1,18 @@
 package mzc.app.adapter.xml;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import lombok.NonNull;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.file.IFileDataLoader;
 import mzc.app.model.BaseModel;
+import org.jetbrains.annotations.NotNull;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +23,7 @@ import java.util.Map;
 public class XMLLoader<T extends BaseModel> implements IFileDataLoader<T> {
     private static final XmlMapper mapper = new XmlMapper();
     @Override
-    public @NonNull Map<String, T> loadData(Class<T> model) {
+    public @NotNull Map<String, T> loadData(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         File inputFile = new File(absolutePath);

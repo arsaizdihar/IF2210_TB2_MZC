@@ -1,14 +1,14 @@
 package mzc.app.adapter.base;
 
-import lombok.NonNull;
 import mzc.app.model.Bill;
 import mzc.app.model.ProductBill;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public interface IBillAdapter extends IBasicAdapter<Bill> {
 
-    @NonNull List<Bill> getByCustomerId(long memberId);
+    @NotNull List<Bill> getByCustomerId(long memberId);
 
-    @NonNull List<ProductBill> getProducts(Bill bill);
+    @NotNull List<ProductBill> getProducts(Bill bill);
 }

@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.file.IFileDataLoader;
 import mzc.app.model.BaseModel;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -22,7 +22,7 @@ import java.util.Map;
 class JSONLoader<T extends BaseModel> implements IFileDataLoader<T> {
     private static final Gson gson = new Gson();
 
-    public @NonNull Map<String, T> loadData(Class<T> model) {
+    public @NotNull Map<String, T> loadData(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (JsonReader reader = new JsonReader(new FileReader(absolutePath))) {

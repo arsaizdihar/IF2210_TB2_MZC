@@ -1,23 +1,22 @@
 package mzc.app.adapter.file;
 
-import lombok.NonNull;
 import mzc.app.adapter.base.IProductAdapter;
 import mzc.app.adapter.base.IProductBillAdapter;
-import mzc.app.model.Product;
 import mzc.app.model.ProductBill;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class FileProductBillAdapter <T extends IFileDataLoader<ProductBill>> extends FileModelAdapter<ProductBill, T> implements IProductBillAdapter {
-    private final @NonNull IProductAdapter productAdapter;
+    private final @NotNull IProductAdapter productAdapter;
 
-    public FileProductBillAdapter(@NonNull IProductAdapter productAdapter) {
+    public FileProductBillAdapter(@NotNull IProductAdapter productAdapter) {
         this.productAdapter = productAdapter;
     }
 
     @Override
-    protected @NonNull Class<ProductBill> getType() {
+    protected @NotNull Class<ProductBill> getType() {
         return ProductBill.class;
     }
 

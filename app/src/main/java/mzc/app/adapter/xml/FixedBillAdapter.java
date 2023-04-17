@@ -1,9 +1,9 @@
 package mzc.app.adapter.xml;
 
 import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.file.FileFixedBillAdapter;
 import mzc.app.model.FixedBill;
+import org.jetbrains.annotations.NotNull;
 
 class FixedBillAdapter extends FileFixedBillAdapter<XMLLoader<FixedBill>> {
     private static final XMLLoader<FixedBill> loader = new XMLLoader<>();
@@ -16,7 +16,7 @@ class FixedBillAdapter extends FileFixedBillAdapter<XMLLoader<FixedBill>> {
     }
 
     @Override
-    protected @NonNull XMLLoader<FixedBill> getLoader() {
+    protected @NotNull XMLLoader<FixedBill> getLoader() {
         return loader;
     }
 }

@@ -1,18 +1,18 @@
 package mzc.app.adapter.base;
 
-import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 public interface IMainAdapter {
 
-    @NonNull ICustomerAdapter getCustomer();
+    @NotNull ICustomerAdapter getCustomer();
 
-    @NonNull IBillAdapter getBill();
+    @NotNull IBillAdapter getBill();
 
-    @NonNull IProductAdapter getProduct();
+    @NotNull IProductAdapter getProduct();
 
-    @NonNull IProductHistoryAdapter getProductHistory();
+    @NotNull IProductHistoryAdapter getProductHistory();
 
-    @NonNull IFixedBillAdapter getFixedBill();
+    @NotNull IFixedBillAdapter getFixedBill();
 
     void close();
 

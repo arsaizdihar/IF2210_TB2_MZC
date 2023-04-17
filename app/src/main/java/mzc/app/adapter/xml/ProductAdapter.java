@@ -1,15 +1,14 @@
 package mzc.app.adapter.xml;
 
-import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.file.FileProductAdapter;
 import mzc.app.model.Product;
+import org.jetbrains.annotations.NotNull;
 
 class ProductAdapter extends FileProductAdapter<XMLLoader<Product>> {
-    private static final @NonNull XMLLoader<Product> loader = new XMLLoader<>();
+    private static final @NotNull XMLLoader<Product> loader = new XMLLoader<>();
 
     @Override
-    protected @NonNull XMLLoader<Product> getLoader() {
+    protected @NotNull XMLLoader<Product> getLoader() {
         return loader;
     }
 }

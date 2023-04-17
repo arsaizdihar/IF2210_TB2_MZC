@@ -1,22 +1,22 @@
 package mzc.app.adapter.json;
 
 import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.file.FileFixedBillAdapter;
 import mzc.app.model.FixedBill;
+import org.jetbrains.annotations.NotNull;
 
 class FixedBillAdapter extends FileFixedBillAdapter<JSONLoader<FixedBill>> {
-    private static final @NonNull JSONLoader<FixedBill> loader = new JSONLoader<>();
+    private static final @NotNull JSONLoader<FixedBill> loader = new JSONLoader<>();
 
     @Getter
-    private final @NonNull ProductHistoryBillAdapter productBillAdapter;
+    private final @NotNull ProductHistoryBillAdapter productBillAdapter;
 
-    FixedBillAdapter(@NonNull ProductHistoryAdapter productAdapter) {
+    FixedBillAdapter(@NotNull ProductHistoryAdapter productAdapter) {
         this.productBillAdapter = new ProductHistoryBillAdapter(productAdapter);
     }
 
     @Override
-    protected @NonNull JSONLoader<FixedBill> getLoader() {
+    protected @NotNull JSONLoader<FixedBill> getLoader() {
         return loader;
     }
 }

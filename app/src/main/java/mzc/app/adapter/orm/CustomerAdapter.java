@@ -7,6 +7,7 @@ import mzc.app.model.Customer;
 import mzc.app.model.CustomerType;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -15,14 +16,14 @@ class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter
         super(session);
     }
 
-    @NonNull
+    @NotNull
     @Override
     protected Class<Customer> getType() {
         return Customer.class;
     }
 
     @Override
-    public List<Bill> getBills(@NonNull Customer customer) {
+    public List<Bill> getBills(@NotNull Customer customer) {
         return customer.getBills();
     }
 

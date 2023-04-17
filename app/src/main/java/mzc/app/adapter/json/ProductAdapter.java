@@ -1,15 +1,14 @@
 package mzc.app.adapter.json;
 
-import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.file.FileProductAdapter;
 import mzc.app.model.Product;
+import org.jetbrains.annotations.NotNull;
 
 class ProductAdapter extends FileProductAdapter<JSONLoader<Product>> {
-    private static final @NonNull JSONLoader<Product> loader = new JSONLoader<>();
+    private static final @NotNull JSONLoader<Product> loader = new JSONLoader<>();
 
     @Override
-    protected @NonNull JSONLoader<Product> getLoader() {
+    protected @NotNull JSONLoader<Product> getLoader() {
         return loader;
     }
 }

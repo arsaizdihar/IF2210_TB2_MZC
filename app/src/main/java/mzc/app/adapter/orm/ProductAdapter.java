@@ -1,9 +1,9 @@
 package mzc.app.adapter.orm;
 
-import lombok.NonNull;
 import mzc.app.adapter.base.IProductAdapter;
 import mzc.app.model.Product;
 import org.hibernate.Session;
+import org.jetbrains.annotations.NotNull;
 
 class ProductAdapter extends ModelAdapter<Product> implements IProductAdapter {
 
@@ -12,7 +12,7 @@ class ProductAdapter extends ModelAdapter<Product> implements IProductAdapter {
     }
 
     @Override
-    protected @NonNull Class<Product> getType() {
+    protected @NotNull Class<Product> getType() {
         return Product.class;
     }
 }

@@ -1,20 +1,19 @@
 package mzc.app.adapter.xml;
 
-import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.adapter.file.FileCustomerAdapter;
 import mzc.app.model.Customer;
+import org.jetbrains.annotations.NotNull;
 
 class CustomerAdapter extends FileCustomerAdapter<XMLLoader<Customer>> {
     private static final XMLLoader<Customer> loader = new XMLLoader<>();
 
-    CustomerAdapter(@NonNull IBillAdapter billAdapter) {
+    CustomerAdapter(@NotNull IBillAdapter billAdapter) {
         super(billAdapter);
     }
 
     @Override
-    protected @NonNull XMLLoader<Customer> getLoader() {
+    protected @NotNull XMLLoader<Customer> getLoader() {
         return loader;
     }
 

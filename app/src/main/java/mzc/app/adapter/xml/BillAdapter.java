@@ -1,10 +1,9 @@
 package mzc.app.adapter.xml;
 
-import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.file.FileBillAdapter;
 import mzc.app.adapter.file.FileProductBillAdapter;
 import mzc.app.model.Bill;
+import org.jetbrains.annotations.NotNull;
 
 class BillAdapter extends FileBillAdapter<XMLLoader<Bill>> {
     private static final XMLLoader<Bill> loader = new XMLLoader<>();
@@ -14,12 +13,12 @@ class BillAdapter extends FileBillAdapter<XMLLoader<Bill>> {
     }
 
     @Override
-    protected @NonNull FileProductBillAdapter<?> getProductBillAdapter() {
+    protected @NotNull FileProductBillAdapter<?> getProductBillAdapter() {
         return productBillAdapter;
     }
 
     @Override
-    protected @NonNull XMLLoader<Bill> getLoader() {
+    protected @NotNull XMLLoader<Bill> getLoader() {
         return loader;
     }
 }

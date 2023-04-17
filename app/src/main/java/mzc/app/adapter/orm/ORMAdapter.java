@@ -1,25 +1,25 @@
 package mzc.app.adapter.orm;
 
 import lombok.Getter;
-import lombok.NonNull;
 import mzc.app.adapter.base.IMainAdapter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.jetbrains.annotations.NotNull;
 
 public class ORMAdapter implements IMainAdapter {
 
     @Getter
-    private final @NonNull CustomerAdapter customer;
+    private final @NotNull CustomerAdapter customer;
     @Getter
-    private final @NonNull BillAdapter bill;
+    private final @NotNull BillAdapter bill;
     @Getter
-    private final @NonNull ProductAdapter product;
+    private final @NotNull ProductAdapter product;
     @Getter
-    private final @NonNull ProductHistoryAdapter productHistory;
+    private final @NotNull ProductHistoryAdapter productHistory;
     @Getter
-    private final @NonNull FixedBillAdapter fixedBill;
-    private final @NonNull Session session;
+    private final @NotNull FixedBillAdapter fixedBill;
+    private final @NotNull Session session;
 
     public ORMAdapter() {
         Configuration cfg = new Configuration();
