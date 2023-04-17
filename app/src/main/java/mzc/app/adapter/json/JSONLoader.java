@@ -19,10 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @NoArgsConstructor
-class JSONLoader<T extends BaseModel> implements IFileDataLoader<T> {
+class JSONLoader implements IFileDataLoader {
     private static final Gson gson = new Gson();
 
-    public @NotNull Map<String, T> loadData(Class<T> model) {
+    public <T extends BaseModel> @NotNull Map<String, T> loadData(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (JsonReader reader = new JsonReader(new FileReader(absolutePath))) {
@@ -43,7 +43,7 @@ class JSONLoader<T extends BaseModel> implements IFileDataLoader<T> {
     }
 
     @Override
-    public void commit(Map<String, T> data, Class<T> model) {
+    public <T extends BaseModel> void commit(Map<String, T> data, Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (FileWriter writer = new FileWriter(absolutePath)) {

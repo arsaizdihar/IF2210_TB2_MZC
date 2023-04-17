@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XMLLoader<T extends BaseModel> implements IFileDataLoader<T> {
+public class XMLLoader implements IFileDataLoader {
     private static final XmlMapper mapper = new XmlMapper();
     @Override
-    public @NotNull Map<String, T> loadData(Class<T> model) {
+    public <T extends BaseModel> @NotNull Map<String, T> loadData(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         File inputFile = new File(absolutePath);
@@ -53,7 +53,7 @@ public class XMLLoader<T extends BaseModel> implements IFileDataLoader<T> {
     }
 
     @Override
-    public void commit(Map<String, T> data, Class<T> model) {
+    public <T extends BaseModel> void commit(Map<String, T> data, Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         File file = new File(absolutePath);

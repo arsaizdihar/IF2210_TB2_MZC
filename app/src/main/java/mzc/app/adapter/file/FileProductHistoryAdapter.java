@@ -2,8 +2,14 @@ package mzc.app.adapter.file;
 
 import mzc.app.adapter.base.IProductHistoryAdapter;
 import mzc.app.model.ProductHistory;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class FileProductHistoryAdapter <T extends IFileDataLoader<ProductHistory>> extends FileModelAdapter<ProductHistory, T> implements IProductHistoryAdapter {
+public class FileProductHistoryAdapter extends FileModelAdapter<ProductHistory> implements IProductHistoryAdapter {
+
+    protected FileProductHistoryAdapter(@NotNull IFileDataLoader loader) {
+        super(loader);
+    }
+
     @Override
     protected Class<ProductHistory> getType() {
         return ProductHistory.class;

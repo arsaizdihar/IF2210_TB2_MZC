@@ -1,5 +1,6 @@
 package mzc.app.adapter.file;
 
+import lombok.Getter;
 import lombok.Setter;
 import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.adapter.base.ICustomerAdapter;
@@ -11,11 +12,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class FileBillAdapter <T extends IFileDataLoader<Bill>> extends FileModelAdapter<Bill, T> implements IBillAdapter {
+public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdapter {
     @Setter
     private @NotNull ICustomerAdapter customerAdapter;
 
-    abstract protected @NotNull FileProductBillAdapter<? extends IFileDataLoader<ProductBill>> getProductBillAdapter();
+    @Getter
+    private final @NotNull FileProductBillAdapter productBillAdapter;
+
+    protected FileBillAdapter(@NotNull IFileDataLoader loader, @NotNull FileProductAdapter productAdapter) {
+        super(loader);
+        this.productBillAdapter = new FileProductBillAdapter(loader, productAdapter);
+    }
 
     @Override
     public Bill getById(long id) {

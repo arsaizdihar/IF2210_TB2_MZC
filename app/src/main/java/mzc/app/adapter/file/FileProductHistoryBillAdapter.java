@@ -8,10 +8,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class FileProductHistoryBillAdapter<T extends IFileDataLoader<ProductHistoryBill>> extends FileModelAdapter<ProductHistoryBill, T> implements IProductHistoryBillAdapter {
+public class FileProductHistoryBillAdapter extends FileModelAdapter<ProductHistoryBill> implements IProductHistoryBillAdapter {
     private final @NotNull IProductHistoryAdapter productAdapter;
 
-    public FileProductHistoryBillAdapter(@NotNull IProductHistoryAdapter productAdapter) {
+    public FileProductHistoryBillAdapter(@NotNull IFileDataLoader loader, @NotNull IProductHistoryAdapter productAdapter) {
+        super(loader);
         this.productAdapter = productAdapter;
     }
 

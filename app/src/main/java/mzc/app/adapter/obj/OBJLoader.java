@@ -12,9 +12,9 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OBJLoader<T extends BaseModel> implements IFileDataLoader<T> {
+public class OBJLoader implements IFileDataLoader {
     @Override
-    public @NotNull Map<String, T> loadData(Class<T> model) {
+    public <T extends BaseModel> @NotNull Map<String, T> loadData(Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (FileInputStream fileInputStream
@@ -38,7 +38,7 @@ public class OBJLoader<T extends BaseModel> implements IFileDataLoader<T> {
     }
 
     @Override
-    public void commit(Map<String, T> data, Class<T> model) {
+    public <T extends BaseModel> void commit(Map<String, T> data, Class<T> model) {
         Path path = getPathForModel(model);
         String absolutePath = path.toAbsolutePath().toString();
         try (FileOutputStream fileOutputStream = new FileOutputStream(absolutePath); ObjectOutputStream objectOutputStream

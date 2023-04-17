@@ -10,12 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class FileModelAdapter<T extends BaseModel, U extends IFileDataLoader<T>> implements IBasicAdapter<T> {
+public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {
 
     @Getter(lazy = true, value = AccessLevel.PROTECTED)
     private final Map<String, T> data = getLoader().loadData(getType());
 
-    abstract protected @NotNull U getLoader();
+    @Getter
+    private final @NotNull IFileDataLoader loader;
+
+    protected FileModelAdapter(@NotNull IFileDataLoader loader) {
+        this.loader = loader;
+
+    }
 
     abstract protected Class<T> getType();
 

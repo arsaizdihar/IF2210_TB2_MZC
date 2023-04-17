@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public interface IFileDataLoader<T extends BaseModel> {
-    @NotNull Map<String, T> loadData(Class<T> model);
+public interface IFileDataLoader {
+    @NotNull <T extends BaseModel> Map<String, T> loadData(Class<T> model);
 
-    void commit(Map<String, T> data, Class<T> model);
+    <T extends BaseModel> void  commit(Map<String, T> data, Class<T> model);
 }

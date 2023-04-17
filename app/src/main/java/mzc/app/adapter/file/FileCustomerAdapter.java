@@ -10,10 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class FileCustomerAdapter<T extends IFileDataLoader<Customer>> extends FileModelAdapter<Customer, T> implements ICustomerAdapter {
+public class FileCustomerAdapter extends FileModelAdapter<Customer> implements ICustomerAdapter {
     private final @NotNull IBillAdapter billAdapter;
 
-    public FileCustomerAdapter(@NotNull IBillAdapter billAdapter) {
+
+    public FileCustomerAdapter(@NotNull IFileDataLoader loader, @NotNull IBillAdapter billAdapter) {
+        super(loader);
         this.billAdapter = billAdapter;
     }
 
@@ -29,5 +31,10 @@ public abstract class FileCustomerAdapter<T extends IFileDataLoader<Customer>> e
     @Override
     public List<Customer> getRegisteredCustomer() {
         return getData().values().stream().filter(c -> c.getType() != CustomerType.BASIC).collect(Collectors.toList());
+    }
+
+    @Override
+    protected Class<Customer> getType() {
+        return Customer.class;
     }
 }
