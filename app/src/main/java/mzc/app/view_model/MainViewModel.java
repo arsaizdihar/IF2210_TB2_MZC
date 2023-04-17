@@ -1,16 +1,20 @@
 package mzc.app.view_model;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import lombok.Getter;
 import mzc.app.model.Customer;
 import mzc.app.model.Product;
+import org.jetbrains.annotations.NotNull;
 
+@Getter
 public class MainViewModel extends BaseViewModel {
-    @FXML
-    private Label welcomeText;
+    private final @NotNull Label welcomeText;
 
-    @FXML
-    protected void onHelloButtonClick() {
+    public MainViewModel() {
+        welcomeText = new Label("");
+    }
+
+    public void onHelloButtonClick() {
         Customer customer = this.getAdapter().getCustomer().getById(1L);
         if (customer != null) {
             welcomeText.setText(customer.getName());

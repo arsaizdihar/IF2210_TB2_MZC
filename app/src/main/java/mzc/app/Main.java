@@ -7,17 +7,14 @@ import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import mzc.app.utils.ViewLoader;
 import mzc.app.utils.ViewModelFactory;
+import mzc.app.view.MainView;
 
 public class Main extends Application {
     @SneakyThrows
     @Override
     public void start(Stage stage) {
-        Parent parent = ViewLoader.load("main-view.fxml", ViewModelFactory::injectViewModel);
-//        Map<String, Class<? extends IMainAdapter>> adapters = AdapterManager.getAvailableAdapters();
-//        for (var adapter: adapters.keySet()) {
-//            System.out.println(adapter);
-//        }
-        Scene scene = new Scene(parent, 320, 240);
+        MainView mainView = new MainView();
+        Scene scene = new Scene(mainView.getView(), 320, 240);
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         stage.setTitle("MZC");
         stage.setScene(scene);
