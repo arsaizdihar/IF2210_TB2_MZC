@@ -1,6 +1,6 @@
 package mzc.app.annotation;
 
-import mzc.app.view_model.BaseViewModel;
+import mzc.app.view_model.base.BaseViewModel;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

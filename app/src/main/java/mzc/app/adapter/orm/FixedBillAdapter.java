@@ -2,7 +2,7 @@ package mzc.app.adapter.orm;
 
 import mzc.app.adapter.base.IFixedBillAdapter;
 import mzc.app.model.FixedBill;
-import mzc.app.model.ProductHistoryBill;
+import mzc.app.model.ProductHistory;
 import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +32,7 @@ public class FixedBillAdapter extends ModelAdapter<FixedBill> implements IFixedB
     }
 
     @Override
-    public @NotNull List<ProductHistoryBill> getProducts(FixedBill bill) {
+    public @NotNull List<ProductHistory> getProducts(FixedBill bill) {
         return bill.getProducts();
     }
 }

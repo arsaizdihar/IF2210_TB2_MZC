@@ -2,8 +2,7 @@ package mzc.app.view_model;
 
 import javafx.scene.control.Label;
 import lombok.Getter;
-import mzc.app.model.Customer;
-import mzc.app.model.Product;
+import mzc.app.view_model.base.BaseViewModel;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -15,6 +14,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void onHelloButtonClick() {
+        getAdapter().getCustomer().getById(1L);
         welcomeText.setText("Hello World!");
     }
 }

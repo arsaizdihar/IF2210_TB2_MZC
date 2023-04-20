@@ -1,4 +1,4 @@
-package mzc.app.view_model;
+package mzc.app.view_model.base;
 
 import lombok.Setter;
 import mzc.app.adapter.AdapterManager;

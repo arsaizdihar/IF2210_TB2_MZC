@@ -5,7 +5,7 @@ import lombok.Setter;
 import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.adapter.base.IFixedBillAdapter;
 import mzc.app.model.FixedBill;
-import mzc.app.model.ProductHistoryBill;
+import mzc.app.model.ProductHistory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -17,11 +17,11 @@ public class FileFixedBillAdapter extends FileModelAdapter<FixedBill> implements
     private @NotNull ICustomerAdapter customerAdapter;
 
     @Getter
-    private final @NotNull FileProductHistoryBillAdapter productBillAdapter;
+    private final @NotNull FileProductHistoryAdapter productHistoryAdapter;
 
     protected FileFixedBillAdapter(@NotNull IFileDataLoader loader, @NotNull FileProductHistoryAdapter productAdapter) {
         super(loader);
-        this.productBillAdapter = new FileProductHistoryBillAdapter(loader, productAdapter);
+        this.productHistoryAdapter = productAdapter;
     }
     @Override
     protected Class<FixedBill> getType() {
@@ -34,9 +34,9 @@ public class FileFixedBillAdapter extends FileModelAdapter<FixedBill> implements
     }
 
     @Override
-    public @NotNull List<ProductHistoryBill> getProducts(FixedBill bill) {
+    public @NotNull List<ProductHistory> getProducts(FixedBill bill) {
         if (bill.isProductsLoaded()) return bill.getProducts();
-        List<ProductHistoryBill> result = getProductBillAdapter().getByBillId(bill.getId());
+        List<ProductHistory> result = getProductHistoryAdapter().getByBillId(bill.getId());
         bill.setProductsLoaded(true);
         bill.setProducts(result);
         return result;

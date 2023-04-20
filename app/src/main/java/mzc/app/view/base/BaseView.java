@@ -1,10 +1,11 @@
-package mzc.app.view;
+package mzc.app.view.base;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.utils.ViewLoader;
-import mzc.app.view_model.BaseViewModel;
+import mzc.app.view_model.base.BaseViewModel;
 import org.jetbrains.annotations.NotNull;
 
 @Getter @Setter
@@ -15,5 +16,5 @@ public abstract class BaseView<T extends BaseViewModel> {
         ViewLoader.load(this);
     }
 
-    abstract public @NotNull Parent getView();
+    abstract public @NotNull Node getView();
 }

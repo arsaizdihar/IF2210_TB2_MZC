@@ -19,7 +19,7 @@ public class FixedBill extends BaseModel {
     private transient boolean productsLoaded = false;
 
     @OneToMany(mappedBy = "bill")
-    private transient List<ProductHistoryBill> products = new ArrayList<>();
+    private transient List<ProductHistory> products = new ArrayList<>();
 
     @EqualCheck
     @Setter(AccessLevel.NONE)

@@ -1,13 +1,8 @@
 package mzc.app.utils;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.util.Callback;
 import mzc.app.annotation.ModelInject;
-import mzc.app.view.BaseView;
-import mzc.app.view_model.BaseViewModel;
-
-import java.io.IOException;
+import mzc.app.view.base.BaseView;
+import mzc.app.view_model.base.BaseViewModel;
 
 public class ViewLoader {
     public static <T extends BaseViewModel> void load(BaseView<T> view) {
