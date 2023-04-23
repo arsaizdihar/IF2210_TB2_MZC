@@ -10,24 +10,24 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "FixedBill")
+@Entity(name = "fixedbill")
+@Table(name = "fixedbill")
 @Getter
 @Setter @NoArgsConstructor
 public class FixedBill extends BaseModel {
     @Transient
     private transient boolean productsLoaded = false;
 
-    @OneToMany(mappedBy = "bill")
+    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY)
     private transient List<ProductHistory> products = new ArrayList<>();
 
     @EqualCheck
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false, name = "customerId")
     private long customerId;
 
-    @ManyToOne()
-    @JoinColumn(name = "customerId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
     private transient Customer customer;
 
     public FixedBill(Customer customer) {

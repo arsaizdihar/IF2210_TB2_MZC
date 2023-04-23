@@ -9,7 +9,7 @@ import mzc.app.annotation.EqualCheck;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ProductHistory")
+@Table(name = "producthistory")
 @Getter @Setter @NoArgsConstructor
 public class ProductHistory extends BaseModel {
     @EqualCheck
@@ -31,11 +31,11 @@ public class ProductHistory extends BaseModel {
     private String image;
 
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false, name = "billId")
     private long billId;
 
-    @ManyToOne()
-    @JoinColumn(name = "billId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "billId", nullable = false, referencedColumnName = "id")
     private transient FixedBill bill;
 
     public ProductHistory(String name, int price, int buyPrice, String category, String image, FixedBill bill) {

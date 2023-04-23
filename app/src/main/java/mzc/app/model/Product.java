@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-@Entity
-@Table(name = "Product")
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "product")
+@Table(name = "product")
 @Getter @Setter @NoArgsConstructor
 public class Product extends BaseModel {
     @EqualCheck
@@ -33,6 +36,9 @@ public class Product extends BaseModel {
     @EqualCheck
     @Column
     private String image;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private transient List<ProductBill> bills = new ArrayList<>();
 
     public Product(int stock, String name, int price, int buyPrice, String category, String image) {
         this.stock = stock;

@@ -4,27 +4,28 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mzc.app.annotation.EqualCheck;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "Bill")
+@Entity(name = "bill")
+@Table(name = "bill")
 @Getter @Setter @NoArgsConstructor
 public class Bill extends BaseModel {
     @Transient
     private transient boolean productsLoaded = false;
 
-    @OneToMany(mappedBy = "bill")
+    @OneToMany(mappedBy = "bill", fetch = FetchType.EAGER)
     private transient List<ProductBill> products = new ArrayList<>();
 
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false, name = "customerId")
     private long customerId;
 
-    @ManyToOne()
-    @JoinColumn(name = "customerId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
     private transient Customer customer;
 
     public Bill(Customer customer) {

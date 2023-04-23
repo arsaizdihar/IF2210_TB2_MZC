@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 
@@ -18,8 +15,8 @@ public class BaseModel implements Serializable {
     @EqualCheck
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     protected long id;
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
