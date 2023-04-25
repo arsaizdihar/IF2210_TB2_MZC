@@ -1,5 +1,6 @@
 package mzc.app.adapter;
 
+import mzc.app.adapter.base.AdapterType;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
@@ -44,10 +45,10 @@ public class AdapterManagerTest {
 
     @Test
     public void testList() {
-        Map<String, Class<? extends IMainAdapter>> res = AdapterManager.getAvailableAdapters();
-        Assertions.assertEquals(res.get("JSON"), JSONAdapter.class);
-        Assertions.assertEquals(res.get("XML"), XMLAdapter.class);
-        Assertions.assertEquals(res.get("OBJ"), OBJAdapter.class);
-        Assertions.assertEquals(res.get("ORM"), ORMAdapter.class);
+        Map<AdapterType, Class<? extends IMainAdapter>> res = AdapterManager.getAvailableAdapters();
+        Assertions.assertEquals(res.get(AdapterType.JSON), JSONAdapter.class);
+        Assertions.assertEquals(res.get(AdapterType.XML), XMLAdapter.class);
+        Assertions.assertEquals(res.get(AdapterType.OBJ), OBJAdapter.class);
+        Assertions.assertEquals(res.get(AdapterType.SQLORM), ORMAdapter.class);
     }
 }
