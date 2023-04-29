@@ -1,20 +1,15 @@
 package mzc.app.view_model;
 
-import javafx.scene.control.Label;
 import lombok.Getter;
+import mzc.app.utils.reactive.Context;
 import mzc.app.view_model.base.BaseViewModel;
-import org.jetbrains.annotations.NotNull;
 
 @Getter
 public class MainViewModel extends BaseViewModel {
-    private final @NotNull Label welcomeText;
+    Context<String> textContext = new Context<>("");
 
     public MainViewModel() {
-        welcomeText = new Label("");
-    }
-
-    public void onHelloButtonClick() {
-        getAdapter().getCustomer().getById(1L);
-        welcomeText.setText("Hello World!");
+        super();
+        addContext(textContext);
     }
 }

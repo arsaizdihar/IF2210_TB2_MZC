@@ -16,7 +16,8 @@ public class MainView extends BaseView<MainViewModel> {
     public MainView() {
         super();
         this.root = new VBox();
-        root.getChildren().add(new TabsView().getView());
+        TabsView tabs = getViewModel().createView(TabsView.class);
+        root.getChildren().add(tabs.getView());
     }
 
     @Override

@@ -9,6 +9,10 @@ import org.jetbrains.annotations.NotNull;
 @ModelInject(TabsViewModel.class)
 public class TabsView extends BaseView<TabsViewModel> {
 
+    public TabsView() {
+        super();
+    }
+
     @Override
     public @NotNull Node getView() {
         return getViewModel().getTabPane();

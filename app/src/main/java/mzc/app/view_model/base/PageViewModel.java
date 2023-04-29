@@ -2,7 +2,6 @@ package mzc.app.view_model.base;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
-import lombok.Getter;
 import lombok.Setter;
 import mzc.app.view.base.PageView;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 public abstract class PageViewModel extends BaseViewModel {
+
     private final @NotNull SimpleStringProperty title;
 
     @Setter

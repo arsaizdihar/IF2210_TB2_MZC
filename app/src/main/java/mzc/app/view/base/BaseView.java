@@ -1,7 +1,6 @@
 package mzc.app.view.base;
 
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.utils.ViewLoader;
@@ -17,4 +16,5 @@ public abstract class BaseView<T extends BaseViewModel> {
     }
 
     abstract public @NotNull Node getView();
+
 }
