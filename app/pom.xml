@@ -110,11 +110,6 @@
             <artifactId>hibernate-core</artifactId>
             <version>6.2.0.CR3</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.cdimascio</groupId>
-            <artifactId>dotenv-java</artifactId>
-            <version>2.3.2</version>
-        </dependency>
 
     </dependencies>
 

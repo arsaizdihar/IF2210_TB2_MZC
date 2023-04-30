@@ -13,7 +13,6 @@ module mzc.app {
     requires org.apache.commons.io;
     requires com.fasterxml.jackson.dataformat.xml;
     requires org.jetbrains.annotations;
-    requires io.github.cdimascio.dotenv.java;
 
     opens mzc.app.view_model to javafx.fxml;
     opens mzc.app.model to org.hibernate.orm.core, com.google.gson, com.fasterxml.jackson.databind;
