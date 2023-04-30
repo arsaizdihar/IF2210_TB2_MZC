@@ -1,10 +1,9 @@
-package mzc.app.setting;
+package mzc.app.modules.setting;
 
 import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.base.AdapterType;
-import mzc.app.plugins.base.BaseSettingModule;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,10 +12,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Setting extends BaseSettingModule {
-    public Setting(@NonNull AdapterType storageMethod, @NonNull String JSONPath, @NonNull String XMLPath,
-                   @NonNull String OBJPath, @NonNull String sqlOrmDatabaseUrl, @NonNull String sqlRawDatabaseUrl,
-                   @NonNull List<String> activePlugins) {
+public class AppSetting extends BaseSetting {
+    public AppSetting(@NonNull AdapterType storageMethod, @NonNull String JSONPath, @NonNull String XMLPath,
+                      @NonNull String OBJPath, @NonNull String sqlOrmDatabaseUrl, @NonNull String sqlRawDatabaseUrl,
+                      @NonNull List<String> activePlugins) {
         super(getDefaultPath());
         this.storageMethod = storageMethod;
         this.JSONPath = JSONPath;
@@ -60,19 +59,19 @@ public class Setting extends BaseSettingModule {
         return Paths.get("./setting.app").toAbsolutePath().toString();
     }
 
-    public static Setting load() {
-        Setting result;
+    public static AppSetting load() {
+        AppSetting result;
 
         try {
             FileInputStream file = new FileInputStream(getDefaultPath());
             ObjectInputStream in = new ObjectInputStream(file);
 
-            result = (Setting) in.readObject();
+            result = (AppSetting) in.readObject();
 
             in.close();
             file.close();
         } catch (IOException | ClassNotFoundException ignored) {
-            result = new Setting(
+            result = new AppSetting(
                     AdapterType.OBJ,
                     AdapterConfig.getBaseDataPath(),
                     AdapterConfig.getBaseDataPath(),

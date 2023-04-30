@@ -1,4 +1,4 @@
-package mzc.app.plugins.base;
+package mzc.app.modules.setting;
 
 import lombok.NonNull;
 
@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class BaseSettingModule implements Serializable {
+public abstract class BaseSetting implements Serializable {
     protected final @NonNull String settingPath;
 
-    public BaseSettingModule(@NonNull String settingPath) {
+    public BaseSetting(@NonNull String settingPath) {
         this.settingPath = settingPath;
     }
 

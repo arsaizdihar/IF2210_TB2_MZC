@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
-import mzc.app.setting.SettingManager;
+import mzc.app.modules.setting.AppSettingManager;
 import mzc.app.view.MainView;
 
 
@@ -23,7 +23,7 @@ public class Main extends Application {
 
     private void boostrap() {
         // initialize config
-        SettingManager.get();
+        AppSettingManager.get();
     }
 
     public static void main(String[] args) {
