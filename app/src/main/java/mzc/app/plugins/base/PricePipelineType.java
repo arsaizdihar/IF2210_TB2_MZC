@@ -1,4 +1,4 @@
-package mzc.app.bootstrap;
+package mzc.app.plugins.base;
 
 public enum PricePipelineType {
     TOTAL_FIXED,

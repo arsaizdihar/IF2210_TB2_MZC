@@ -1,4 +1,4 @@
-package mzc.app.bootstrap;
+package mzc.app.plugins.base;
 
 import lombok.NonNull;
 
@@ -23,5 +23,4 @@ public abstract class BaseSettingModule implements Serializable {
         out.close();
         file.close();
     }
-
 }

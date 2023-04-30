@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.base.AdapterType;
-import mzc.app.bootstrap.BaseSettingModule;
+import mzc.app.plugins.base.BaseSettingModule;
 
 import java.io.FileInputStream;
 import java.io.IOException;
