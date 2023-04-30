@@ -4,16 +4,20 @@ import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.base.AdapterType;
+import mzc.app.bootstrap.BaseSettingModule;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Setting implements Serializable {
+public class Setting extends BaseSettingModule {
     public Setting(@NonNull AdapterType storageMethod, @NonNull String JSONPath, @NonNull String XMLPath,
                    @NonNull String OBJPath, @NonNull String sqlOrmDatabaseUrl, @NonNull String sqlRawDatabaseUrl,
                    @NonNull List<String> activePlugins) {
+        super(getDefaultPath());
         this.storageMethod = storageMethod;
         this.JSONPath = JSONPath;
         this.XMLPath = XMLPath;
@@ -23,54 +27,44 @@ public class Setting implements Serializable {
         this.activePlugins = activePlugins;
     }
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     AdapterType storageMethod;
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     String JSONPath;
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     String XMLPath;
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     String OBJPath;
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     String sqlOrmDatabaseUrl;
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     String sqlRawDatabaseUrl;
 
-    @Getter @NonNull
+    @Getter
+    @NonNull
     List<String> activePlugins;
 
-    public void save() {
-        String filename = getSettingPath();
 
-        try {
-            FileOutputStream file = new FileOutputStream(filename);
-            ObjectOutputStream out = new ObjectOutputStream(file);
-
-            out.writeObject(this);
-
-            out.close();
-            file.close();
-        } catch (IOException ignored) {
-            System.out.println("Failed to save configuration file");
-        }
-    }
-
-    private static String getSettingPath() {
+    private static String getDefaultPath() {
         return Paths.get("./setting.app").toAbsolutePath().toString();
     }
 
-    public static @NonNull Setting load() {
-        String filename = getSettingPath();
-
+    public static Setting load() {
         Setting result;
 
         try {
-            FileInputStream file = new FileInputStream(filename);
+            FileInputStream file = new FileInputStream(getDefaultPath());
             ObjectInputStream in = new ObjectInputStream(file);
 
             result = (Setting) in.readObject();

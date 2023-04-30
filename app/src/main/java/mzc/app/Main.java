@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
+import mzc.app.setting.SettingManager;
 import mzc.app.view.MainView;
 
 
@@ -18,6 +19,11 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    private void boostrap() {
+        // initialize config
+        SettingManager.get();
     }
 
     public static void main(String[] args) {
