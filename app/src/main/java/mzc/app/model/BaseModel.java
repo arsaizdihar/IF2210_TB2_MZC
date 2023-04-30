@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 

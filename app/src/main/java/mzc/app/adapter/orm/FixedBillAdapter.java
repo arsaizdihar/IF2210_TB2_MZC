@@ -1,14 +1,14 @@
 package mzc.app.adapter.orm;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import mzc.app.adapter.base.IFixedBillAdapter;
 import mzc.app.model.FixedBill;
 import mzc.app.model.ProductHistory;
 import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class FixedBillAdapter extends ModelAdapter<FixedBill> implements IFixedBillAdapter {

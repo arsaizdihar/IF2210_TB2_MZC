@@ -1,5 +1,7 @@
 package mzc.app.adapter.orm;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import lombok.Getter;
 import mzc.app.adapter.base.IBasicAdapter;
 import mzc.app.model.BaseModel;
@@ -7,8 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {

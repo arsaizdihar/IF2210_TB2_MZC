@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import mzc.app.modules.setting.AppSettingManager;
 import mzc.app.view.MainView;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 
 public class Main extends Application {
@@ -14,7 +15,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         MainView mainView = new MainView();
         Scene scene = new Scene(mainView.getView(), 1280, 720);
-        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+        scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         stage.setTitle("MZC");
         stage.setScene(scene);
         stage.setResizable(false);
