@@ -1,6 +1,7 @@
 package mzc.app.adapter;
 
 import lombok.Getter;
+import mzc.app.adapter.base.AdapterType;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
@@ -31,13 +32,13 @@ public class AdapterManager {
     }
 
     @NotNull
-    public static Map<String, Class<? extends IMainAdapter>> getAvailableAdapters() {
+    public static Map<AdapterType, Class<? extends IMainAdapter>> getAvailableAdapters() {
 //        use LinkedHashMap to make map still ordered
-        Map<String, Class<? extends IMainAdapter>> map = new LinkedHashMap<>();
-        map.put("JSON", JSONAdapter.class);
-        map.put("XML", XMLAdapter.class);
-        map.put("OBJ", OBJAdapter.class);
-        map.put("ORM", ORMAdapter.class);
+        Map<AdapterType, Class<? extends IMainAdapter>> map = new LinkedHashMap<>();
+        map.put(AdapterType.JSON, JSONAdapter.class);
+        map.put(AdapterType.XML, XMLAdapter.class);
+        map.put(AdapterType.OBJ, OBJAdapter.class);
+        map.put(AdapterType.SQLORM, ORMAdapter.class);
         return map;
     }
 }

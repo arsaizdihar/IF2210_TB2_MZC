@@ -9,8 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity()
-@Table(name = "Customer")
+@Entity(name = "customer")
+@Table(name = "customer")
 @Getter @Setter @NoArgsConstructor
 public class Customer extends BaseModel {
     @EqualCheck
@@ -23,6 +23,9 @@ public class Customer extends BaseModel {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private transient List<Bill> bills = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private transient List<FixedBill> fixedBills = new ArrayList<>();
 
     @EqualCheck
     @Column

@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-@Entity
-@Table(name = "ProductBill")
+@Entity(name = "productbill")
+@Table(name = "productbill")
 @Getter @Setter @NoArgsConstructor
 public class ProductBill extends BaseModel {
     @EqualCheck
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false, name = "productId")
     private long productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,7 +22,7 @@ public class ProductBill extends BaseModel {
 
     @EqualCheck
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false, name = "billId")
     private long billId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,5 +42,4 @@ public class ProductBill extends BaseModel {
         this.bill = bill;
         billId = bill.getId();
     }
-
 }
