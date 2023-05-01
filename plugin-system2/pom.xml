@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>plugin-base</artifactId>
+    <artifactId>plugin-system2</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

@@ -1,4 +1,4 @@
-package mzc.plugin_base;
+package mzc;
 
 public class Main {
     public static void main(String[] args) {
