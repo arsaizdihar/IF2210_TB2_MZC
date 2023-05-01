@@ -1,7 +1,7 @@
 package mzc.app.adapter.orm;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.Getter;
+import lombok.NonNull;
 import mzc.app.adapter.base.IMainAdapter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,15 +22,26 @@ public class ORMAdapter implements IMainAdapter {
     private final @NotNull FixedBillAdapter fixedBill;
     private final @NotNull Session session;
 
+    public ORMAdapter(@NonNull String databaseUrl) {
+        Configuration cfg = new Configuration();
+        cfg.configure();
+
+        if (cfg.getProperty("hibernate.connection.url") == null) {
+            cfg.setProperty("hibernate.connection.url", databaseUrl);
+        }
+
+        SessionFactory sessionFactory = cfg.buildSessionFactory();
+        session = sessionFactory.openSession();
+        customer = new CustomerAdapter(session);
+        bill = new BillAdapter(session);
+        product = new ProductAdapter(session);
+        productHistory = new ProductHistoryAdapter(session);
+        fixedBill = new FixedBillAdapter(session);
+    }
+
     public ORMAdapter() {
         Configuration cfg = new Configuration();
         cfg.configure();
-        Dotenv dotenv = Dotenv.load();
-
-        if (cfg.getProperty("hibernate.connection.url") == null) {
-            cfg.setProperty("hibernate.connection.url",
-                    dotenv.get("DATABASE_URL", "jdbc:mysql://root:root@localhost:3306/mzc"));
-        }
 
         SessionFactory sessionFactory = cfg.buildSessionFactory();
         session = sessionFactory.openSession();

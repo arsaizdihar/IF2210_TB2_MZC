@@ -8,19 +8,18 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- We use dialect to provide information about which
            database we are using, we are using mysql -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.dialect.storage_engine">innodb</property>
         <!-- This property enables us to update the
               table everytime the program runs-->
         <property name="hbm2ddl.auto">update</property>
         <property name="show_sql">true</property>
 
-        <mapping class="mzc.app.model.Customer" />
-        <mapping class="mzc.app.model.Product" />
-        <mapping class="mzc.app.model.Bill" />
-        <mapping class="mzc.app.model.ProductBill" />
-        <mapping class="mzc.app.model.ProductHistory" />
-        <mapping class="mzc.app.model.FixedBill" />
-
+        <mapping class="mzc.app.model.Customer"/>
+        <mapping class="mzc.app.model.Product"/>
+        <mapping class="mzc.app.model.Bill"/>
+        <mapping class="mzc.app.model.ProductBill"/>
+        <mapping class="mzc.app.model.ProductHistory"/>
+        <mapping class="mzc.app.model.FixedBill"/>
     </session-factory>
 </hibernate-configuration>

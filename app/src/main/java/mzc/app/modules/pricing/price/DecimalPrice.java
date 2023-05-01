@@ -1,4 +1,4 @@
-package mzc.app.modules.pricing;
+package mzc.app.modules.pricing.price;
 
 import lombok.NonNull;
 

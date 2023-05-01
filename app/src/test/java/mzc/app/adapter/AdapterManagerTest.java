@@ -6,7 +6,9 @@ import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
 import mzc.app.adapter.xml.XMLAdapter;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
@@ -18,6 +20,7 @@ public class AdapterManagerTest {
         if (adapterManager != null)
             adapterManager.adapter.close();
     }
+
     @Test
     public void testJSON() {
         adapterManager = new AdapterManager(new JSONAdapter());
@@ -33,8 +36,8 @@ public class AdapterManagerTest {
     @Test
     public void testSet() {
         adapterManager = new AdapterManager(new JSONAdapter());
-        adapterManager.setAdapter(new ORMAdapter());
-        Assertions.assertTrue(adapterManager.getAdapter() instanceof ORMAdapter);
+        adapterManager.setAdapter(new XMLAdapter());
+        Assertions.assertTrue(adapterManager.getAdapter() instanceof XMLAdapter);
     }
 
     @Test

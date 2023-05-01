@@ -15,11 +15,11 @@
         <property name="hbm2ddl.auto">create-drop</property>
         <property name="show_sql">true</property>
 
-        <mapping class="mzc.app.model.Customer" />
-        <mapping class="mzc.app.model.Product" />
-        <mapping class="mzc.app.model.Bill" />
-        <mapping class="mzc.app.model.ProductBill" />
-        <mapping class="mzc.app.model.ProductHistory" />
-
+        <mapping class="mzc.app.model.Customer"/>
+        <mapping class="mzc.app.model.Product"/>
+        <mapping class="mzc.app.model.Bill"/>
+        <mapping class="mzc.app.model.ProductBill"/>
+        <mapping class="mzc.app.model.ProductHistory"/>
+        <mapping class="mzc.app.model.FixedBill"/>
     </session-factory>
 </hibernate-configuration>

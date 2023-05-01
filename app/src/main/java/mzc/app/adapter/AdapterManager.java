@@ -7,6 +7,8 @@ import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
 import mzc.app.adapter.xml.XMLAdapter;
+import mzc.app.modules.setting.AppSetting;
+import mzc.app.modules.setting.AppSettingManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
@@ -17,7 +19,16 @@ public class AdapterManager {
     @NotNull IMainAdapter adapter;
 
     public AdapterManager() {
-        adapter = new JSONAdapter();
+        AppSetting setting = AppSettingManager.get();
+
+        switch (setting.getStorageMethod()) {
+            case OBJ -> adapter = new OBJAdapter();
+            case XML -> adapter = new XMLAdapter();
+            case JSON -> adapter = new JSONAdapter();
+            case SQLORM -> adapter = new ORMAdapter(setting.getSqlOrmDatabaseUrl());
+            case SQLRaw -> adapter = new ORMAdapter(setting.getSqlRawDatabaseUrl()); // temporary
+            default -> adapter = new JSONAdapter();
+        }
     }
 
     public AdapterManager(@NotNull IMainAdapter adapter) {
@@ -33,7 +44,6 @@ public class AdapterManager {
 
     @NotNull
     public static Map<AdapterType, Class<? extends IMainAdapter>> getAvailableAdapters() {
-//        use LinkedHashMap to make map still ordered
         Map<AdapterType, Class<? extends IMainAdapter>> map = new LinkedHashMap<>();
         map.put(AdapterType.JSON, JSONAdapter.class);
         map.put(AdapterType.XML, XMLAdapter.class);
