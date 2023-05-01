@@ -12,7 +12,6 @@ public class TabsView extends BaseView<TabsViewModel> {
     public TabsView() {
         super();
         getViewModel().getTabPane().setId("tab-pane");
-        getViewModel().getTabPane();
     }
 
     @Override

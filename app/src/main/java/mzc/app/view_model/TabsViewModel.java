@@ -1,7 +1,5 @@
 package mzc.app.view_model;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import lombok.Getter;
@@ -9,14 +7,16 @@ import lombok.Setter;
 import mzc.app.view.base.PageView;
 import mzc.app.view.page.MainPageView;
 import mzc.app.view_model.base.BaseViewModel;
+import mzc.app.view_model.base.PageViewModel;
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.InvocationTargetException;
 
 @Getter @Setter
 public class TabsViewModel extends BaseViewModel {
     private TabPane tabPane = new TabPane();
 
     public void init() {
-        System.out.println("TabsViewModel init");
         Tab newTab = new Tab("+");
         newTab.getStyleClass().add("add-tab");
         newTab.setOnSelectionChanged(event -> {
@@ -34,24 +34,37 @@ public class TabsViewModel extends BaseViewModel {
     }
 
     public static class PageTab {
-        private final @NotNull ChangeListener<String> updateTitle = new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                tab.setText(newValue);
-            }
-        };
         private @NotNull PageView<?> currentPage;
 
         @Getter
         private final @NotNull Tab tab;
         private final @NotNull TabsViewModel tabs;
+        private final PageViewModel.PageContext pageContext = new PageViewModel.PageContext(this::changePage, new PageViewModel.CreatePageFunc() {
+            @Override
+            public <T extends PageView<?>> T createPage(Class<T> pageClass) {
+                try {
+                    T view = pageClass.getDeclaredConstructor().newInstance();
+                    addPageContext(view);
+                    return tabs.createView(view);
+                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public <T extends PageView<?>> T createPage(T page) {
+                addPageContext(page);
+                return tabs.createView(page);
+            }
+        });
 
         public PageTab(@NotNull TabsViewModel tabs) {
             this.tabs = tabs;
-            currentPage = tabs.createView(MainPageView.class);
-            currentPage.getViewModel().addTitleListener(updateTitle);
-            currentPage.getViewModel().setOnChangePage(this::changePage);
-            tab = new Tab(currentPage.getViewModel().getTitle());
+            currentPage = new MainPageView();
+            addPageContext(currentPage);
+            tabs.createView(currentPage);
+            tab = new Tab();
+            tab.textProperty().bind(currentPage.getViewModel().getTitle());
             tab.setContent(currentPage.getView());
         }
 
@@ -59,17 +72,14 @@ public class TabsViewModel extends BaseViewModel {
             if (page.getViewModel().getParentView() != currentPage.getViewModel().getParentView()) {
                 throw new RuntimeException("Cannot change page to a page with different parent view");
             }
-            currentPage.getViewModel().removeTitleListener(updateTitle);
             currentPage = page;
-            currentPage.getViewModel().addTitleListener(updateTitle);
-            currentPage.getViewModel().setOnChangePage(this::changePage);
-            tab.setText(currentPage.getViewModel().getTitle());
+            addPageContext(currentPage);
+            tab.textProperty().bind(currentPage.getViewModel().getTitle());
             tab.setContent(currentPage.getView());
-            currentPage.getViewModel().addTitleListener(updateTitle);
         }
 
-        public <T extends PageView<?>> T createPage(Class<T> pageClass) {
-            return tabs.createView(pageClass);
+        void addPageContext(PageView<?> pageView) {
+            pageView.getViewModel().addPageContext(this.pageContext);
         }
     }
 }

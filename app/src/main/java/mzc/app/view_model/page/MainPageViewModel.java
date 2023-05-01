@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mzc.app.utils.reactive.Context;
 import mzc.app.utils.reactive.State;
+import mzc.app.view.page.ParamPageView;
 import mzc.app.view_model.base.PageViewModel;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class MainPageViewModel extends PageViewModel {
     private final @NotNull Label label = new Label("");
     private final @NotNull Button counterButton = new Button("Counter");
+    private final @NotNull Button changePageButton = new Button("Change page");
     private final @NotNull Label counterLabel = new Label("0");
     private final @NotNull TextField textField = new TextField();
     public MainPageViewModel() {
@@ -25,6 +27,7 @@ public class MainPageViewModel extends PageViewModel {
     public void init() {
         super.init();
         Context<String> textContext = useContext(String.class);
+        PageContext pageContext = useContext(PageContext.class).getValue();
         textField.setText(textContext.getValue());
         label.textProperty().bind(textContext);
         textContext.bindBidirectional(textField.textProperty());
@@ -33,5 +36,10 @@ public class MainPageViewModel extends PageViewModel {
             counter.setValue(value -> value + 1);
         });
         counterLabel.textProperty().bind(Bindings.createObjectBinding(() -> counter.getValue().toString(), counter));
+        changePageButton.setOnAction(event -> {
+            ParamPageView page = new ParamPageView("Param Page");
+            pageContext.createPage(page);
+            pageContext.changePage(page);
+        });
     }
 }
