@@ -4,23 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00279478-23f5-4f94-9074-e74e8f7d5a4e" name="Changes" comment="feat: plugin setting">
+    <list default="true" id="00279478-23f5-4f94-9074-e74e8f7d5a4e" name="Changes" comment="feat: add main app and do some refactor">
       <change afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/modules/plugins/PluginLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/GUIApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/AdapterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/AdapterManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/orm/ORMAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/orm/ORMAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PriceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PriceFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/base/BaseModule.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/base/IViewModule.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/base/ViewType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/loader/ModuleLoader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/mzc/app/adapter/AdapterManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/mzc/app/adapter/AdapterManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin-base/src/main/java/mzc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin-base/src/main/java/mzc/plugin_base/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/GUIApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/GUIApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +100,7 @@
       <workItem from="1682918187077" duration="835000" />
       <workItem from="1682919029922" duration="806000" />
       <workItem from="1682919843821" duration="9849000" />
-      <workItem from="1682930435628" duration="813000" />
+      <workItem from="1682930435628" duration="1311000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add initial multi module project">
       <created>1682918603678</created>
@@ -141,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682924115861</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: add main app and do some refactor">
+      <created>1682931408063</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682931408064</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +171,7 @@
     <MESSAGE value="feat: add module dependencies" />
     <MESSAGE value="feat: update priceview and price pipelines" />
     <MESSAGE value="feat: plugin setting" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: plugin setting" />
+    <MESSAGE value="feat: add main app and do some refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add main app and do some refactor" />
   </component>
 </project>

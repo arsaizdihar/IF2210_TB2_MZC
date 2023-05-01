@@ -11,7 +11,7 @@ import mzc.app.view_model.base.PageViewModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class App extends GUIApp {
+public class App {
     @Getter
     protected @NonNull AppSetting appSetting;
 
@@ -33,9 +33,5 @@ public class App extends GUIApp {
 
         // put
         this.pages.put(key, pageClass);
-    }
-
-    public static void start() {
-        launch();
     }
 }

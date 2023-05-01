@@ -23,4 +23,8 @@ public class GUIApp extends Application {
         stage.setResizable(false);
         stage.show();
     }
+
+    public static void launchGUI() {
+        launch();
+    }
 }
