@@ -1,12 +1,16 @@
 package mzc.app.view_model.base;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.adapter.AdapterManager;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.utils.reactive.Context;
+import mzc.app.view.MainView;
 import mzc.app.view.base.BaseView;
+import mzc.app.view_model.MainViewModel;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public abstract class BaseViewModel {
@@ -14,7 +18,6 @@ public abstract class BaseViewModel {
     @Getter final private ArrayList<Context<?>> contexts = new ArrayList<>();
     @Getter
     private BaseViewModel parentView;
-
 
     public IMainAdapter getAdapter() {
         return adapterManager.getAdapter();
@@ -41,7 +44,7 @@ public abstract class BaseViewModel {
     }
 
     public <U> Context<U> useContext(Class<U> clazz) {
-        BaseViewModel parentView = this.getParentView();
+        BaseViewModel parentView = this;
         while (parentView != null) {
             Context<U> context = parentView.getContext(clazz);
             if (context != null) {
@@ -59,12 +62,16 @@ public abstract class BaseViewModel {
 
     public <T extends BaseView<? extends BaseViewModel>>  T createView(Class<T> viewClass) {
         try {
-            T view = viewClass.newInstance();
-            view.getViewModel().setParentView(this);
-            return view;
-        } catch (InstantiationException | IllegalAccessException e) {
+            T view = viewClass.getDeclaredConstructor().newInstance();
+            return createView(view);
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public <T extends BaseView<? extends BaseViewModel>>  T createView(T view) {
+        view.getViewModel().setParentView(this);
+        return view;
     }
 
     public void init() {
