@@ -8,6 +8,8 @@ import mzc.app.modules.setting.AppSettingManager;
 import mzc.app.view.MainView;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
+import java.util.Objects;
+
 
 public class Main extends Application {
     @SneakyThrows
@@ -16,6 +18,8 @@ public class Main extends Application {
         MainView mainView = new MainView();
         Scene scene = new Scene(mainView.getView(), 1280, 720);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/mzc/app/css/colors.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/mzc/app/css/main-styles.css")).toExternalForm());
         stage.setTitle("MZC");
         stage.setScene(scene);
         stage.setResizable(false);

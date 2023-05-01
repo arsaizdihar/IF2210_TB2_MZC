@@ -1,5 +1,6 @@
 package mzc.app.view_model.page;
 
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,7 +17,6 @@ public class MainPageViewModel extends PageViewModel {
     private final @NotNull Button counterButton = new Button("Counter");
     private final @NotNull Label counterLabel = new Label("0");
     private final @NotNull TextField textField = new TextField();
-    private final State<Integer> counter = new State<>(0);
     public MainPageViewModel() {
         super("MZC");
     }
@@ -26,20 +26,12 @@ public class MainPageViewModel extends PageViewModel {
         super.init();
         Context<String> textContext = useContext(String.class);
         textField.setText(textContext.getValue());
-        label.setText(textContext.getValue());
-        textContext.addListener((observable, oldValue, newValue) -> {
-            label.setText(newValue);
-        });
-
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            textContext.setValue(newValue);
-        });
+        label.textProperty().bind(textContext);
+        textContext.bindBidirectional(textField.textProperty());
+        State<Integer> counter = new State<>(0);
         counterButton.setOnAction(event -> {
             counter.setValue(value -> value + 1);
         });
-
-        counter.addListener((observable, oldValue, newValue) -> {
-            counterLabel.setText(newValue.toString());
-        });
+        counterLabel.textProperty().bind(Bindings.createObjectBinding(() -> counter.getValue().toString(), counter));
     }
 }

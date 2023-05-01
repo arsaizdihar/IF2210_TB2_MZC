@@ -18,6 +18,7 @@ public class TabsViewModel extends BaseViewModel {
     public void init() {
         System.out.println("TabsViewModel init");
         Tab newTab = new Tab("+");
+        newTab.getStyleClass().add("add-tab");
         newTab.setOnSelectionChanged(event -> {
             if (newTab.isSelected()) {
                 addNewTab();
