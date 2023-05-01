@@ -1,9 +1,8 @@
 package mzc.app.adapter.orm;
 
 import lombok.Getter;
+import lombok.NonNull;
 import mzc.app.adapter.base.IMainAdapter;
-import mzc.app.modules.setting.AppSetting;
-import mzc.app.modules.setting.AppSettingManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -23,13 +22,12 @@ public class ORMAdapter implements IMainAdapter {
     private final @NotNull FixedBillAdapter fixedBill;
     private final @NotNull Session session;
 
-    public ORMAdapter() {
+    public ORMAdapter(@NonNull String databaseUrl) {
         Configuration cfg = new Configuration();
         cfg.configure();
-        AppSetting setting = AppSettingManager.get();
 
         if (cfg.getProperty("hibernate.connection.url") == null) {
-            cfg.setProperty("hibernate.connection.url", setting.getSqlOrmDatabaseUrl());
+            cfg.setProperty("hibernate.connection.url", databaseUrl);
         }
 
         SessionFactory sessionFactory = cfg.buildSessionFactory();

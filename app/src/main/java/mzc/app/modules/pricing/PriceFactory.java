@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 
 public class PriceFactory {
     @Getter
-    private static Class<? extends IPrice> priceView = RupiahPrice.class;
+    private Class<? extends IPrice> priceView = RupiahPrice.class;
 
-    public static IPrice createPriceView(BigDecimal value) {
+    public IPrice createPriceView(BigDecimal value) {
         try {
             return priceView.getConstructor(BigDecimal.class).newInstance(value);
         } catch (Exception exception) {
@@ -19,7 +19,7 @@ public class PriceFactory {
         }
     }
 
-    public static void setPriceView(Class<? extends IPrice> newClass) throws Exception {
+    public void setPriceView(Class<? extends IPrice> newClass) throws Exception {
         // try to create price view with given class
         newClass.getConstructor(BigDecimal.class).newInstance(new BigDecimal(0));
 

@@ -15,6 +15,7 @@ module mzc.app {
     requires org.jetbrains.annotations;
 
     opens mzc.app.view_model to javafx.fxml;
+    opens mzc.app.bootstrap to javafx.graphics;
     opens mzc.app.model to org.hibernate.orm.core, com.google.gson, com.fasterxml.jackson.databind;
     exports mzc.app;
 }

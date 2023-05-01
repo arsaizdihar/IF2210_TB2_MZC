@@ -4,12 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00279478-23f5-4f94-9074-e74e8f7d5a4e" name="Changes" comment="feat: update priceview and price pipelines">
-      <change afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/modules/settings/PluginSetting.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/modules/settings/PluginSettingManager.java" afterDir="false" />
+    <list default="true" id="00279478-23f5-4f94-9074-e74e8f7d5a4e" name="Changes" comment="feat: plugin setting">
+      <change afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/modules/plugins/PluginLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/bootstrap/GUIApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-extend/src/main/java/mzc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/setting/AppSetting.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/setting/AppSetting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/AdapterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/AdapterManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/orm/ORMAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/adapter/orm/ORMAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PriceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PriceFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/base/BaseModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/base/IViewModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/base/ViewType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/plugins/loader/ModuleLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/mzc/app/adapter/AdapterManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/mzc/app/adapter/AdapterManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin-base/src/main/java/mzc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin-base/src/main/java/mzc/plugin_base/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,24 +56,50 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "plugins",
-    "jdk.selected.JAVA_MODULE": "temurin-17",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.1392405",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;plugins&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;temurin-17&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.1392405&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="mzc.app" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Base App" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="temurin-17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="mzc.app.Main" />
+      <module name="app" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -73,7 +110,8 @@
       <updated>1682918186003</updated>
       <workItem from="1682918187077" duration="835000" />
       <workItem from="1682919029922" duration="806000" />
-      <workItem from="1682919843821" duration="4090000" />
+      <workItem from="1682919843821" duration="9849000" />
+      <workItem from="1682930435628" duration="813000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add initial multi module project">
       <created>1682918603678</created>
@@ -96,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682923709485</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: plugin setting">
+      <created>1682924115861</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682924115861</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,6 +174,7 @@
     <MESSAGE value="feat: add initial multi module project" />
     <MESSAGE value="feat: add module dependencies" />
     <MESSAGE value="feat: update priceview and price pipelines" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: update priceview and price pipelines" />
+    <MESSAGE value="feat: plugin setting" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: plugin setting" />
   </component>
 </project>
