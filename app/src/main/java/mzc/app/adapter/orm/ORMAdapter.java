@@ -39,6 +39,19 @@ public class ORMAdapter implements IMainAdapter {
         fixedBill = new FixedBillAdapter(session);
     }
 
+    public ORMAdapter() {
+        Configuration cfg = new Configuration();
+        cfg.configure();
+
+        SessionFactory sessionFactory = cfg.buildSessionFactory();
+        session = sessionFactory.openSession();
+        customer = new CustomerAdapter(session);
+        bill = new BillAdapter(session);
+        product = new ProductAdapter(session);
+        productHistory = new ProductHistoryAdapter(session);
+        fixedBill = new FixedBillAdapter(session);
+    }
+
     @Override
     public void close() {
         session.close();

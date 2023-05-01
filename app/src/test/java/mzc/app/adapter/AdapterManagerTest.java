@@ -29,7 +29,7 @@ public class AdapterManagerTest {
 
     @Test
     public void testORM() {
-        adapterManager = new AdapterManager(new ORMAdapter(""));
+        adapterManager = new AdapterManager(new ORMAdapter());
         Assertions.assertTrue(adapterManager.getAdapter() instanceof ORMAdapter);
     }
 
@@ -37,7 +37,7 @@ public class AdapterManagerTest {
     public void testSet() {
         adapterManager = new AdapterManager(new JSONAdapter());
         adapterManager.setAdapter(new XMLAdapter());
-        Assertions.assertTrue(adapterManager.getAdapter() instanceof ORMAdapter);
+        Assertions.assertTrue(adapterManager.getAdapter() instanceof XMLAdapter);
     }
 
     @Test

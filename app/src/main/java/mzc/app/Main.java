@@ -1,11 +1,10 @@
 package mzc.app;
 
+import javafx.application.Application;
 import mzc.app.bootstrap.App;
-import mzc.app.bootstrap.GUIApp;
 
 public class Main {
     public static void main(String[] args) {
-        App app = new App();
-        GUIApp.launchGUI();
+        Application.launch(App.class);
     }
 }

@@ -11,7 +11,7 @@ import mzc.app.view_model.base.PageViewModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class App {
+public class App extends GUIApp {
     @Getter
     protected @NonNull AppSetting appSetting;
 

@@ -29,7 +29,7 @@ class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter
 
     @Override
     public List<Customer> getRegisteredCustomer() {
-        Query<Customer> query = session.createQuery("FROM Customer C WHERE C.type <> :basic", Customer.class);
+        Query<Customer> query = session.createQuery("FROM customer C WHERE C.type <> :basic", Customer.class);
         query.setParameter("basic", CustomerType.BASIC);
         return query.list();
     }
