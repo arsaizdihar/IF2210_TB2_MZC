@@ -6,6 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="plugin-system2" />
+        <module name="plugin-system1" />
+        <module name="plugin-chart1" />
+        <module name="app-extend" />
+        <module name="plugin-base" />
+        <module name="plugin-chart2" />
       </profile>
       <profile name="Annotation profile for IF2210_TB2_MZC" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -15,12 +21,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar" />
         </processorPath>
         <module name="app" />
-        <module name="plugin-chart1" />
-        <module name="plugin-chart2" />
-        <module name="plugin-system2" />
-        <module name="plugin-system1" />
-        <module name="app-extend" />
-        <module name="plugin-base" />
       </profile>
     </annotationProcessing>
   </component>

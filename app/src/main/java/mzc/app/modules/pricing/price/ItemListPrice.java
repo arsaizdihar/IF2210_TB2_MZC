@@ -1,14 +1,14 @@
-package mzc.app.modules.pricing;
+package mzc.app.modules.pricing.price;
 
 import lombok.NonNull;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ListPrice implements IPrice {
+public class ItemListPrice implements IPrice {
     private final @NonNull List<ItemPrice> items;
 
-    public ListPrice(@NonNull List<ItemPrice> items) {
+    public ItemListPrice(@NonNull List<ItemPrice> items) {
         this.items = items;
     }
 
