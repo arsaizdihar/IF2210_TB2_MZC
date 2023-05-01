@@ -4,25 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00279478-23f5-4f94-9074-e74e8f7d5a4e" name="Changes" comment="feat: add module dependencies">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PriceFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/pipelines/PricePipelineType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/price/PositiveDecimalPrice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="00279478-23f5-4f94-9074-e74e8f7d5a4e" name="Changes" comment="feat: update priceview and price pipelines">
+      <change afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/modules/settings/PluginSetting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/modules/settings/PluginSettingManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/DecimalPrice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/price/DecimalPrice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/IPrice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/price/IPrice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/ItemPrice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/price/ItemPrice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/ListPrice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/price/ItemListPrice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PricePipelineResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PricePipelineResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PricePipelineService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/PriceCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/RupiahPrice.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/price/RupiahPrice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/pipelines/IPricePipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/pipelines/IPricePipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/pipelines/PointPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/pipelines/PointPipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/pipelines/VIPDiscountPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/pricing/pipelines/VIPDiscountPipeline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-extend/src/main/java/mzc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-extend/src/main/java/mzc/app_extend/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/setting/AppSetting.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/mzc/app/modules/setting/AppSetting.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +73,7 @@
       <updated>1682918186003</updated>
       <workItem from="1682918187077" duration="835000" />
       <workItem from="1682919029922" duration="806000" />
-      <workItem from="1682919843821" duration="3741000" />
+      <workItem from="1682919843821" duration="4090000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add initial multi module project">
       <created>1682918603678</created>
@@ -102,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682919898308</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: update priceview and price pipelines">
+      <created>1682923709485</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682923709485</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +128,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: add initial multi module project" />
     <MESSAGE value="feat: add module dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add module dependencies" />
+    <MESSAGE value="feat: update priceview and price pipelines" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update priceview and price pipelines" />
   </component>
 </project>
