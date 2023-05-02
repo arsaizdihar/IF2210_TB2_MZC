@@ -26,13 +26,22 @@ public class BaseReactive<T> implements Property<T> {
     public void setValue(T value) {
         T oldValue = this.value;
         this.value = value;
-        if (!this.value.equals(oldValue)) {
+        if (this.value != oldValue) {
             for (ChangeListener<? super T> listener : listeners) {
                 listener.changed(this, oldValue, this.value);
             }
             for (InvalidationListener listener : invalidListeners) {
                 listener.invalidated(this);
             }
+        }
+    }
+
+    public void forceUpdate() {
+        for (ChangeListener<? super T> listener : listeners) {
+            listener.changed(this, this.value, this.value);
+        }
+        for (InvalidationListener listener : invalidListeners) {
+            listener.invalidated(this);
         }
     }
 

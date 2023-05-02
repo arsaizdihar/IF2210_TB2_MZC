@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeftSideView<T extends LeftSideViewModel> extends BaseView<T> {
-    protected State<List<BaseView<?>>> children = new State<>(new ArrayList<>());
 
     public LeftSideView(String title, String buttonText) {
         getViewModel().setButtonText(buttonText);
@@ -30,15 +29,9 @@ public class LeftSideView<T extends LeftSideViewModel> extends BaseView<T> {
         init();
     }
 
-    public void setOnButtonClicked(EventHandler<ActionEvent> handler) {
-        if (getViewModel().getButton() == null) {
-            throw new RuntimeException("Must set button first");
-        }
-        getViewModel().getButton().setOnAction(handler);
-    }
-
     private void init() {
         var hBox = getViewModel().getHBox();
+        hBox.setPadding(new Insets(0, 0, 20, 0));
         Pane spacer = new Pane();
         hBox.getChildren().add(spacer);
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -51,19 +44,9 @@ public class LeftSideView<T extends LeftSideViewModel> extends BaseView<T> {
         var vbox = getViewModel().getVBox();
         vbox.getChildren().addAll(hBox);
         vbox.setPadding(new Insets(20));
-        VBox childrenContainer = new VBox();
-        VBox.setVgrow(childrenContainer, Priority.ALWAYS);
         vbox.getStyleClass().add("left-side");
-
-        children.addListener((o, b, newChildren) -> {
-            childrenContainer.getChildren().clear();
-            for (var child: newChildren) {
-                if (child.getViewModel().getParentView() == null) {
-                    getViewModel().createView(child);
-                }
-                childrenContainer.getChildren().add(child.getView());
-            }
-        });
+        vbox.getChildren().add(getViewModel().getListView());
+        VBox.setVgrow(getViewModel().getListView(), Priority.ALWAYS);
     }
 
 
