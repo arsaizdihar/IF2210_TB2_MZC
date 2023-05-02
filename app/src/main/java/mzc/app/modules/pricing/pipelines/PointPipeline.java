@@ -18,7 +18,7 @@ public class PointPipeline implements IPricePipeline {
     @Override
     public @NonNull PricePipelineResult calculate(IPrice input) {
         IPrice nominal = new DecimalPrice(new BigDecimal(this.userPoints * -1));
-        IPrice total = new PositiveDecimalPrice(input.getValue().subtract(nominal.getValue()));
+        IPrice total = new PositiveDecimalPrice(input.getValue().add(nominal.getValue()));
         return new PricePipelineResult("Poin", nominal, total);
     }
 
