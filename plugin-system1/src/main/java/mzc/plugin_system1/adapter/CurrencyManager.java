@@ -14,7 +14,7 @@ public class CurrencyManager {
 
     public static @NotNull ICurrencyAdapter getAdapter() {
         if (adapter == null) {
-            AppSetting setting = CurrencyPlugin.getSetting();
+            AppSetting setting = CurrencyPlugin.getAppSetting();
 
             switch (setting.getStorageMethod()) {
                 case OBJ -> adapter = new OBJCurrencyAdapter();
