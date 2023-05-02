@@ -4,6 +4,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import lombok.Getter;
 import lombok.Setter;
+import mzc.app.bootstrap.PageEntry;
 import mzc.app.view.base.PageView;
 import mzc.app.view.page.MainPageView;
 import mzc.app.view_model.base.BaseViewModel;
@@ -17,21 +18,21 @@ public class TabsViewModel extends BaseViewModel {
     private TabPane tabPane = new TabPane();
 
     public void init() {
-        Tab newTab = new Tab("+");
-        newTab.getStyleClass().add("add-tab");
-        newTab.setOnSelectionChanged(event -> {
-            if (newTab.isSelected()) {
-                addNewTab();
-            }
-        });
-        tabPane.getTabs().add(newTab);
+        addNewTab();
     }
 
-    private void addNewTab() {
+    public void addNewTab() {
         PageTab pageTab = new PageTab(this);
-        tabPane.getTabs().add(tabPane.getTabs().size() - 1, pageTab.getTab());
+        tabPane.getTabs().add(pageTab.getTab());
         tabPane.getSelectionModel().select(pageTab.getTab());
     }
+
+    public void addNewTab(PageEntry entry) {
+        PageTab pageTab = new PageTab(this, entry);
+        tabPane.getTabs().add(pageTab.getTab());
+        tabPane.getSelectionModel().select(pageTab.getTab());
+    }
+
 
     public static class PageTab {
         private @NotNull PageView<?> currentPage;
@@ -63,6 +64,14 @@ public class TabsViewModel extends BaseViewModel {
             currentPage = new MainPageView();
             addPageContext(currentPage);
             tabs.createView(currentPage);
+            tab = new Tab();
+            tab.textProperty().bind(currentPage.getViewModel().getTitle());
+            tab.setContent(currentPage.getView());
+        }
+
+        public PageTab(@NotNull TabsViewModel tabs, PageEntry entry) {
+            this.tabs = tabs;
+            currentPage = pageContext.createPage(entry.getPageClass());
             tab = new Tab();
             tab.textProperty().bind(currentPage.getViewModel().getTitle());
             tab.setContent(currentPage.getView());
