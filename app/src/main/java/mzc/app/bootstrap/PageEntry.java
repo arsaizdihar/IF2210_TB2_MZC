@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PageEntry {
-    public PageEntry(@NonNull String title, @NonNull String key, @NonNull Class<? extends PageView<? extends PageViewModel>> pageClass, @NonNull List<PageEntry> subentries) {
+    public PageEntry(@NonNull String title, @NonNull String key, @NonNull Class<? extends PageView<? extends PageViewModel>> pageClass, @NonNull List<ViewEntry> subentries) {
         this.title = title;
         this.key = key;
         this.pageClass = pageClass;
@@ -27,7 +27,6 @@ public class PageEntry {
         this.title = title;
         this.key = key;
         this.pageClass = pageClass;
-
         this.subentries = new HashMap<>();
     }
 
@@ -43,7 +42,7 @@ public class PageEntry {
 
     @Getter
     @Setter
-    protected @NonNull Map<String, PageEntry> subentries;
+    protected @NonNull Map<String, ViewEntry> subentries;
 
 
 }
