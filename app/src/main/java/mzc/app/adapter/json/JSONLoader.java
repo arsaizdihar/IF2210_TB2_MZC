@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @NoArgsConstructor
-class JSONLoader implements IFileDataLoader {
+public class JSONLoader implements IFileDataLoader {
     private static final Gson gson = new Gson();
 
     public <T extends BaseModel> @NotNull Map<String, T> loadData(Class<T> model) {

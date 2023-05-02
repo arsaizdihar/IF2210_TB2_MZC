@@ -6,12 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "product")
 @Table(name = "product")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Product extends BaseModel {
     @EqualCheck
     @Column
@@ -23,11 +26,11 @@ public class Product extends BaseModel {
 
     @EqualCheck
     @Column
-    private int price;
+    private BigDecimal price;
 
     @EqualCheck
     @Column
-    private int buyPrice;
+    private BigDecimal buyPrice;
 
     @EqualCheck
     @Column
@@ -40,7 +43,7 @@ public class Product extends BaseModel {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private transient List<ProductBill> bills = new ArrayList<>();
 
-    public Product(int stock, String name, int price, int buyPrice, String category, String image) {
+    public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category, String image) {
         this.stock = stock;
         this.name = name;
         this.price = price;

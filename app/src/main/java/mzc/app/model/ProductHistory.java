@@ -1,16 +1,19 @@
 package mzc.app.model;
 
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "producthistory")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProductHistory extends BaseModel {
     @EqualCheck
     @Column
@@ -18,11 +21,11 @@ public class ProductHistory extends BaseModel {
 
     @EqualCheck
     @Column
-    private int price;
+    private BigDecimal price;
 
     @EqualCheck
     @Column
-    private int buyPrice;
+    private BigDecimal buyPrice;
 
     @Column
     private String category;
@@ -38,7 +41,7 @@ public class ProductHistory extends BaseModel {
     @JoinColumn(name = "billId", nullable = false, referencedColumnName = "id")
     private transient FixedBill bill;
 
-    public ProductHistory(String name, int price, int buyPrice, String category, String image, FixedBill bill) {
+    public ProductHistory(String name, BigDecimal price, BigDecimal buyPrice, String category, String image, FixedBill bill) {
         this.name = name;
         this.price = price;
         this.buyPrice = buyPrice;

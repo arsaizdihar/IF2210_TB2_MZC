@@ -11,10 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {
-    @Getter protected final Session session;
+public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {
+    @Getter
+    protected final Session session;
 
-    ModelAdapter(Session session) {
+    public ModelAdapter(Session session) {
         this.session = session;
     }
 
@@ -25,8 +26,7 @@ abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {
         return session.get(getType(), id);
     }
 
-    public void persist(@NotNull T item)
-    {
+    public void persist(@NotNull T item) {
         Transaction tx = session.beginTransaction();
         session.persist(item);
         tx.commit();
