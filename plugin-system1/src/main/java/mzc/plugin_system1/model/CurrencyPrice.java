@@ -10,24 +10,27 @@ import java.math.RoundingMode;
 public class CurrencyPrice implements IPrice {
     private final @NonNull Currency currency;
 
-    private final @NonNull BigDecimal value;
+    private final @NonNull BigDecimal defaultValue;
+
+    private final @NonNull BigDecimal convertedValue;
 
     public CurrencyPrice(BigDecimal price) {
         this.currency = CurrencyManager.getDefaultCurrency();
 
-        this.value = price.divide(this.currency.getConversion(), RoundingMode.HALF_EVEN);
+        this.convertedValue = price.divide(this.currency.getConversion(), RoundingMode.HALF_EVEN);
+        this.defaultValue = price;
     }
 
     @Override
     public @NonNull BigDecimal getValue() {
-        return value;
+        return defaultValue;
     }
 
     @Override
     public @NonNull String toString() {
-        if (this.value.compareTo(new BigDecimal(0)) < 0) {
-            return "-" + this.currency.getSymbol() + this.value.abs().toString();
+        if (this.convertedValue.compareTo(new BigDecimal(0)) < 0) {
+            return "-" + this.currency.getSymbol() + this.convertedValue.abs().toString();
         }
-        return this.currency.getSymbol() + this.value.toString();
+        return this.currency.getSymbol() + this.convertedValue.toString();
     }
 }
