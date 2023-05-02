@@ -10,6 +10,8 @@ import mzc.app.modules.setting.AppSetting;
 import mzc.app.modules.setting.AppSettingManager;
 import org.hibernate.cfg.Configuration;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 public class App {
@@ -27,6 +29,12 @@ public class App {
     protected Configuration hibernateConfiguration;
 
     public App() {
+        try {
+            Files.createDirectories(Paths.get("./data"));
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        
         // initialize app setting
         this.appSetting = AppSettingManager.get();
 

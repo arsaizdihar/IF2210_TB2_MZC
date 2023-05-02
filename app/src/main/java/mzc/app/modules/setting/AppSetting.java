@@ -56,7 +56,7 @@ public class AppSetting extends BaseSetting {
 
 
     private static String getDefaultPath() {
-        return Paths.get("setting.app").toAbsolutePath().toString();
+        return Paths.get("./data/setting.app").normalize().toAbsolutePath().toString();
     }
 
     public static AppSetting load() {
