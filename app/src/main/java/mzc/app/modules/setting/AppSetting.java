@@ -2,6 +2,7 @@ package mzc.app.modules.setting;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.base.AdapterType;
 
@@ -27,26 +28,32 @@ public class AppSetting extends BaseSetting {
     }
 
     @Getter
+    @Setter
     @NonNull
     AdapterType storageMethod;
 
     @Getter
+    @Setter
     @NonNull
     String JSONPath;
 
     @Getter
+    @Setter
     @NonNull
     String XMLPath;
 
     @Getter
+    @Setter
     @NonNull
     String OBJPath;
 
     @Getter
+    @Setter
     @NonNull
     String sqlOrmDatabaseUrl;
 
     @Getter
+    @Setter
     @NonNull
     String sqlRawDatabaseUrl;
 

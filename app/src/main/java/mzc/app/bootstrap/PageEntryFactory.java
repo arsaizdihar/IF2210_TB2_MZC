@@ -1,6 +1,5 @@
 package mzc.app.bootstrap;
 
-import mzc.app.view.page.MainPageView;
 import mzc.app.view.page.ProductListPageView;
 
 import java.util.HashMap;

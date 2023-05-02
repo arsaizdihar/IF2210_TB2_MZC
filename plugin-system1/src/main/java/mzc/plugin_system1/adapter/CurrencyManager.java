@@ -48,7 +48,7 @@ public class CurrencyManager {
         return currencies;
     }
 
-    public static Currency loadDefault() {
+    public static void loadDefault() {
         var currency = adapter.getAll().stream().filter(Currency::isDefault).findFirst();
 
         if (currency.isEmpty()) {
@@ -59,7 +59,5 @@ public class CurrencyManager {
         } else {
             defaultCurrency = currency.get();
         }
-
-        return defaultCurrency;
     }
 }

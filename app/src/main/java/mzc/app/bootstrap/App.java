@@ -3,7 +3,6 @@ package mzc.app.bootstrap;
 import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.base.AdapterType;
-import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.orm.SessionManager;
 import mzc.app.modules.plugins.PluginLoader;
 import mzc.app.modules.setting.AppSetting;
@@ -21,8 +20,6 @@ public class App {
     @Getter
     protected @NonNull Map<String, PageEntry> pages;
 
-    protected IMainAdapter adapter;
-
     protected PluginLoader pluginLoader;
 
     @Getter
@@ -34,7 +31,7 @@ public class App {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-        
+
         // initialize app setting
         this.appSetting = AppSettingManager.get();
 
