@@ -6,6 +6,7 @@ import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
+import mzc.app.adapter.orm.SessionManager;
 import mzc.app.adapter.xml.XMLAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
@@ -21,9 +22,12 @@ import java.util.List;
 
 public class AdapterTest {
     private IMainAdapter adapter;
+
     @BeforeAll
     public static void setup() {
         AdapterConfig.setBaseDataPath("./data/temp/");
+        SessionManager.setUpdateUrl(false);
+        SessionManager.getConfiguration();
     }
 
     @AfterEach
@@ -73,7 +77,7 @@ public class AdapterTest {
     @ValueSource(classes = {ORMAdapter.class, JSONAdapter.class, XMLAdapter.class, OBJAdapter.class})
     public void testBill(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
-        Customer c = new  Customer();
+        Customer c = new Customer();
         adapter.getCustomer().persist(c);
 
         Assertions.assertEquals(0, adapter.getCustomer().getBills(c).size());
@@ -94,7 +98,8 @@ public class AdapterTest {
     public IMainAdapter getAdapterManager(Class<? extends IMainAdapter> adapterClass) {
         try {
             return adapterClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }

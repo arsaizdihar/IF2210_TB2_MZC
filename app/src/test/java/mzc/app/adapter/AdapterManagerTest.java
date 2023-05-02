@@ -5,6 +5,7 @@ import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
+import mzc.app.adapter.orm.SessionManager;
 import mzc.app.adapter.xml.XMLAdapter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -29,6 +30,7 @@ public class AdapterManagerTest {
 
     @Test
     public void testORM() {
+        SessionManager.getConfiguration();
         adapterManager = new AdapterManager(new ORMAdapter());
         Assertions.assertTrue(adapterManager.getAdapter() instanceof ORMAdapter);
     }

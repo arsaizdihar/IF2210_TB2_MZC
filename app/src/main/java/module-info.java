@@ -1,4 +1,5 @@
 module mzc.app {
+    uses mzc.app.modules.plugins.Plugin;
     requires javafx.base;
     requires javafx.controls;
     requires javafx.fxml;

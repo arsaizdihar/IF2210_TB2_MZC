@@ -1,6 +1,5 @@
 package mzc.app.adapter.orm;
 
-import lombok.NonNull;
 import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
