@@ -14,12 +14,10 @@
 
   <modules>
     <module>app</module>
-    <module>plugin-base</module>
     <module>plugin-chart1</module>
     <module>plugin-chart2</module>
     <module>plugin-system1</module>
     <module>plugin-system2</module>
-    <module>app-extend</module>
   </modules>
 
   <build>

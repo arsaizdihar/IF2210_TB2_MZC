@@ -10,8 +10,6 @@
         <module name="plugin-system2" />
         <module name="plugin-system1" />
         <module name="plugin-chart1" />
-        <module name="app-extend" />
-        <module name="plugin-base" />
         <module name="plugin-chart2" />
       </profile>
       <profile name="Annotation profile for IF2210_TB2_MZC" enabled="true">
@@ -24,5 +22,9 @@
         <module name="app" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="app-extend" target="17" />
+      <module name="plugin-base" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
