@@ -1,10 +1,13 @@
 package mzc.app.view_model;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import lombok.Getter;
@@ -14,28 +17,37 @@ import mzc.app.view_model.base.PageViewModel;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
 public class HomeViewModel extends BaseViewModel {
     private Label clock = new Label();
     private Label date = new Label();
-//    private final String[] listImagePath = new String[];
-    private final ImageView logo = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-0.png")).toExternalForm());
+    private final List<Image> listImagePath = new ArrayList<>();
+    private int imageIdx = 0;
+    private ImageView logo = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-0.png")).toExternalForm());
     private Label ourTeam = new Label("Our Team");
     private HBox teamMember;
 
     private VBox mainMenu;
 
 
-    private VBox mainCol;
+    private StackPane mainCol;
 
     public HomeViewModel() {
     }
 
     @Override
     public void init() {
-//        this.listImagePath.add("/mzc/app/assets/mzc-0.png");
+        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-0.png")).toExternalForm()));
+        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-1.png")).toExternalForm()));
+        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-2.png")).toExternalForm()));
+        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-3.png")).toExternalForm()));
+        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-4.png")).toExternalForm()));
+        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-5.png")).toExternalForm()));
+        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-6.png")).toExternalForm()));
         updateTime();
         updateDate();
         // Container for datetime
@@ -44,7 +56,7 @@ public class HomeViewModel extends BaseViewModel {
 
         this.ourTeam.setStyle("-fx-font-family: Helvetica; -fx-font-size: 3em;");
         this.ourTeam.setFont(new Font("Gotham", 12));
-        this.logo.setFitWidth(200);
+        this.logo.setFitWidth(150);
         this.logo.setPreserveRatio(true);
         ImageView team = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/our-team.png")).toExternalForm());
         VBox teamMember = new VBox(this.ourTeam, team);
@@ -52,7 +64,9 @@ public class HomeViewModel extends BaseViewModel {
         this.mainMenu = new VBox(datetime, teamMember);
         this.mainMenu.setAlignment(Pos.CENTER);
         this.mainMenu.setSpacing(100);
-        this.mainCol = new VBox(this.logo, this.mainMenu);
+        this.mainMenu.setPadding(new Insets(100, 0, 0, 0));
+        this.mainCol = new StackPane(this.mainMenu, this.logo);
+        this.mainCol.setAlignment(Pos.TOP_LEFT);
 
         Thread updateTimeThread = new Thread(() -> {
             while (true) {
@@ -64,6 +78,7 @@ public class HomeViewModel extends BaseViewModel {
                 Platform.runLater(() -> {
                     updateTime(); // Update the time label every second
                     updateDate();
+                    updateLogo();
                 });
             }
         });
@@ -84,5 +99,12 @@ public class HomeViewModel extends BaseViewModel {
         String formattedDate = currentDate.format(formatter);
         this.date.setText(formattedDate);
         this.date.setStyle("-fx-font-family: Helvetica; -fx-font-size: 2em;");
+    }
+
+    private void updateLogo() {
+        this.imageIdx = (this.imageIdx+1) % this.listImagePath.size();
+        this.logo.setFitHeight(150);
+        this.logo.setPreserveRatio(true);
+        this.logo.setImage(this.listImagePath.get(this.imageIdx));
     }
 }
