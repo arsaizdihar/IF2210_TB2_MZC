@@ -29,9 +29,20 @@ public class Currency extends BaseModel {
     @Column
     private BigDecimal conversion = new BigDecimal(0);
 
+    @EqualCheck
+    @Column
+    private boolean isDefault = false;
+
     public Currency(String symbol, String name, BigDecimal conversion) {
         this.symbol = symbol;
         this.name = name;
         this.conversion = conversion;
+    }
+
+    public Currency(String symbol, String name, BigDecimal conversion, boolean isDefault) {
+        this.symbol = symbol;
+        this.name = name;
+        this.conversion = conversion;
+        this.isDefault = isDefault;
     }
 }
