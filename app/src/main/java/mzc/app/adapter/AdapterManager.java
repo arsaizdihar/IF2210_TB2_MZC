@@ -25,8 +25,8 @@ public class AdapterManager {
             case OBJ -> adapter = new OBJAdapter();
             case XML -> adapter = new XMLAdapter();
             case JSON -> adapter = new JSONAdapter();
-            case SQLORM -> adapter = new ORMAdapter(setting.getSqlOrmDatabaseUrl());
-            case SQLRaw -> adapter = new ORMAdapter(setting.getSqlRawDatabaseUrl()); // temporary
+            case SQLORM -> adapter = new ORMAdapter();
+            case SQLRaw -> adapter = new ORMAdapter(); // temporary
             default -> adapter = new JSONAdapter();
         }
     }
@@ -51,4 +51,5 @@ public class AdapterManager {
         map.put(AdapterType.SQLORM, ORMAdapter.class);
         return map;
     }
+
 }

@@ -56,14 +56,15 @@ public class AppSetting extends BaseSetting {
 
 
     private static String getDefaultPath() {
-        return Paths.get("./setting.app").toAbsolutePath().toString();
+        return Paths.get("setting.app").toAbsolutePath().toString();
     }
 
     public static AppSetting load() {
         AppSetting result;
 
         try {
-            FileInputStream file = new FileInputStream(getDefaultPath());
+            String path = getDefaultPath();
+            FileInputStream file = new FileInputStream(path);
             ObjectInputStream in = new ObjectInputStream(file);
 
             result = (AppSetting) in.readObject();
@@ -80,6 +81,12 @@ public class AppSetting extends BaseSetting {
                     "jdbc:mysql://root:root@localhost:3306/mzcraw",
                     new ArrayList<>()
             );
+
+            try {
+                result.save();
+            } catch (Exception exception) {
+                throw new RuntimeException(exception.getMessage());
+            }
         }
 
         return result;

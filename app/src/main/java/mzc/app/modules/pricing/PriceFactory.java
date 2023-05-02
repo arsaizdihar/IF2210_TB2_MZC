@@ -10,6 +10,10 @@ public class PriceFactory {
     @Getter
     private Class<? extends IPrice> priceView = RupiahPrice.class;
 
+    public IPrice createPriceView(IPrice value) {
+        return createPriceView(value.getValue());
+    }
+
     public IPrice createPriceView(BigDecimal value) {
         try {
             return priceView.getConstructor(BigDecimal.class).newInstance(value);

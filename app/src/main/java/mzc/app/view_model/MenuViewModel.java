@@ -7,11 +7,8 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.bootstrap.App;
 import mzc.app.bootstrap.AppManager;
-import mzc.app.utils.reactive.Context;
 import mzc.app.view.TabsView;
-import mzc.app.view.page.MainPageView;
 import mzc.app.view_model.base.BaseViewModel;
-import mzc.app.view_model.base.PageViewModel;
 
 @Getter
 public class MenuViewModel extends BaseViewModel {
