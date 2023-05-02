@@ -17,10 +17,6 @@ import java.lang.reflect.InvocationTargetException;
 public class TabsViewModel extends BaseViewModel {
     private TabPane tabPane = new TabPane();
 
-    public void init() {
-        addNewTab();
-    }
-
     public void addNewTab() {
         tabPane.setStyle("-fx-background-color: white;");
         PageTab pageTab = new PageTab(this);

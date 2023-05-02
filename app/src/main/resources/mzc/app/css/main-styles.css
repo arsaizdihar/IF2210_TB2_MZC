@@ -1,3 +1,7 @@
+* {
+    -fx-font-family: "Poppins";
+}
+
 #tab-pane *.tab-header-background {
     -fx-background-color: -fx-gray-200;
 }
@@ -30,3 +34,13 @@
     -fx-border-style: hidden;
 }
 
+#split-page *.left-side .title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+#split-page *.left-side {
+    -fx-border-style: hidden solid hidden hidden;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-gray-300;
+}

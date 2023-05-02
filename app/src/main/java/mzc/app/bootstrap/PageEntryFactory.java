@@ -1,6 +1,7 @@
 package mzc.app.bootstrap;
 
 import mzc.app.view.page.MainPageView;
+import mzc.app.view.page.ProductListPageView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,13 +10,9 @@ public class PageEntryFactory {
     public static Map<String, PageEntry> createPageEntries() {
         Map<String, PageEntry> pageEntries = new HashMap<>();
 
-        var defaultPage = createDefaultPage();
-        pageEntries.put(defaultPage.getKey(), defaultPage);
+        var productList = new PageEntry("Daftar Barang", "product_list", ProductListPageView.class);
+        pageEntries.put(productList.getKey(), productList);
 
         return pageEntries;
-    }
-
-    public static PageEntry createDefaultPage() {
-        return new PageEntry("Main Page", "main", MainPageView.class);
     }
 }
