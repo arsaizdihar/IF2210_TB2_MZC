@@ -1,15 +1,14 @@
-package mzc.app.view_model.page;
+package mzc.app.view_model;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import lombok.Getter;
+import mzc.app.view_model.base.BaseViewModel;
 import mzc.app.view_model.base.PageViewModel;
 
 import java.time.LocalDate;
@@ -18,10 +17,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Getter
-public class HomePageViewModel extends PageViewModel {
+public class HomeViewModel extends BaseViewModel {
     private Label clock = new Label();
     private Label date = new Label();
-    private final ImageView logo = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-logo-2.png")).toExternalForm());
+//    private final String[] listImagePath = new String[];
+    private final ImageView logo = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-0.png")).toExternalForm());
     private Label ourTeam = new Label("Our Team");
     private HBox teamMember;
 
@@ -30,12 +30,12 @@ public class HomePageViewModel extends PageViewModel {
 
     private VBox mainCol;
 
-    public HomePageViewModel() {
-        super("MZC");
+    public HomeViewModel() {
     }
 
     @Override
     public void init() {
+//        this.listImagePath.add("/mzc/app/assets/mzc-0.png");
         updateTime();
         updateDate();
         // Container for datetime

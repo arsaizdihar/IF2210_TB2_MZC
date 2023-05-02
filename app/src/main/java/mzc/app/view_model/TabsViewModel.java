@@ -22,13 +22,27 @@ public class TabsViewModel extends BaseViewModel {
     }
 
     public void addNewTab() {
+        tabPane.setStyle("-fx-background-color: white;");
         PageTab pageTab = new PageTab(this);
+        pageTab.getTab().setOnClosed(e -> {
+            System.out.println(tabPane.getTabs().size());
+            if (tabPane.getTabs().size() == 0) {
+                tabPane.setStyle("-fx-background-color: transparent;");
+            }
+        });
         tabPane.getTabs().add(pageTab.getTab());
         tabPane.getSelectionModel().select(pageTab.getTab());
     }
 
     public void addNewTab(PageEntry entry) {
+        tabPane.setStyle("-fx-background-color: white;");
         PageTab pageTab = new PageTab(this, entry);
+        pageTab.getTab().setOnClosed(e -> {
+            System.out.println(tabPane.getTabs().size());
+            if (tabPane.getTabs().size() == 0) {
+                tabPane.setStyle("-fx-background-color: transparent;");
+            }
+        });
         tabPane.getTabs().add(pageTab.getTab());
         tabPane.getSelectionModel().select(pageTab.getTab());
     }
