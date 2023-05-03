@@ -25,7 +25,7 @@ public class RightSideProductViewModel extends RightSideViewModel {
         setupImage();
         Button kirim = new Button("Kirim");
         kirim.setPrefWidth(100);
-        kirim.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-font-size: 16;");
+        kirim.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;");
         this.mainCol = new HBox(this.list, this.image);
         this.mainCol.setAlignment(Pos.CENTER);
         this.mainCol.setSpacing(100);
