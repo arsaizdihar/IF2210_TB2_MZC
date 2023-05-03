@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import lombok.Getter;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
+import org.jetbrains.annotations.NotNull;
 
 @Getter
 public class RightSideProductViewModel extends RightSideViewModel {
@@ -21,17 +22,20 @@ public class RightSideProductViewModel extends RightSideViewModel {
     public void init() {
         super.init();
         Label tambahBarang = new Label("Tambah Barang");
+        tambahBarang.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         setupLines();
         setupImage();
         Button kirim = new Button("Kirim");
         kirim.setPrefWidth(100);
-        kirim.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;");
+        kirim.getStyleClass().addAll("btn", "btn-success");
+        kirim.setStyle("-fx-font-weight: bold;");
         this.mainCol = new HBox(this.list, this.image);
         this.mainCol.setAlignment(Pos.CENTER);
         this.mainCol.setSpacing(100);
         this.main = new VBox(tambahBarang, this.mainCol, kirim);
         this.main.setAlignment(Pos.CENTER);
         this.main.setSpacing(100);
+        this.main.setStyle("-fx-font-size: 16px;");
     }
 
     private void setupLines() {
@@ -53,6 +57,7 @@ public class RightSideProductViewModel extends RightSideViewModel {
 
     private void setupImage() {
         Button pilihGambar = new Button("Pilih Gambar");
+        pilihGambar.getStyleClass().add("btn");
 
         this.image = new VBox(pilihGambar);
     }
@@ -60,9 +65,9 @@ public class RightSideProductViewModel extends RightSideViewModel {
 
 @Getter
 class TextInput {
-    private Label label;
-    private TextField textField;
-    private VBox main;
+    private final @NotNull Label label;
+    private final @NotNull TextField textField;
+    private final @NotNull VBox main;
 
     public TextInput(String str, int width) {
         this.label = new Label(str);
