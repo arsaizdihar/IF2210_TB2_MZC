@@ -4,14 +4,10 @@ import lombok.Getter;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
-import mzc.app.model.ProductBill;
 import mzc.app.utils.reactive.Context;
 import mzc.app.utils.reactive.State;
 import mzc.app.view.components.cashier.LeftSideCashierView;
 import mzc.app.view.components.cashier.PaymentSummaryView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CashierPageViewModel extends SplitPageViewModel {
     public CashierPageViewModel() {
@@ -20,10 +16,10 @@ public class CashierPageViewModel extends SplitPageViewModel {
 
     public static class CashierContext {
         @Getter
-        private final State<List<ProductBill>> items = new State<>(new ArrayList<>());
+        private final State<Bill> bill = new State<>(null);
 
         @Getter
-        private final State<Bill> bill = new State<>(null);
+        private final State<Boolean> shouldUpdate = new State<>(true);
 
         private final IMainAdapter adapter;
 
@@ -38,8 +34,6 @@ public class CashierPageViewModel extends SplitPageViewModel {
             newBill.setCustomer(customer);
             this.adapter.getBill().persist(newBill);
             this.bill.setValue(newBill);
-
-            this.getItems().setValue(new ArrayList<>());
         }
 
         public void loadBill(Customer customer) {
@@ -54,11 +48,6 @@ public class CashierPageViewModel extends SplitPageViewModel {
             } else {
                 this.bill.setValue(first.get());
             }
-
-            this.items.setValue(new ArrayList<>());
-            this.bill.getValue().getProducts().forEach(productBill -> {
-                this.items.getValue().add(productBill);
-            });
         }
     }
 
@@ -67,16 +56,9 @@ public class CashierPageViewModel extends SplitPageViewModel {
         super.init();
         Context<CashierContext> cashierContext = new Context<>(new CashierContext(getAdapter()));
         addContext(cashierContext);
+        cashierContext.getValue().loadBill();
 
         this.setLeft(new LeftSideCashierView());
         this.setRight(new PaymentSummaryView());
-
-
-        // di kiri
-//        cashierContext.getValue().getItems().getValue().add();
-//        cashierContext.getValue().getItems().forceUpdate();
-
-        // di kanan
-//        cashierContext.getValue().getItems().addListener((observableValue, products, t1) -> );
     }
 }

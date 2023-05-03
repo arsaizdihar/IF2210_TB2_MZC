@@ -1,40 +1,56 @@
 package mzc.app.view_model.components.cashier;
 
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.model.ProductBill;
 import mzc.app.utils.reactive.State;
 import mzc.app.view_model.base.BaseViewModel;
 import mzc.app.view_model.page.CashierPageViewModel;
+import org.jetbrains.annotations.NotNull;
 
 public class ProductViewModel extends BaseViewModel {
     @Getter
     private ProductBill productBill;
 
     @Getter
-    private State<Integer> counter = new State<Integer>(0);
+    private final @NotNull Label counterLabel = new Label("");
 
     @Getter
-    private Button increment = new Button();
+    private final @NotNull State<Integer> counter = new State<Integer>(0);
 
     @Getter
-    private Button decrement = new Button();
+    private final @NotNull Button increment = new Button();
+
+    @Getter
+    private final @NotNull Button decrement = new Button();
+
+    @Getter
+    private final @NotNull HBox container = new HBox();
+
+    @Getter
+    private final @NotNull VBox productInfo = new VBox();
 
     @Override
     public void init() {
         super.init();
 
+        this.counterLabel.textProperty().bind(Bindings.createObjectBinding(() -> counter.getValue().toString(), counter));
+
         this.increment.setOnAction(e -> {
             counter.setValue(counter.getValue() + 1);
             getAdapter().getProductBill().persist(this.productBill);
-            useContext(CashierPageViewModel.CashierContext.class).getValue().getBill().forceUpdate();
+            useContext(CashierPageViewModel.CashierContext.class).getValue().getShouldUpdate().setValue(true);
         });
 
         this.decrement.setOnAction(e -> {
             if (counter.getValue() > 0) {
                 counter.setValue(counter.getValue() - 1);
                 getAdapter().getProductBill().persist(this.productBill);
-                useContext(CashierPageViewModel.CashierContext.class).getValue().getBill().forceUpdate();
+                useContext(CashierPageViewModel.CashierContext.class).getValue().getShouldUpdate().setValue(true);
             }
         });
 
@@ -54,6 +70,9 @@ public class ProductViewModel extends BaseViewModel {
             if (next < this.productBill.getProduct().getStock() && this.increment.isDisabled()) {
                 this.increment.setDisable(false);
             }
+
+            this.productBill.setAmount(next);
+            getAdapter().getProductBill().persist(this.productBill);
         });
     }
 
