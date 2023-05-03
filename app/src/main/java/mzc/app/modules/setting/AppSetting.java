@@ -79,7 +79,7 @@ public class AppSetting extends BaseSetting {
             file.close();
         } catch (IOException | ClassNotFoundException ignored) {
             result = new AppSetting(
-                    AdapterType.OBJ,
+                    AdapterType.JSON,
                     "data/json/",
                     "data/xml/",
                     "data/obj/",

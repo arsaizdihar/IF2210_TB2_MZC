@@ -6,14 +6,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.annotation.EqualCheck;
 import mzc.app.utils.FileManager;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,9 +75,23 @@ public class Product extends BaseModel {
         image = null;
     }
 
-    public static List<Product> getSeed() {
+    public static List<Product> getSeed(String path) {
         List<Product> products = new ArrayList<>();
-        products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("10000"), "Minuman", ""));
+        products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("12000"), "Minuman", ""));
+        products.add(new Product(0, "Americano", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", ""));
+        products.add(new Product(5, "Teh Earl Grey", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", ""));
+        products.add(new Product(10, "Chicken Katsu Mushroom Butter Chicken", new BigDecimal("24000"), new BigDecimal("16000"), "Makanan", ""));
+        products.add(new Product(0, "Chicken Katsu Curry Rice", new BigDecimal("28000"), new BigDecimal("20000"), "Makanan", ""));
+        products.add(new Product(5, "Nasi Goreng Bawang Merah", new BigDecimal("25000"), new BigDecimal("12000"), "Makanan", ""));
+
+        products.forEach(product -> {
+            try {
+                product.updateImage(path);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        });
+
         return products;
     }
 }
