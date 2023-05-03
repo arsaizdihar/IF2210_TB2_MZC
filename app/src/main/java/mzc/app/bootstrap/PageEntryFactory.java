@@ -1,5 +1,6 @@
 package mzc.app.bootstrap;
 
+import mzc.app.view.page.CashierPageView;
 import mzc.app.view.page.MainPageView;
 import mzc.app.view.page.ProductListPageView;
 
@@ -14,6 +15,9 @@ public class PageEntryFactory {
         var main = new PageEntry("Main", "main", MainPageView.class);
         pageEntries.put(productList.getKey(), productList);
         pageEntries.put(main.getKey(), main);
+
+        var cashier = new PageEntry("Kasir", "cashier", CashierPageView.class);
+        pageEntries.put(cashier.getKey(), cashier);
 
         return pageEntries;
     }

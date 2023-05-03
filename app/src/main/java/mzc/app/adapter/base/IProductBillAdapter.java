@@ -1,4 +1,6 @@
 package mzc.app.adapter.base;
 
-public interface IProductBillAdapter {
+import mzc.app.model.ProductBill;
+
+public interface IProductBillAdapter extends IBasicAdapter<ProductBill> {
 }

@@ -17,6 +17,10 @@ public class ORMAdapter implements IMainAdapter {
     private final @NotNull ProductHistoryAdapter productHistory;
     @Getter
     private final @NotNull FixedBillAdapter fixedBill;
+
+    @Getter
+    private final @NotNull ProductBillAdapter productBill;
+
     private final @NotNull Session session;
 
     public ORMAdapter() {
@@ -26,6 +30,7 @@ public class ORMAdapter implements IMainAdapter {
         product = new ProductAdapter(session);
         productHistory = new ProductHistoryAdapter(session);
         fixedBill = new FixedBillAdapter(session);
+        productBill = new ProductBillAdapter(session);
     }
 
     @Override

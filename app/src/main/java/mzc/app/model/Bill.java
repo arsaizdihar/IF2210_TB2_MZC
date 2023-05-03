@@ -1,23 +1,24 @@
 package mzc.app.model;
 
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mzc.app.annotation.EqualCheck;
 
-import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "bill")
 @Table(name = "bill")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Bill extends BaseModel {
     @Transient
     private transient boolean productsLoaded = false;
 
-    @OneToMany(mappedBy = "bill", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY)
     private transient List<ProductBill> products = new ArrayList<>();
 
     @Setter(AccessLevel.NONE)

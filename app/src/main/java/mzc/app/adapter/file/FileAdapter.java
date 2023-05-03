@@ -22,6 +22,9 @@ public abstract class FileAdapter implements IMainAdapter {
     @Getter
     private final @NotNull FileFixedBillAdapter fixedBill;
 
+    @Getter
+    private final @NotNull FileProductBillAdapter productBill;
+
     public FileAdapter(@NotNull IFileDataLoader loader) {
         this.product = new FileProductAdapter(loader);
         this.bill = new FileBillAdapter(loader, product);
@@ -30,6 +33,7 @@ public abstract class FileAdapter implements IMainAdapter {
         this.productHistory = new FileProductHistoryAdapter(loader);
         this.fixedBill = new FileFixedBillAdapter(loader, productHistory);
         this.fixedBill.setCustomerAdapter(this.customer);
+        this.productBill = new FileProductBillAdapter(loader, this.product);
     }
 
     @Override

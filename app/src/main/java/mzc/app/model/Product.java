@@ -77,4 +77,10 @@ public class Product extends BaseModel {
         imagePath = dstPath;
         image = null;
     }
+
+    public static List<Product> getSeed() {
+        List<Product> products = new ArrayList<>();
+        products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("10000"), "Minuman", ""));
+        return products;
+    }
 }

@@ -8,6 +8,8 @@ public interface IMainAdapter {
 
     @NotNull IBillAdapter getBill();
 
+    @NotNull IProductBillAdapter getProductBill();
+
     @NotNull IProductAdapter getProduct();
 
     @NotNull IProductHistoryAdapter getProductHistory();

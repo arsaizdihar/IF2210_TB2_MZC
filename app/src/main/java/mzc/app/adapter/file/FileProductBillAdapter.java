@@ -26,5 +26,4 @@ public class FileProductBillAdapter extends FileModelAdapter<ProductBill> implem
         result.forEach(p -> p.setProduct(productAdapter.getById(p.getId())));
         return result;
     }
-
 }
