@@ -63,7 +63,7 @@ public class ProductViewModel extends BaseViewModel {
                 this.increment.setDisable(true);
             }
 
-            if (next >= 0 && this.decrement.isDisabled()) {
+            if (next > 0 && this.decrement.isDisabled()) {
                 this.decrement.setDisable(false);
             }
 
@@ -79,5 +79,13 @@ public class ProductViewModel extends BaseViewModel {
     public void setProductBill(ProductBill productBill) {
         this.productBill = productBill;
         this.counter.setValue(this.productBill.getAmount());
+
+        if (this.counter.getValue() == 0) {
+            this.decrement.setDisable(true);
+        }
+
+        if (this.counter.getValue() == this.productBill.getProduct().getStock()) {
+            this.increment.setDisable(true);
+        }
     }
 }

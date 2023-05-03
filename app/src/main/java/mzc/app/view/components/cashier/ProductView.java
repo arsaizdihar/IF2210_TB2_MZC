@@ -1,9 +1,11 @@
 package mzc.app.view.components.cashier;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import mzc.app.annotation.ModelInject;
 import mzc.app.model.ProductBill;
 import mzc.app.view.base.BaseView;
@@ -23,18 +25,40 @@ public class ProductView extends BaseView<ProductViewModel> {
 
         var product = getViewModel().getProductBill().getProduct();
         var container = getViewModel().getContainer();
-        container.getChildren().add(new ImageView(product.getImage()));
+        container.setMinWidth(0);
+        container.setPrefWidth(1);
+        var imageView = new ImageView(product.getImage());
+        imageView.setFitHeight(125);
+        imageView.setFitWidth(125);
+        container.getChildren().add(imageView);
 
         var productInfo = getViewModel().getProductInfo();
-        productInfo.getChildren().add(new Label(product.getName()));
-        productInfo.getChildren().add(new Label(product.getCategory()));
-        productInfo.getChildren().add(new Label("Stok " + product.getStock()));
-        productInfo.getChildren().add(new Label(product.getPriceView().toString()));
+        var titleLabel = new Label(product.getName());
+        titleLabel.getStyleClass().add("h4");
+        titleLabel.getStyleClass().add("b");
+        productInfo.getChildren().add(titleLabel);
+
+        var categoryLabel = new Label(product.getCategory());
+        categoryLabel.getStyleClass().add("h5");
+        productInfo.getChildren().add(categoryLabel);
+
+        var stockLabel = new Label("Stok " + product.getStock());
+        stockLabel.getStyleClass().add("h5");
+        productInfo.getChildren().add(stockLabel);
+
+        var priceLabel = new Label(product.getPriceView().toString());
+        priceLabel.getStyleClass().add("h5");
+        productInfo.getChildren().add(priceLabel);
+        HBox.setHgrow(productInfo, Priority.ALWAYS);
+
+        productInfo.setPadding(new Insets(0, 0, 0, 10));
 
         container.getChildren().add(productInfo);
 
         var buttonGroup = new HBox();
-        buttonGroup.getChildren().addAll(getViewModel().getDecrement(), getViewModel().getCounterLabel(), getViewModel().getIncrement());
+        buttonGroup.setSpacing(10);
+        var counterLabel = getViewModel().getCounterLabel();
+        buttonGroup.getChildren().addAll(getViewModel().getDecrement(), counterLabel, getViewModel().getIncrement());
         container.getChildren().add(buttonGroup);
     }
 
