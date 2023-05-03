@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
+import mzc.app.modules.pricing.PriceFactory;
+import mzc.app.modules.pricing.price.IPrice;
 import mzc.app.utils.FileManager;
 
 import java.io.IOException;
@@ -59,6 +61,14 @@ public class Product extends BaseModel {
         this.buyPrice = buyPrice;
         this.category = category;
         this.imagePath = imagePath;
+    }
+
+    public IPrice getPriceView() {
+        return PriceFactory.createPriceView(this.price);
+    }
+
+    public IPrice getBuyPriceView() {
+        return PriceFactory.createPriceView(this.buyPrice);
     }
 
     public Image getImage() {

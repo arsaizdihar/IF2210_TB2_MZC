@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
+import mzc.app.modules.pricing.PriceFactory;
+import mzc.app.modules.pricing.price.IPrice;
 
 import java.math.BigDecimal;
 
@@ -53,5 +55,13 @@ public class ProductHistory extends BaseModel {
     public void setBill(FixedBill bill) {
         this.bill = bill;
         billId = bill.getId();
+    }
+
+    public IPrice getPriceView() {
+        return PriceFactory.createPriceView(this.price);
+    }
+
+    public IPrice getBuyPriceView() {
+        return PriceFactory.createPriceView(this.buyPrice);
     }
 }
