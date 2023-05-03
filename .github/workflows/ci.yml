@@ -1,6 +1,6 @@
 name: CI
 
-on: [push, pull_request]
+on: []
 jobs:
   test_app:
     runs-on: ubuntu-latest
