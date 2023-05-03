@@ -1,4 +1,4 @@
-package mzc.plugin_system1.model;
+package mzc.plugin_currency.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

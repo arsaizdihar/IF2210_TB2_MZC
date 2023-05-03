@@ -1,15 +1,15 @@
-package mzc.plugin_system1.adapter;
+package mzc.plugin_currency.adapter;
 
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.modules.setting.AppSetting;
-import mzc.plugin_system1.CurrencyPlugin;
-import mzc.plugin_system1.adapter.base.ICurrencyAdapter;
-import mzc.plugin_system1.adapter.file.JSONCurrencyAdapter;
-import mzc.plugin_system1.adapter.file.OBJCurrencyAdapter;
-import mzc.plugin_system1.adapter.file.XMLCurrencyAdapter;
-import mzc.plugin_system1.adapter.orm.CurrencyAdapter;
-import mzc.plugin_system1.model.Currency;
+import mzc.plugin_currency.CurrencyPlugin;
+import mzc.plugin_currency.adapter.base.ICurrencyAdapter;
+import mzc.plugin_currency.adapter.file.JSONCurrencyAdapter;
+import mzc.plugin_currency.adapter.file.OBJCurrencyAdapter;
+import mzc.plugin_currency.adapter.file.XMLCurrencyAdapter;
+import mzc.plugin_currency.adapter.orm.CurrencyAdapter;
+import mzc.plugin_currency.model.Currency;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;

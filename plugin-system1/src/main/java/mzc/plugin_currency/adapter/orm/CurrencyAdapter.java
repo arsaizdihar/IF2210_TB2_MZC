@@ -1,8 +1,8 @@
-package mzc.plugin_system1.adapter.orm;
+package mzc.plugin_currency.adapter.orm;
 
 import mzc.app.adapter.orm.ModelAdapter;
-import mzc.plugin_system1.adapter.base.ICurrencyAdapter;
-import mzc.plugin_system1.model.Currency;
+import mzc.plugin_currency.adapter.base.ICurrencyAdapter;
+import mzc.plugin_currency.model.Currency;
 import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 

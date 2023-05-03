@@ -1,4 +1,4 @@
-package mzc.plugin_system1.adapter.file;
+package mzc.plugin_currency.adapter.file;
 
 import mzc.app.adapter.obj.OBJLoader;
 import org.jetbrains.annotations.NotNull;

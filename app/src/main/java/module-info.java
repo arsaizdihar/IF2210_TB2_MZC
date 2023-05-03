@@ -1,4 +1,4 @@
-module mzc.app {
+open module mzc.app {
     uses mzc.app.modules.plugins.Plugin;
     requires javafx.base;
     requires javafx.controls;
@@ -16,8 +16,9 @@ module mzc.app {
     requires com.fasterxml.jackson.dataformat.xml;
     requires org.jetbrains.annotations;
 
-    opens mzc.app.view_model to javafx.fxml;
-    opens mzc.app.bootstrap to javafx.graphics;
-    opens mzc.app.model to org.hibernate.orm.core, com.google.gson, com.fasterxml.jackson.databind;
+//    opens mzc.app.view_model to javafx.fxml;
+//    opens mzc.app.bootstrap to javafx.graphics;
+//    opens mzc.app.model to org.hibernate.orm.core, com.google.gson, com.fasterxml.jackson.databind;
+
     exports mzc.app;
 }

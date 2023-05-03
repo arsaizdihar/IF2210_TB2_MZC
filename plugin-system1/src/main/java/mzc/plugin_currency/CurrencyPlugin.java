@@ -1,13 +1,13 @@
-package mzc.plugin_system1;
+package mzc.plugin_currency;
 
 import lombok.Getter;
 import mzc.app.bootstrap.App;
 import mzc.app.modules.plugins.Plugin;
 import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.setting.AppSetting;
-import mzc.plugin_system1.adapter.CurrencyManager;
-import mzc.plugin_system1.model.Currency;
-import mzc.plugin_system1.model.CurrencyPrice;
+import mzc.plugin_currency.adapter.CurrencyManager;
+import mzc.plugin_currency.model.Currency;
+import mzc.plugin_currency.model.CurrencyPrice;
 import org.hibernate.Session;
 
 public class CurrencyPlugin extends Plugin {

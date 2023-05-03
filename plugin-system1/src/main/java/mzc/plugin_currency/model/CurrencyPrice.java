@@ -1,8 +1,8 @@
-package mzc.plugin_system1.model;
+package mzc.plugin_currency.model;
 
 import lombok.NonNull;
 import mzc.app.modules.pricing.price.IPrice;
-import mzc.plugin_system1.adapter.CurrencyManager;
+import mzc.plugin_currency.adapter.CurrencyManager;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
