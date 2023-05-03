@@ -12,7 +12,7 @@ public class MainPageView extends PageView<MainPageViewModel> {
     @Override
     public @NotNull Node getView() {
         VBox root = new VBox();
-        root.getChildren().addAll(getViewModel().getTextField(), getViewModel().getLabel(), getViewModel().getCounterButton(), getViewModel().getCounterLabel(), getViewModel().getChangePageButton());
+        root.getChildren().addAll(getViewModel().getTextField(), getViewModel().getLabel(), getViewModel().getCounterButton(), getViewModel().getCounterLabel(), getViewModel().getChangePageButton(), getViewModel().getFileDialogView().getView());
         return root;
     }
 }

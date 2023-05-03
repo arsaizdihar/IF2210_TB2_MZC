@@ -80,9 +80,9 @@ public class AppSetting extends BaseSetting {
         } catch (IOException | ClassNotFoundException ignored) {
             result = new AppSetting(
                     AdapterType.OBJ,
-                    "./data/json/",
-                    "./data/xml/",
-                    "./data/obj/",
+                    "data/json/",
+                    "data/xml/",
+                    "data/obj/",
                     "jdbc:mysql://root:root@localhost:3306/mzc",
                     "jdbc:mysql://root:root@localhost:3306/mzcraw",
                     new ArrayList<>()

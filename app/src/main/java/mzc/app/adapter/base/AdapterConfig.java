@@ -15,7 +15,7 @@ public class AdapterConfig {
             return pathOverride;
         }
 
-        String result = "./data/";
+        String result = "data/";
         switch (type) {
             case JSON -> result = AppSettingManager.get().getJSONPath();
             case XML -> result = AppSettingManager.get().getXMLPath();
