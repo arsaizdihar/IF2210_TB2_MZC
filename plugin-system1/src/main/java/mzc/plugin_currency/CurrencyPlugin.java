@@ -11,11 +11,13 @@ import mzc.plugin_currency.model.CurrencyPrice;
 import org.hibernate.Session;
 
 public class CurrencyPlugin extends Plugin {
-    @Getter
-    protected static AppSetting appSetting;
 
     @Getter
-    protected static Session session;
+    private static AppSetting appSetting;
+
+    @Getter
+    private static Session session;
+
 
     public CurrencyPlugin() {
         super("Multicurrency");

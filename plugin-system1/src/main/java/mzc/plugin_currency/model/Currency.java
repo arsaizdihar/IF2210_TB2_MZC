@@ -31,7 +31,7 @@ public class Currency extends BaseModel {
 
     @EqualCheck
     @Column
-    private boolean isDefault = false;
+    private boolean isDefaultCurrency = false;
 
     public Currency(String symbol, String name, BigDecimal conversion) {
         this.symbol = symbol;
@@ -39,10 +39,10 @@ public class Currency extends BaseModel {
         this.conversion = conversion;
     }
 
-    public Currency(String symbol, String name, BigDecimal conversion, boolean isDefault) {
+    public Currency(String symbol, String name, BigDecimal conversion, boolean isDefaultCurrency) {
         this.symbol = symbol;
         this.name = name;
         this.conversion = conversion;
-        this.isDefault = isDefault;
+        this.isDefaultCurrency = isDefaultCurrency;
     }
 }

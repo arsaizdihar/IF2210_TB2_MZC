@@ -1,7 +1,6 @@
 package mzc.plugin_currency.adapter;
 
 import lombok.Getter;
-import lombok.Setter;
 import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_currency.CurrencyPlugin;
 import mzc.plugin_currency.adapter.base.ICurrencyAdapter;
@@ -20,7 +19,6 @@ public class CurrencyManager {
     protected static ICurrencyAdapter adapter;
 
     @Getter
-    @Setter
     protected static Currency defaultCurrency;
 
     public static @NotNull ICurrencyAdapter getAdapter() {
@@ -49,7 +47,7 @@ public class CurrencyManager {
     }
 
     public static void loadDefault() {
-        var currency = adapter.getAll().stream().filter(Currency::isDefault).findFirst();
+        var currency = adapter.getAll().stream().filter(Currency::isDefaultCurrency).findFirst();
 
         if (currency.isEmpty()) {
             var alternative = new Currency("Rp", "Rupiah", new BigDecimal(1), true);
