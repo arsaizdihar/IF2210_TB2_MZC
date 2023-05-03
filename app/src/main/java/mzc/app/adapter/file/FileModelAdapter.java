@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {
 
@@ -43,6 +42,16 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
         }
         getData().put(Long.toString(item.getId()), item);
         commit();
+    }
+
+    @Override
+    public void deleteById(long id) {
+        getData().remove(Long.toString(id));
+    }
+
+    @Override
+    public void delete(@NotNull T model) {
+        deleteById(model.getId());
     }
 
     @Override

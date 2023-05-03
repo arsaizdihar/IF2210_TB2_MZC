@@ -26,6 +26,21 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
         return session.get(getType(), id);
     }
 
+    @Override
+    public void deleteById(long id) {
+        var entityManager = session.getEntityManagerFactory().createEntityManager();
+        var model = entityManager.find(getClass(), id);
+        entityManager.remove(model);
+        entityManager.flush();
+        entityManager.clear();
+        entityManager.close();
+    }
+
+    @Override
+    public void delete(@NotNull T model) {
+        deleteById(model.getId());
+    }
+
     public void persist(@NotNull T item) {
         Transaction tx = session.beginTransaction();
         session.persist(item);
