@@ -79,7 +79,7 @@ public class Product extends BaseModel {
     }
 
     public void updateImage(String realPath) throws IOException {
-        String dstPath = FileManager.getDataStorePath(realPath);
+        String dstPath = FileManager.getRandomizedDataStorePath(realPath);
         FileManager.copyFile(realPath, dstPath);
         imagePath = dstPath;
         image = null;

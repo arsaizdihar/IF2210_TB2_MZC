@@ -13,16 +13,18 @@ public class Main {
         app.init();
         app.postInit();
 
-        if (args.length == 2 || args.length == 3) {
-            if (!args[0].equals("seed")) {
-                throw new RuntimeException("Seeder usage: java ...jar seed absolute-image-path [force]");
-            }
+        for (var arg : args) {
+            if (arg.startsWith("--seed")) {
+                var adapter = new AdapterManager();
 
-            var adapter = new AdapterManager();
+                var split = arg.split("=");
 
-            if (adapter.getAdapter().getProduct().getAll().size() == 0 || args.length == 3) {
+                if (split.length < 2) {
+                    throw new RuntimeException("Invalid command. Format: --seed=\"filepath\"");
+                }
+
                 var productAdapter = adapter.getAdapter().getProduct();
-                Product.getSeed(args[1]).forEach(productAdapter::persist);
+                Product.getSeed(split[1]).forEach(productAdapter::persist);
             }
         }
 
