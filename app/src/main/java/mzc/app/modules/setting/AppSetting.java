@@ -3,7 +3,6 @@ package mzc.app.modules.setting;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import mzc.app.adapter.base.AdapterConfig;
 import mzc.app.adapter.base.AdapterType;
 
 import java.io.FileInputStream;
@@ -81,9 +80,9 @@ public class AppSetting extends BaseSetting {
         } catch (IOException | ClassNotFoundException ignored) {
             result = new AppSetting(
                     AdapterType.OBJ,
-                    AdapterConfig.getBaseDataPath(),
-                    AdapterConfig.getBaseDataPath(),
-                    AdapterConfig.getBaseDataPath(),
+                    "./data/json/",
+                    "./data/xml/",
+                    "./data/obj/",
                     "jdbc:mysql://root:root@localhost:3306/mzc",
                     "jdbc:mysql://root:root@localhost:3306/mzcraw",
                     new ArrayList<>()
