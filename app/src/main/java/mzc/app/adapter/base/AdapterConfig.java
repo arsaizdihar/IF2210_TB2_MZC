@@ -20,6 +20,8 @@ public class AdapterConfig {
             case JSON -> result = AppSettingManager.get().getJSONPath();
             case XML -> result = AppSettingManager.get().getXMLPath();
             case OBJ -> result = AppSettingManager.get().getOBJPath();
+            case SQLORM -> result = "data/orm";
+            case SQLRaw -> result = "data/sql";
         }
 
         return result;
