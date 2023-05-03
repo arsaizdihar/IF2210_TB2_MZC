@@ -54,8 +54,12 @@ public abstract class SplitPageViewModel extends PageViewModel {
 
     public void setRight(RightSideView<?> right) {
         assert left != null: "Must set left side first";
-        left.getViewModel().createView(right);
         this.right = right;
-        splitView.add(right.getView(), 1, 0);
+        if (right == null) {
+            splitView.add(null, 1, 0);
+        } else {
+            left.getViewModel().createView(right);
+            splitView.add(right.getView(), 1, 0);
+        }
     }
 }

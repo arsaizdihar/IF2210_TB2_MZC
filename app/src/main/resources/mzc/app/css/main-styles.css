@@ -44,3 +44,8 @@
     -fx-border-width: 2px;
     -fx-border-color: -fx-gray-300;
 }
+
+.text-field {
+
+    -fx-display-caret: true;
+}

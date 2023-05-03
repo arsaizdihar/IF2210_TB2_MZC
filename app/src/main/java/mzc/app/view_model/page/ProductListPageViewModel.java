@@ -12,6 +12,5 @@ public class ProductListPageViewModel extends SplitPageViewModel {
     public void init() {
         super.init();
         this.setLeft(new LeftSideProductView());
-        this.setRight(new RightSideProductView());
     }
 }
