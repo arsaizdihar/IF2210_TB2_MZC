@@ -19,7 +19,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
         private final State<Bill> bill = new State<>(null);
 
         @Getter
-        private final State<Boolean> shouldUpdate = new State<>(true);
+        private final State<Boolean> shouldUpdateSummary = new State<>(true);
 
         private final IMainAdapter adapter;
 
@@ -35,8 +35,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
             this.adapter.getBill().persist(newBill);
             this.bill.setValue(newBill);
 
-            this.shouldUpdate.setValue(true);
-            this.shouldUpdate.forceUpdate();
+            this.shouldUpdateSummary.setValue(true);
         }
 
         public void loadBill(Customer customer) {
@@ -52,8 +51,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
                 this.bill.setValue(first.get());
             }
 
-            this.shouldUpdate.setValue(true);
-            this.shouldUpdate.forceUpdate();
+            this.shouldUpdateSummary.setValue(true);
         }
     }
 

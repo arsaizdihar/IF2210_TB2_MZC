@@ -42,17 +42,15 @@ public class ProductViewModel extends BaseViewModel {
 
         this.increment.setOnAction(e -> {
             counter.setValue(counter.getValue() + 1);
-            getAdapter().getProductBill().persist(this.productBill);
-            useContext(CashierPageViewModel.CashierContext.class).getValue().getShouldUpdate().setValue(true);
         });
 
         this.decrement.setOnAction(e -> {
             if (counter.getValue() > 0) {
                 counter.setValue(counter.getValue() - 1);
-                getAdapter().getProductBill().persist(this.productBill);
-                useContext(CashierPageViewModel.CashierContext.class).getValue().getShouldUpdate().setValue(true);
             }
         });
+
+        var cashierContext = useContext(CashierPageViewModel.CashierContext.class).getValue();
 
         this.counter.addListener((observableValue, prev, next) -> {
             if (next == 0) {
@@ -73,6 +71,8 @@ public class ProductViewModel extends BaseViewModel {
 
             this.productBill.setAmount(next);
             getAdapter().getProductBill().persist(this.productBill);
+            System.out.println("Updating counter. Telling to update summary.");
+            cashierContext.getShouldUpdateSummary().setValue(true);
         });
     }
 
