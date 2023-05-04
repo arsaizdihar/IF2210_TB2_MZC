@@ -34,6 +34,9 @@ public class CashierPageViewModel extends SplitPageViewModel {
             newBill.setCustomer(customer);
             this.adapter.getBill().persist(newBill);
             this.bill.setValue(newBill);
+
+            this.shouldUpdate.setValue(true);
+            this.shouldUpdate.forceUpdate();
         }
 
         public void loadBill(Customer customer) {
@@ -48,6 +51,9 @@ public class CashierPageViewModel extends SplitPageViewModel {
             } else {
                 this.bill.setValue(first.get());
             }
+
+            this.shouldUpdate.setValue(true);
+            this.shouldUpdate.forceUpdate();
         }
     }
 
