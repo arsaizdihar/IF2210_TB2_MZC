@@ -5,16 +5,18 @@ import lombok.Getter;
 import mzc.app.model.ProductBill;
 import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.price.ItemPrice;
-import mzc.app.utils.Tuple;
 import mzc.app.utils.reactive.Context;
 import mzc.app.utils.reactive.State;
 import mzc.app.view.components.cashier.CustomerSelectorView;
 import mzc.app.view.components.cashier.ItemsView;
+import mzc.app.view.components.cashier.SubtotalView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
 import mzc.app.view_model.page.CashierPageViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PaymentSummaryViewModel extends RightSideViewModel {
     public static class PaymentSummaryContext {
@@ -22,11 +24,14 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
         private State<List<ProductBill>> products = new State<>(new ArrayList<>());
 
         @Getter
-        private State<List<Tuple<ProductBill, ItemPrice>>> productItems = new State<>(new ArrayList<>());
+        private State<Map<ProductBill, ItemPrice>> productItems = new State<>(new HashMap<>());
     }
 
     @Getter
     private CustomerSelectorView customerSelector = new CustomerSelectorView();
+
+    @Getter
+    private SubtotalView totalView = new SubtotalView();
 
     @Getter
     private ItemsView itemsView = new ItemsView();
@@ -51,7 +56,7 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
                 System.out.println(productBill.getProductId() + " with amount " + productBill.getAmount());
                 if (productBill.getAmount() > 0) {
                     ItemPrice itemPrice = new ItemPrice(productBill.getAmount(), PriceFactory.createPriceView(productBill.getProduct().getPrice()));
-                    paymentContext.getValue().getProductItems().getValue().add(new Tuple<>(productBill, itemPrice));
+                    paymentContext.getValue().getProductItems().getValue().put(productBill, itemPrice);
                 }
             });
 
@@ -71,6 +76,7 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
 
         createView(this.customerSelector);
         createView(this.itemsView);
+        createView(this.totalView);
         reloadSummary();
     }
 

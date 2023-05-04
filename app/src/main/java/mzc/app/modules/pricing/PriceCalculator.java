@@ -24,7 +24,7 @@ public class PriceCalculator {
     public List<PricePipelineResult> calculate(@NonNull ItemListPrice items) {
         List<PricePipelineResult> result = new ArrayList<>();
 
-        PricePipelineResult current = new PricePipelineResult("Subtotal", items, items);
+        PricePipelineResult current = new PricePipelineResult("Subtotal", PriceFactory.createPriceView(items), PriceFactory.createPriceView(items));
         result.add(current);
 
         for (var pipeline : this.fixedPipelines) {

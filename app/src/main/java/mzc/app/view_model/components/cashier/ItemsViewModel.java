@@ -15,14 +15,14 @@ public class ItemsViewModel extends BaseViewModel {
 
         var context = useContext(PaymentSummaryViewModel.PaymentSummaryContext.class).getValue();
 
-        context.getProductItems().addListener(observable -> {
-            itemList.getChildren().clear();
+        context.getProductItems().addListener(((observableValue, prev, productItems) -> {
+            this.itemList.getChildren().clear();
 
-            context.getProductItems().getValue().forEach(pair -> {
-                itemList.getChildren().add(new Label(pair.x.getProduct().getName() + " " + pair.y.toString()));
+            productItems.forEach((key, value) -> {
+                itemList.getChildren().add(new Label(key.getProduct().getName() + " " + value.toString()));
             });
 
-            System.out.println("Listeing for product items update (ItemView)");
-        });
+            System.out.println("Listening for product items update (ItemView)");
+        }));
     }
 }

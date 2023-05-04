@@ -1,22 +1,24 @@
 package mzc.app.model;
 
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 
 @MappedSuperclass
-@Getter @Setter
+@Getter
+@Setter
 public class BaseModel implements Serializable {
     @EqualCheck
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected long id;
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
@@ -36,5 +38,10 @@ public class BaseModel implements Serializable {
             }
         }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
     }
 }

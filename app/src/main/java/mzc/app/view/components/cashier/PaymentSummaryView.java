@@ -16,6 +16,7 @@ public class PaymentSummaryView extends RightSideView<PaymentSummaryViewModel> {
     public void init() {
         this.getViewModel().getContainer().getChildren().add(this.getViewModel().getCustomerSelector().getView());
         this.getViewModel().getContainer().getChildren().add(this.getViewModel().getItemsView().getView());
+        this.getViewModel().getContainer().getChildren().add(this.getViewModel().getTotalView().getView());
     }
 
     @Override

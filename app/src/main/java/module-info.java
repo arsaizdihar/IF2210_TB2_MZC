@@ -24,11 +24,12 @@ open module mzc.app {
     exports mzc.app.adapter.base;
     exports mzc.app.modules.setting;
     exports mzc.app.modules.pricing;
+    exports mzc.app.modules.pricing.pipelines;
+    exports mzc.app.modules.pricing.price;
     exports mzc.app.modules.plugins;
     exports mzc.app.bootstrap;
     exports mzc.app.annotation;
     exports mzc.app.model;
-    exports mzc.app.modules.pricing.price;
     exports mzc.app.adapter.obj;
     exports mzc.app.adapter.file;
     exports mzc.app.adapter.xml;
