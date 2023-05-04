@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 @ModelInject(LeftSideProductViewModel.class)
 public class LeftSideProductView extends LeftSideView<LeftSideProductViewModel> {
-    public LeftSideProductView() {
+    public  LeftSideProductView() {
         super("Daftar Barang", "Tambah Barang");
     }
 }
