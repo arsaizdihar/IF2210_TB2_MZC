@@ -47,6 +47,7 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
     @Override
     public void deleteById(long id) {
         getData().remove(Long.toString(id));
+        commit();
     }
 
     @Override

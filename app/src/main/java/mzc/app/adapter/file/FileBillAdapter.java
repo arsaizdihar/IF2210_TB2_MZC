@@ -19,9 +19,9 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
     @Getter
     private final @NotNull FileProductBillAdapter productBillAdapter;
 
-    protected FileBillAdapter(@NotNull IFileDataLoader loader, @NotNull FileProductAdapter productAdapter) {
+    protected FileBillAdapter(@NotNull IFileDataLoader loader, @NotNull FileProductBillAdapter productBillAdapter) {
         super(loader);
-        this.productBillAdapter = new FileProductBillAdapter(loader, productAdapter);
+        this.productBillAdapter = productBillAdapter;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
 
     @Override
     public @NotNull List<ProductBill> getProducts(Bill bill) {
-        if (bill.isProductsLoaded()) return bill.getProducts();
+//        if (bill.isProductsLoaded()) return bill.getProducts();
         List<ProductBill> result = getProductBillAdapter().getByBillId(bill.getId());
         bill.setProductsLoaded(true);
         bill.setProducts(result);

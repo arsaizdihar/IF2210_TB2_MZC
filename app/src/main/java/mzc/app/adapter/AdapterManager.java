@@ -51,5 +51,4 @@ public class AdapterManager {
         map.put(AdapterType.SQLORM, ORMAdapter.class);
         return map;
     }
-
 }

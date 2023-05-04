@@ -2,6 +2,7 @@ package mzc.app.bootstrap;
 
 import lombok.Getter;
 import lombok.NonNull;
+import mzc.app.adapter.Datastore;
 import mzc.app.adapter.base.AdapterType;
 import mzc.app.adapter.orm.SessionManager;
 import mzc.app.modules.plugins.PluginLoader;
@@ -41,6 +42,9 @@ public class App {
         if (this.appSetting.getStorageMethod() == AdapterType.SQLORM) {
             this.hibernateConfiguration = SessionManager.getConfiguration();
         }
+
+        // load adapter
+        Datastore.initManager();
     }
 
     public void init() {

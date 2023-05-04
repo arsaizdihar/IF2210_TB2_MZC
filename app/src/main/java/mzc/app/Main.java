@@ -1,7 +1,7 @@
 package mzc.app;
 
 import javafx.application.Application;
-import mzc.app.adapter.AdapterManager;
+import mzc.app.adapter.Datastore;
 import mzc.app.bootstrap.App;
 import mzc.app.bootstrap.AppManager;
 import mzc.app.bootstrap.GUIApp;
@@ -16,7 +16,7 @@ public class Main {
 
         for (var arg : args) {
             if (arg.startsWith("--seed")) {
-                var adapter = new AdapterManager();
+                var adapter = Datastore.getManager();
 
                 var split = arg.split("=");
 

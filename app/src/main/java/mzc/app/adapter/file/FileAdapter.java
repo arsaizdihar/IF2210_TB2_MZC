@@ -27,13 +27,13 @@ public abstract class FileAdapter implements IMainAdapter {
 
     public FileAdapter(@NotNull IFileDataLoader loader) {
         this.product = new FileProductAdapter(loader);
-        this.bill = new FileBillAdapter(loader, product);
+        this.productBill = new FileProductBillAdapter(loader, this.product);
+        this.bill = new FileBillAdapter(loader, this.productBill);
         this.customer = new FileCustomerAdapter(loader, bill);
         this.bill.setCustomerAdapter(this.customer);
         this.productHistory = new FileProductHistoryAdapter(loader);
         this.fixedBill = new FileFixedBillAdapter(loader, productHistory);
         this.fixedBill.setCustomerAdapter(this.customer);
-        this.productBill = new FileProductBillAdapter(loader, this.product);
     }
 
     @Override
@@ -48,5 +48,4 @@ public abstract class FileAdapter implements IMainAdapter {
         } catch (IOException ignored) {
         }
     }
-
 }
