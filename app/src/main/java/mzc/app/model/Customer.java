@@ -1,17 +1,19 @@
 package mzc.app.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "customer")
 @Table(name = "customer")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Customer extends BaseModel {
     @EqualCheck
     @Column
@@ -51,5 +53,20 @@ public class Customer extends BaseModel {
         this.name = name;
         this.phone = phone;
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public static List<Customer> getSeeder() {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(new Customer("Arsa Izdihar Islam", "089512341234", CustomerType.MEMBER));
+        customers.add(new Customer("Akbar Maulana Ridho", "089512341235", CustomerType.MEMBER));
+        customers.add(new Customer("Fakhri Muhammad Mahendra", "089512341236", CustomerType.MEMBER));
+        customers.add(new Customer("Razzan Yoni", "0895123412347", CustomerType.VIP));
+        customers.add(new Customer("Kenneth Ezekiel Suprantoni", "089512341234", CustomerType.VIP));
+        return customers;
     }
 }
