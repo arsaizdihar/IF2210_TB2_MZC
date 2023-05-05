@@ -127,9 +127,10 @@ public class SubtotalViewModel extends BaseViewModel {
             alert.setTitle("Checkout Failed");
             alert.setHeaderText(null);
             alert.setContentText(String.join("\n", validation));
-            alert.showAndWait();
 
             cashierContext.loadBill(oldBill.getCustomer());
+
+            alert.showAndWait();
         } else {
             placeOrder();
 
@@ -137,13 +138,14 @@ public class SubtotalViewModel extends BaseViewModel {
             alert.setTitle("Checkout Success");
             alert.setHeaderText(null);
             alert.setContentText("Pembelian berhasil");
-            alert.showAndWait();
 
             if (oldBill.getCustomer().getType() != CustomerType.BASIC) {
                 cashierContext.loadBill(oldBill.getCustomer());
             } else {
                 cashierContext.loadBill();
             }
+
+            alert.showAndWait();
         }
     }
 
@@ -219,6 +221,7 @@ public class SubtotalViewModel extends BaseViewModel {
 
             var product = productBill.getProduct();
             product.setStock(product.getStock() - productBill.getAmount());
+            getAdapter().getProduct().persist(product);
         });
 
         // calculate pipelines

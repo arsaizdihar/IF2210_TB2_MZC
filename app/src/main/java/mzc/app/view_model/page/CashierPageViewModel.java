@@ -22,6 +22,9 @@ public class CashierPageViewModel extends SplitPageViewModel {
         @Getter
         private State<Customer> customer = new State<>(null);
 
+        @Getter
+        private State<Customer> guestCustomer = new State<>(null);
+
         private final IMainAdapter adapter;
 
         public CashierContext(IMainAdapter adapter) {
@@ -38,6 +41,8 @@ public class CashierPageViewModel extends SplitPageViewModel {
 
             this.getCustomer().setValue(customer);
             this.getBill().setValue(newBill);
+
+            this.getGuestCustomer().setValue(customer);
         }
 
         public void loadBill(Customer customer) {
@@ -77,7 +82,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
 
         context.getCustomer().addListener((observableValue, prev, customer) -> {
             if (customer != null) {
-                System.out.println("Customer changed. Loading bill");
+                System.out.println("Customer changed. Loading bill for " + customer.getName());
                 context.loadBill(customer);
             } else {
                 System.out.println("Customer is null");

@@ -2,6 +2,7 @@ package mzc.app.view_model.components.cashier;
 
 import javafx.scene.layout.VBox;
 import lombok.Getter;
+import mzc.app.model.Bill;
 import mzc.app.model.ProductBill;
 import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.price.ItemPrice;
@@ -44,20 +45,19 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
 
         var cashierContext = useContext(CashierPageViewModel.CashierContext.class).getValue();
 
-        cashierContext.getBill().addListener((observableValue, bill, t1) -> {
-            reloadSummary();
+        cashierContext.getBill().addListener((observableValue, prev, next) -> {
+            reloadSummary(next);
         });
 
         createView(this.customerSelector);
         createView(this.itemsView);
         createView(this.totalView);
-        reloadSummary();
+        reloadSummary(cashierContext.getBill().getValue());
     }
 
-    public void reloadSummary() {
+    public void reloadSummary(Bill bill) {
         var paymentContext = useContext(PaymentSummaryContext.class).getValue();
-        var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
-        var productBills = getAdapter().getBill().getProducts(context.getBill().getValue());
+        var productBills = getAdapter().getBill().getProducts(bill);
         System.out.println("Reloading product summary (product bill) got size " + productBills.size());
 
         paymentContext.getProductItems().getValue().clear();

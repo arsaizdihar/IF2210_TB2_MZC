@@ -2,10 +2,12 @@ package mzc.app.bootstrap;
 
 import mzc.app.view.page.MainPageView;
 import mzc.app.view.page.CashierPageView;
+import mzc.app.view.page.MainPageView;
 
 import mzc.app.view.page.MemberListPageView;
 import mzc.app.view.page.ProductListPageView;
 import mzc.app.view.page.SettingsPageView;
+
 
 import java.util.HashMap;
 import java.util.Map;

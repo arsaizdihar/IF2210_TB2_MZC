@@ -5,6 +5,8 @@ import lombok.NonNull;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public abstract class BaseSetting implements Serializable {
     protected final @NonNull String settingPath;
@@ -15,6 +17,7 @@ public abstract class BaseSetting implements Serializable {
 
     public void save() {
         try {
+            Files.createDirectories(Paths.get(settingPath).getParent().toAbsolutePath());
             FileOutputStream file = new FileOutputStream(this.settingPath);
             ObjectOutputStream out = new ObjectOutputStream(file);
 
