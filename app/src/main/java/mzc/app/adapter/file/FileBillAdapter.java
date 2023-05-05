@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdapter {
     @Setter
@@ -33,19 +33,19 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
     }
 
     @Override
-    public @NotNull List<Bill> getByCustomerId(long customerId) {
-        return loadAllCustomers(getClones(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).collect(Collectors.toList())));
+    public @NotNull Set<Bill> getByCustomerId(long customerId) {
+        return loadAllCustomers(getClones(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId))));
     }
 
     @Override
-    public @NotNull List<Bill> getAll() {
+    public @NotNull Set<Bill> getAll() {
         return loadAllCustomers(super.getAll());
     }
 
     @Override
-    public @NotNull List<ProductBill> getProducts(Bill bill) {
+    public @NotNull Set<ProductBill> getProducts(Bill bill) {
         if (bill.isProductsLoaded()) return bill.getProducts();
-        List<ProductBill> result = getProductBillAdapter().getByBillId(bill.getId());
+        Set<ProductBill> result = getProductBillAdapter().getByBillId(bill.getId());
         bill.setProductsLoaded(true);
         bill.setProducts(result);
         return result;
@@ -56,7 +56,7 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
         return Bill.class;
     }
 
-    public List<Bill> loadAllCustomers(List<Bill> bills) {
+    public Set<Bill> loadAllCustomers(Set<Bill> bills) {
         bills.forEach(b -> b.setCustomer(customerAdapter.getById(b.getCustomerId())));
         return bills;
     }

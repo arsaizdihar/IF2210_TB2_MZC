@@ -11,6 +11,8 @@ import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
 
@@ -19,16 +21,16 @@ class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     }
 
     @Override
-    public @NotNull List<Bill> getByCustomerId(long customerId) {
+    public @NotNull Set<Bill> getByCustomerId(long customerId) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Bill> cr = cb.createQuery(Bill.class);
         Root<Bill> root = cr.from(Bill.class);
         cr.select(root).where(cb.equal(root.get("customerId"), customerId));
-        return session.createQuery(cr).list();
+        return session.createQuery(cr).stream().collect(Collectors.toSet());
     }
 
     @Override
-    public @NotNull List<ProductBill> getProducts(@NotNull Bill bill) {
+    public @NotNull Set<ProductBill> getProducts(@NotNull Bill bill) {
         return bill.getProducts();
     }
 

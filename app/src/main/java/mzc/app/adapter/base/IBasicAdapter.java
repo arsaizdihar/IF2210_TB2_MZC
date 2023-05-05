@@ -4,6 +4,7 @@ import mzc.app.model.BaseModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IBasicAdapter<T extends BaseModel> {
     T getById(long id);
@@ -14,7 +15,7 @@ public interface IBasicAdapter<T extends BaseModel> {
 
     void delete(@NotNull T model);
 
-    @NotNull List<T> getAll();
+    @NotNull Set<T> getAll();
 
-    @NotNull List<T> getInIds(@NotNull List<Long> ids);
+    @NotNull Set<T> getInIds(@NotNull Set<Long> ids);
 }

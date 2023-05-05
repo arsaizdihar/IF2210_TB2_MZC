@@ -7,10 +7,9 @@ import mzc.app.model.BaseModel;
 import mzc.app.model.ISoftDelete;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {
 
@@ -34,9 +33,8 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
     }
 
     @Override
-    public @NotNull List<T> getInIds(@NotNull List<Long> ids) {
-        var set = new HashSet<>(ids);
-        return getClones(getData().values().stream().filter(each -> set.contains(each.getId())).toList());
+    public @NotNull Set<T> getInIds(@NotNull Set<Long> ids) {
+        return getClones(getData().values().stream().filter(each -> ids.contains(each.getId())));
     }
 
     @Override
@@ -68,15 +66,15 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
     }
 
     @Override
-    public @NotNull List<T> getAll() {
+    public @NotNull Set<T> getAll() {
         if (ISoftDelete.class.isAssignableFrom(this.getType())) {
             return getClones(getData().values().stream().filter(each -> {
                 var model = (ISoftDelete) each;
                 return !model.getDeleted();
-            }).toList());
+            }));
         }
 
-        return getClones(new ArrayList<>(getData().values()));
+        return getClones(getData().values());
     }
 
     @SuppressWarnings("unchecked")
@@ -85,8 +83,12 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
         return (T) model.clone();
     }
 
-    public List<T> getClones(List<T> models) {
-        return models.stream().map(this::getClone).toList();
+    public Set<T> getClones(Collection<T> models) {
+        return models.stream().map(this::getClone).collect(Collectors.toSet());
+    }
+
+    public Set<T> getClones(Stream<T> models) {
+        return models.map(this::getClone).collect(Collectors.toSet());
     }
 
     public void commit() {

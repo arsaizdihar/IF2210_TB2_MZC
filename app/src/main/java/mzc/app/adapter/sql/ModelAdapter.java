@@ -4,14 +4,12 @@ import com.github.vertical_blank.sqlformatter.SqlFormatter;
 import com.github.vertical_blank.sqlformatter.core.FormatConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import mzc.app.adapter.base.IBasicAdapter;
 import mzc.app.model.BaseModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -97,7 +95,7 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
     }
 
     @Override
-    public @NotNull List<T> getInIds(@NotNull List<Long> ids) {
+    public @NotNull Set<T> getInIds(@NotNull Set<Long> ids) {
         var query = SqlFormatter.format("SELECT * FROM ? WHERE id IN ?",
                 FormatConfig.builder().params(List.of(getTableName(), String.format("(%s)",
                         ids.stream().map(String::valueOf).collect(Collectors.joining(", "))
@@ -105,7 +103,7 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
         try (var con = ds.getConnection(); var stat = con.prepareStatement(query); var rs = stat.executeQuery()) {
             return deserializeResults(rs);
         } catch (SQLException e) {
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
     }
 
@@ -115,12 +113,12 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
     }
 
     @Override
-    public @NotNull List<T> getAll() {
+    public @NotNull Set<T> getAll() {
         var query = SqlFormatter.format("SELECT * FROM ?", Collections.singletonList(getTableName()));
         try(var con = ds.getConnection(); var stat = con.prepareStatement(query); var rs = stat.executeQuery()) {
             return deserializeResults(rs);
         } catch (SQLException e) {
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
     }
 
@@ -152,8 +150,8 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
         }
     }
 
-    public List<T> deserializeResults(ResultSet res) {
-        List<T> models = new ArrayList<>();
+    public Set<T> deserializeResults(ResultSet res) {
+        Set<T> models = new LinkedHashSet<>();
         try {
             while (res.next()) {
                 models.add(deserializeResult(res));

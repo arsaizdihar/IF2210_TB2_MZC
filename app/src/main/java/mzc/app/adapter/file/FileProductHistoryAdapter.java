@@ -7,7 +7,7 @@ import mzc.app.adapter.base.IProductHistoryAdapter;
 import mzc.app.model.ProductHistory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FileProductHistoryAdapter extends FileModelAdapter<ProductHistory> implements IProductHistoryAdapter {
@@ -24,8 +24,8 @@ public class FileProductHistoryAdapter extends FileModelAdapter<ProductHistory> 
     }
 
     @Override
-    public @NotNull List<ProductHistory> getByBillId(long id) {
-        var result = getClones(getData().values().stream().filter((v) -> v.getBillId() == id).collect(Collectors.toList()));
+    public @NotNull Set<ProductHistory> getByBillId(long id) {
+        var result = getClones(getData().values().stream().filter((v) -> v.getBillId() == id));
         result.forEach(p -> p.setBill(billAdapter.getById(p.getBillId())));
         return result;
     }

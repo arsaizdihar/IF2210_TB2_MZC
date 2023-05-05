@@ -8,7 +8,9 @@ import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "fixedbill")
 @Table(name = "fixedbill")
@@ -20,7 +22,7 @@ public class FixedBill extends BaseModel {
     private transient boolean productsLoaded = false;
 
     @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private transient List<ProductHistory> products = new ArrayList<>();
+    private transient Set<ProductHistory> products = new LinkedHashSet<>();
 
     @EqualCheck
     @Setter(AccessLevel.NONE)

@@ -20,6 +20,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Set;
 
 public class AdapterTest {
     private IMainAdapter adapter;
@@ -42,7 +43,7 @@ public class AdapterTest {
     public void testCustomer(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         ICustomerAdapter customerAdapter = adapter.getCustomer();
-        List<Customer> customers;
+        Set<Customer> customers;
 
         customers = customerAdapter.getAll();
         Assertions.assertEquals(0, customers.size());
@@ -52,12 +53,13 @@ public class AdapterTest {
         customers = customerAdapter.getAll();
 
         Assertions.assertEquals(1, customers.size());
+        Customer cc = customers.iterator().next();
 
-        Assertions.assertEquals("a\"", customers.get(0).getName());
-        Assertions.assertEquals("1234", customers.get(0).getPhone());
-        Assertions.assertEquals(CustomerType.BASIC, customers.get(0).getType());
+        Assertions.assertEquals("a\"", cc.getName());
+        Assertions.assertEquals("1234", cc.getPhone());
+        Assertions.assertEquals(CustomerType.BASIC, cc.getType());
 
-        Assertions.assertTrue(customers.get(0).equals(c1));
+        Assertions.assertTrue(cc.equals(c1));
 
         Customer c2 = new Customer("b", "12345", CustomerType.MEMBER);
         customerAdapter.persist(c2);
@@ -68,10 +70,11 @@ public class AdapterTest {
         customerAdapter.persist(c3);
 
         customers = customerAdapter.getRegisteredCustomer();
+        var iter = customers.iterator();
 
         Assertions.assertEquals(2, customers.size());
-        Assertions.assertTrue(c2.equals(customers.get(0)));
-        Assertions.assertTrue(c3.equals(customers.get(1)));
+        Assertions.assertTrue(c2.equals(iter.next()));
+        Assertions.assertTrue(c3.equals(iter.next()));
     }
 
     @ParameterizedTest
@@ -89,10 +92,10 @@ public class AdapterTest {
 
         Assertions.assertTrue(bill.equals(adapter.getBill().getById(bill.getId())));
 
-        List<Bill> bills = adapter.getBill().getAll();
+        Set<Bill> bills = adapter.getBill().getAll();
 
         Assertions.assertEquals(1, bills.size());
-        Assertions.assertTrue(bill.equals(bills.get(0)));
+        Assertions.assertTrue(bill.equals(bills.iterator().next()));
         Assertions.assertTrue(bill.getCustomer().equals(c));
     }
 

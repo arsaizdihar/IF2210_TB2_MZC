@@ -8,10 +8,10 @@ import mzc.app.model.Customer;
 import mzc.app.model.FixedBill;
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter {
     private final @NotNull IBillAdapter billAdapter;
@@ -26,26 +26,26 @@ public class CustomerAdapter extends ModelAdapter<Customer> implements ICustomer
     }
 
     @Override
-    public @NotNull List<Bill> getBills(@NotNull Customer customer) {
+    public @NotNull Set<Bill> getBills(@NotNull Customer customer) {
         if (customer.isBillsLoaded()) return customer.getBills();
         customer.setBillsLoaded(true);
-        List<Bill> result = billAdapter.getByCustomerId(customer.getId());
+        Set<Bill> result = billAdapter.getByCustomerId(customer.getId());
         customer.setBills(result);
         return result;
     }
 
     @Override
-    public @NotNull List<FixedBill> getFixedBills(@NotNull Customer customer) {
+    public @NotNull Set<FixedBill> getFixedBills(@NotNull Customer customer) {
         return customer.getFixedBills();
     }
 
     @Override
-    public List<Customer> getRegisteredCustomer() {
+    public @NotNull Set<Customer> getRegisteredCustomer() {
         try (var conn = ds.getConnection(); var stat = conn.prepareStatement("SELECT * FROM customer WHERE type <> 0"); var rs = stat.executeQuery()) {
             return deserializeResults(rs);
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
     }
 }

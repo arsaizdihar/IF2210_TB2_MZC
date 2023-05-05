@@ -6,11 +6,12 @@ import mzc.app.model.FixedBill;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ICustomerAdapter extends IBasicAdapter<Customer> {
-    @NotNull List<Bill> getBills(@NotNull Customer customer);
+    @NotNull Set<Bill> getBills(@NotNull Customer customer);
 
-    @NotNull List<FixedBill> getFixedBills(@NotNull Customer customer);
+    @NotNull Set<FixedBill> getFixedBills(@NotNull Customer customer);
 
-    List<Customer> getRegisteredCustomer();
+    @NotNull Set<Customer> getRegisteredCustomer();
 }

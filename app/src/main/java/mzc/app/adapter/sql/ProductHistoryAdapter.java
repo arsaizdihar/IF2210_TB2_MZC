@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class ProductHistoryAdapter extends ModelAdapter<ProductHistory> implements IProductHistoryAdapter {
     public ProductHistoryAdapter(@NotNull HikariDataSource ds) {
@@ -17,13 +18,13 @@ public class ProductHistoryAdapter extends ModelAdapter<ProductHistory> implemen
     }
 
     @Override
-    public @NotNull List<ProductHistory> getByBillId(long id) {
+    public @NotNull Set<ProductHistory> getByBillId(long id) {
         var query = SqlFormatter.format("SELECT * FROM producthistory WHERE billId = ?",
                 Collections.singletonList(id));
         try (var con = this.ds.getConnection(); var stmt = con.prepareStatement(query); var res = stmt.executeQuery()) {
             return deserializeResults(res);
         } catch (SQLException e) {
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
     }
 

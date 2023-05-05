@@ -5,10 +5,11 @@ import mzc.app.model.ProductBill;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IBillAdapter extends IBasicAdapter<Bill> {
 
-    @NotNull List<Bill> getByCustomerId(long memberId);
+    @NotNull Set<Bill> getByCustomerId(long memberId);
 
-    @NotNull List<ProductBill> getProducts(Bill bill);
+    @NotNull Set<ProductBill> getProducts(Bill bill);
 }

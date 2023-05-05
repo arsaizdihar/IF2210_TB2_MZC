@@ -7,11 +7,8 @@ import mzc.app.model.FixedBill;
 import mzc.app.model.ProductHistory;
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class FixedBillAdapter extends ModelAdapter<FixedBill> implements IFixedBillAdapter {
     private final @NotNull ProductHistoryAdapter productHistoryAdapter;
@@ -21,18 +18,18 @@ public class FixedBillAdapter extends ModelAdapter<FixedBill> implements IFixedB
     }
 
     @Override
-    public @NotNull List<FixedBill> getByCustomerId(long customerId) {
+    public @NotNull Set<FixedBill> getByCustomerId(long customerId) {
         var query = SqlFormatter.format("SELECT * FROM fixedbill WHERE customerId = ?",
                 Collections.singletonList(customerId));
         try (var con = this.ds.getConnection(); var stmt = con.prepareStatement(query); var rs = stmt.executeQuery()) {
             return deserializeResults(rs);
         } catch (SQLException e) {
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
     }
 
     @Override
-    public @NotNull List<ProductHistory> getProducts(FixedBill bill) {
+    public @NotNull Set<ProductHistory> getProducts(FixedBill bill) {
         if (bill.isProductsLoaded()) {
             return bill.getProducts();
         }

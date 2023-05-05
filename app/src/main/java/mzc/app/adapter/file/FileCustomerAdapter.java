@@ -10,6 +10,7 @@ import mzc.app.model.FixedBill;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FileCustomerAdapter extends FileModelAdapter<Customer> implements ICustomerAdapter {
@@ -24,26 +25,26 @@ public class FileCustomerAdapter extends FileModelAdapter<Customer> implements I
     }
 
     @Override
-    public @NotNull List<Bill> getBills(@NotNull Customer customer) {
+    public @NotNull Set<Bill> getBills(@NotNull Customer customer) {
         if (customer.isBillsLoaded()) return customer.getBills();
         customer.setBillsLoaded(true);
-        List<Bill> result = billAdapter.getByCustomerId(customer.getId());
+        Set<Bill> result = billAdapter.getByCustomerId(customer.getId());
         customer.setBills(result);
         return result;
     }
 
     @Override
-    public @NotNull List<FixedBill> getFixedBills(@NotNull Customer customer) {
+    public @NotNull Set<FixedBill> getFixedBills(@NotNull Customer customer) {
         if (customer.isFixedBillsLoaded()) return customer.getFixedBills();
         customer.setFixedBillsLoaded(true);
-        List<FixedBill> result = fixedBillAdapter.getByCustomerId(customer.getId());
+        Set<FixedBill> result = fixedBillAdapter.getByCustomerId(customer.getId());
         customer.setFixedBills(result);
         return result;
     }
 
     @Override
-    public List<Customer> getRegisteredCustomer() {
-        return getClones(getData().values().stream().filter(c -> c.getType() != CustomerType.BASIC).collect(Collectors.toList()));
+    public @NotNull Set<Customer> getRegisteredCustomer() {
+        return getClones(getData().values().stream().filter(c -> c.getType() != CustomerType.BASIC));
     }
 
     @Override

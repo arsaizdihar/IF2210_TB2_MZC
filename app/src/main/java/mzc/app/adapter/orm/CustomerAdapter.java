@@ -9,7 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter {
     public CustomerAdapter(Session session) {
@@ -23,19 +24,19 @@ class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter
     }
 
     @Override
-    public @NotNull List<Bill> getBills(@NotNull Customer customer) {
+    public @NotNull Set<Bill> getBills(@NotNull Customer customer) {
         return customer.getBills();
     }
 
     @Override
-    public @NotNull List<FixedBill> getFixedBills(@NotNull Customer customer) {
+    public @NotNull Set<FixedBill> getFixedBills(@NotNull Customer customer) {
         return customer.getFixedBills();
     }
 
     @Override
-    public List<Customer> getRegisteredCustomer() {
+    public @NotNull Set<Customer> getRegisteredCustomer() {
         Query<Customer> query = session.createQuery("FROM customer C WHERE C.type <> :basic", Customer.class);
         query.setParameter("basic", CustomerType.BASIC);
-        return query.list();
+        return query.stream().collect(Collectors.toSet());
     }
 }

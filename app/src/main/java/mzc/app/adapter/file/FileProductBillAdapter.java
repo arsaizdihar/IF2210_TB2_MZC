@@ -6,6 +6,7 @@ import mzc.app.model.ProductBill;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FileProductBillAdapter extends FileModelAdapter<ProductBill> implements IProductBillAdapter {
@@ -21,8 +22,8 @@ public class FileProductBillAdapter extends FileModelAdapter<ProductBill> implem
         return ProductBill.class;
     }
 
-    public List<ProductBill> getByBillId(long billId) {
-        List<ProductBill> result = getClones(getData().values().stream().filter(p -> p.getBillId() == billId).collect(Collectors.toList()));
+    public Set<ProductBill> getByBillId(long billId) {
+        Set<ProductBill> result = getClones(getData().values().stream().filter(p -> p.getBillId() == billId));
         result.forEach(p -> p.setProduct(productAdapter.getById(p.getProductId())));
         return result;
     }

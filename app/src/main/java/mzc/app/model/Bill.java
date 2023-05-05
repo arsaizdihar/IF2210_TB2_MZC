@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "bill")
 @Table(name = "bill")
@@ -19,7 +21,7 @@ public class Bill extends BaseModel {
     private transient boolean productsLoaded = false;
 
     @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private transient List<ProductBill> products = new ArrayList<>();
+    private transient Set<ProductBill> products = new LinkedHashSet<>();
 
     @Setter(AccessLevel.NONE)
     @Column(insertable = false, updatable = false, name = "customerId")

@@ -4,7 +4,8 @@ import mzc.app.model.ProductHistory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IProductHistoryAdapter extends IBasicAdapter<ProductHistory> {
-    @NotNull List<ProductHistory> getByBillId(long id);
+    @NotNull Set<ProductHistory> getByBillId(long id);
 }

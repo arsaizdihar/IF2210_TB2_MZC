@@ -11,6 +11,8 @@ import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter<T> {
     @Getter
@@ -51,7 +53,7 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
     }
 
     @Override
-    public @NotNull List<T> getInIds(@NotNull List<Long> ids) {
+    public @NotNull Set<T> getInIds(@NotNull Set<Long> ids) {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<T> cr = cb.createQuery(getType());
         cr.from(getType()).get("id").in(ids);
@@ -60,10 +62,10 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
             return session.createQuery(cr).stream().filter(each -> {
                 var model = (ISoftDelete) each;
                 return !model.getDeleted();
-            }).toList();
+            }).collect(Collectors.toSet());
         }
 
-        return session.createQuery(cr).list();
+        return session.createQuery(cr).stream().collect(Collectors.toSet());
     }
 
     public void persist(@NotNull T item) {
@@ -73,7 +75,7 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
     }
 
     @Override
-    public @NotNull List<T> getAll() {
+    public @NotNull Set<T> getAll() {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<T> cr = cb.createQuery(getType());
         cr.from(getType());
@@ -82,9 +84,9 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
             return session.createQuery(cr).stream().filter(each -> {
                 var model = (ISoftDelete) each;
                 return !model.getDeleted();
-            }).toList();
+            }).collect(Collectors.toSet());
         }
 
-        return session.createQuery(cr).list();
+        return session.createQuery(cr).stream().collect(Collectors.toSet());
     }
 }

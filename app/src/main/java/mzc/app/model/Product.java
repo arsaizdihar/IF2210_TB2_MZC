@@ -14,7 +14,9 @@ import mzc.app.utils.FileManager;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "product")
 @Table(name = "product")
@@ -48,7 +50,7 @@ public class Product extends BaseModel implements ISoftDelete {
     private String imagePath;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private transient List<ProductBill> bills = new ArrayList<>();
+    private transient Set<ProductBill> bills = new LinkedHashSet<>();
 
     @Transient
     @Setter(AccessLevel.NONE)

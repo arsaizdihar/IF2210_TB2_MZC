@@ -12,9 +12,7 @@ import mzc.app.model.ProductBill;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
@@ -30,19 +28,19 @@ public class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     }
 
     @Override
-    public @NotNull List<Bill> getByCustomerId(long memberId) {
+    public @NotNull Set<Bill> getByCustomerId(long memberId) {
         var query = SqlFormatter.format("SELECT * FROM bill WHERE customerId = ?",
                 Collections.singletonList(memberId));
         try (var con = ds.getConnection(); var stmt = con.prepareStatement(query); var rs = stmt.executeQuery()) {
             var models = deserializeResults(rs);
             return loadAllCustomers(models);
         } catch (SQLException e) {
-            return new ArrayList<>();
+            return new LinkedHashSet<>();
         }
     }
 
     @Override
-    public @NotNull List<ProductBill> getProducts(Bill bill) {
+    public @NotNull Set<ProductBill> getProducts(Bill bill) {
         if (bill.isProductsLoaded()) {
             return bill.getProducts();
         }
@@ -52,8 +50,8 @@ public class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
         return products;
     }
 
-    public List<Bill> loadAllCustomers(List<Bill> bills) {
-        var customers = customerAdapter.getInIds(bills.stream().map(Bill::getCustomerId).toList());
+    public Set<Bill> loadAllCustomers(Set<Bill> bills) {
+        var customers = customerAdapter.getInIds(bills.stream().map(Bill::getCustomerId).collect(Collectors.toSet()));
         var customersMap = customers.stream().collect(Collectors.toMap(Customer::getId, c -> c));
         bills.forEach(b -> b.setCustomer(customersMap.get(b.getCustomerId())));
         return bills;
