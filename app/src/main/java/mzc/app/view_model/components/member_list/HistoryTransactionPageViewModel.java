@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import lombok.Getter;
 import lombok.Setter;
+import mzc.app.model.Customer;
 import mzc.app.utils.reactive.Context;
 import mzc.app.view_model.base.PageViewModel;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
@@ -20,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 public class HistoryTransactionPageViewModel extends RightSideViewModel {
 //    private final @NotNull VBox titleBox = new VBox();
 //    private final @NotNull BorderPane infoBox = new BorderPane();
+    @Getter @Setter
+    private Customer customer;
     @Getter
     private VBox root = new VBox();
     @Getter
