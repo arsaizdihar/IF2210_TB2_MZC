@@ -6,6 +6,7 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.modules.setting.AppSetting;
 import mzc.app.modules.setting.AppSettingManager;
+import mzc.app.view.components.FileDialogView;
 import org.controlsfx.control.ToggleSwitch;
 
 public class PluginViewModel extends SettingsTabViewModel {
@@ -13,6 +14,11 @@ public class PluginViewModel extends SettingsTabViewModel {
     private final VBox pluginList = new VBox();
     @Getter
     private AppSetting setting = AppSettingManager.get();
+    @Getter FileDialogView addPluginDialog = new FileDialogView(new Button("Tambah Plugin"),
+        file -> {
+            String absolutePath = file.getAbsolutePath();
+            setting.getActivePlugins().add(absolutePath);
+        });
     @Getter
     private final Button pluginsButton = new Button("Simpan Perubahan");
 
@@ -20,11 +26,15 @@ public class PluginViewModel extends SettingsTabViewModel {
     @Override
     public void init() {
         super.init();
+        createView(addPluginDialog);
         setting.getActivePlugins().forEach(plugin -> {
             Label label = new Label(plugin.toString());
-            ToggleSwitch toggleSwitch = new ToggleSwitch(plugin.toString());
             pluginList.getChildren().add(label);
-            pluginList.getChildren().add(toggleSwitch);
         });
+        pluginsButton.setOnAction(
+            event -> {
+                setting.save();
+            }
+        );
     }
 }

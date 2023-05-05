@@ -9,6 +9,7 @@ import mzc.app.modules.plugins.PluginLoader;
 import mzc.app.modules.setting.AppSetting;
 import mzc.app.modules.setting.AppSettingManager;
 import mzc.app.view.components.settings.DataStoreView;
+import mzc.app.view.components.settings.PluginView;
 import mzc.app.view.components.settings.SettingsTabView;
 import org.hibernate.cfg.Configuration;
 
@@ -49,6 +50,7 @@ public class App {
         // bootstrap setting tab list
         this.settingTabs = new HashMap<>();
         this.settingTabs.put("Data Store", DataStoreView.class);
+        this.settingTabs.put("Plugin", PluginView.class);
 
         if (this.appSetting.getStorageMethod() == AdapterType.SQLORM) {
             this.hibernateConfiguration = SessionManager.getConfiguration();

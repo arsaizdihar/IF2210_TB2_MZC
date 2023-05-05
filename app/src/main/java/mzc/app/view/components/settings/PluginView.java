@@ -1,4 +1,18 @@
 package mzc.app.view.components.settings;
 
-public class PluginView {
+import javafx.scene.Node;
+import mzc.app.annotation.ModelInject;
+import mzc.app.view_model.components.settings.PluginViewModel;
+import org.jetbrains.annotations.NotNull;
+
+@ModelInject(PluginViewModel.class)
+public class PluginView extends SettingsTabView<PluginViewModel>{
+    public PluginView() { super("Daftar Plugin yang Aktif"); }
+
+    @Override
+    @NotNull
+    public Node getView() {
+        getViewModel().getLeftBox().getChildren().addAll(getViewModel().getPluginList(), getViewModel().getAddPluginDialog().getView(), getViewModel().getPluginsButton());
+        return super.getView();
+    }
 }
