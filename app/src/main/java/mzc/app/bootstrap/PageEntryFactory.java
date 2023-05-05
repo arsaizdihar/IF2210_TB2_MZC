@@ -1,12 +1,7 @@
 package mzc.app.bootstrap;
 
+import mzc.app.view.page.*;
 import mzc.app.view.page.MainPageView;
-import mzc.app.view.page.CashierPageView;
-import mzc.app.view.page.MainPageView;
-
-import mzc.app.view.page.MemberListPageView;
-import mzc.app.view.page.ProductListPageView;
-import mzc.app.view.page.SettingsPageView;
 
 
 import java.util.HashMap;
@@ -26,6 +21,9 @@ public class PageEntryFactory {
 
         var cashier = new PageEntry("Kasir", "cashier", CashierPageView.class);
         pageEntries.put(cashier.getKey(), cashier);
+
+        var report = new PageEntry("Laporan Penjualan", "report", ReportPageView.class);
+        pageEntries.put(report.getKey(), report);
 
         var defaultPage = createDefaultPage();
         var settingsPage = createSettingPage();
