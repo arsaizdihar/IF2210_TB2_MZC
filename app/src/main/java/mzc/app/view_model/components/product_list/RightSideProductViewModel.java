@@ -6,21 +6,33 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import lombok.Getter;
+import mzc.app.annotation.ModelInject;
+import mzc.app.model.Product;
+import mzc.app.view.components.FileDialogView;
+import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Objects;
 
 @Getter
 public class RightSideProductViewModel extends RightSideViewModel {
     private VBox main;
     private HBox mainCol;
     private VBox list;
-    private VBox image;
+    private VBox image = new VBox();
 
     @Override
     public void init() {
         super.init();
+
         Label tambahBarang = new Label("Tambah Barang");
         tambahBarang.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         setupLines();
@@ -39,8 +51,10 @@ public class RightSideProductViewModel extends RightSideViewModel {
     }
 
     private void setupLines() {
-        TextInput namaBarang = new TextInput("Nama Barang", 200);
+        TextInputView namaBarang = new TextInputView("Nama Barang", 200);
+        createView(namaBarang);
         Label kategori = new Label("Kategori");
+
         ComboBox<String> kategoriField = new ComboBox<>(FXCollections.observableArrayList(
                 "Option 1",
                 "Option 2",
@@ -48,32 +62,44 @@ public class RightSideProductViewModel extends RightSideViewModel {
         ));
         kategoriField.setPrefWidth(200);
         VBox kat = new VBox(kategori, kategoriField);
-        TextInput hargaBeli = new TextInput("Harga Beli", 200);
-        TextInput hargaJual = new TextInput("Harga Jual", 200);
-        TextInput stok = new TextInput("Stok", 200);
-        this.list = new VBox(namaBarang.getMain(), kat, hargaBeli.getMain(), hargaJual.getMain(), stok.getMain());
+        TextInputView hargaBeli = new TextInputView("Harga Beli", 200);
+        createView(hargaBeli);
+        TextInputView hargaJual = new TextInputView("Harga Jual", 200);
+        createView(hargaJual);
+        TextInputView stok = new TextInputView("Stok", 200);
+        createView(stok);
+        this.list = new VBox(namaBarang.getView(), kat, hargaBeli.getView(), hargaJual.getView(), stok.getView());
         this.list.setSpacing(15);
     }
 
     private void setupImage() {
+        Image placeholder = (new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/product.png")).toExternalForm()));
+        ImageView imageView = new ImageView(placeholder);
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+        this.image.getChildren().add(imageView);
         Button pilihGambar = new Button("Pilih Gambar");
+        Label error = new Label("File tidak valid");
+        var fileDialogView = new FileDialogView(pilihGambar, file -> {
+            try {
+                Image image = new Image(new FileInputStream(file));
+                imageView.setImage(image);
+            } catch (FileNotFoundException e) {
+                this.image.getChildren().add(error);
+            }
+            String absolutePath = file.getAbsolutePath();
+            Product product = new Product();
+            try {
+                product.updateImage(absolutePath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        createView(fileDialogView);
         pilihGambar.getStyleClass().add("btn");
 
-        this.image = new VBox(pilihGambar);
+
+        this.image.getChildren().add(fileDialogView.getView());
     }
 }
 
-@Getter
-class TextInput {
-    private final @NotNull Label label;
-    private final @NotNull TextField textField;
-    private final @NotNull VBox main;
-
-    public TextInput(String str, int width) {
-        this.label = new Label(str);
-        this.textField = new TextField();
-        this.textField.setPromptText(str);
-        this.textField.setPrefWidth(width);
-        this.main = new VBox(this.label, this.textField);
-    }
-}
