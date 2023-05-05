@@ -2,6 +2,7 @@ package mzc.app.view_model.components.cashier;
 
 import lombok.Getter;
 import mzc.app.model.Customer;
+import mzc.app.model.CustomerType;
 import mzc.app.utils.reactive.State;
 import mzc.app.view_model.base.BaseViewModel;
 import mzc.app.view_model.page.CashierPageViewModel;
@@ -20,6 +21,11 @@ public class CustomerSelectorViewModel extends BaseViewModel {
 
         var cashierContext = useContext(CashierPageViewModel.CashierContext.class).getValue();
         var customer = cashierContext.getBill().getValue().getCustomer();
+
+        if (customer.getType() != CustomerType.BASIC) {
+            throw new RuntimeException("Initial customer should be a basic");
+        }
+        
         customer.setName("Bukan Anggota");
         this.customerSelector.getItems().add(customer);
         this.customerSelector.getItems().addAll(getAdapter().getCustomer().getRegisteredCustomer());

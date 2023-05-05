@@ -49,6 +49,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
                     this.shouldUpdateSummary.setValue(true);
                 }
             } else {
+                first.get().setCustomer(adapter.getCustomer().getById(first.get().getCustomerId()));
                 this.bill.setValue(first.get());
                 this.shouldUpdateSummary.setValue(true);
             }

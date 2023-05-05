@@ -35,6 +35,9 @@ public class ProductHistory extends BaseModel {
     @Column
     private String image;
 
+    @Column
+    private Integer amount;
+
     @Setter(AccessLevel.NONE)
     @Column(insertable = false, updatable = false, name = "billId")
     private long billId;
@@ -43,12 +46,23 @@ public class ProductHistory extends BaseModel {
     @JoinColumn(name = "billId", nullable = false, referencedColumnName = "id")
     private transient FixedBill bill;
 
-    public ProductHistory(String name, BigDecimal price, BigDecimal buyPrice, String category, String image, FixedBill bill) {
+    public ProductHistory(String name, BigDecimal price, BigDecimal buyPrice, String category, String image, Integer amount, FixedBill bill) {
         this.name = name;
         this.price = price;
         this.buyPrice = buyPrice;
         this.category = category;
         this.image = image;
+        this.amount = amount;
+        setBill(bill);
+    }
+
+    public ProductHistory(Product product, FixedBill bill, Integer amount) {
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.buyPrice = product.getBuyPrice();
+        this.category = product.getCategory();
+        this.image = product.getImagePath();
+        this.amount = amount;
         setBill(bill);
     }
 
