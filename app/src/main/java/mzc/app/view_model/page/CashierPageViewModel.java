@@ -20,7 +20,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
         private final State<Bill> bill = new State<>(null);
 
         @Getter
-        private final State<Boolean> shouldUpdateSummary = new State<>(true);
+        private State<Customer> customer = new State<>(null);
 
         private final IMainAdapter adapter;
 
@@ -31,12 +31,13 @@ public class CashierPageViewModel extends SplitPageViewModel {
         public void loadBill() {
             Bill newBill = new Bill();
             Customer customer = new Customer();
+            customer.setName("Bukan Anggota");
             this.adapter.getCustomer().persist(customer);
             newBill.setCustomer(customer);
             this.adapter.getBill().persist(newBill);
-            this.bill.setValue(newBill);
 
-            this.shouldUpdateSummary.setValue(true);
+            this.getCustomer().setValue(customer);
+            this.getBill().setValue(newBill);
         }
 
         public void loadBill(Customer customer) {
@@ -47,12 +48,17 @@ public class CashierPageViewModel extends SplitPageViewModel {
                     Bill newBill = new Bill(customer);
                     this.adapter.getBill().persist(newBill);
                     this.bill.setValue(newBill);
-                    this.shouldUpdateSummary.setValue(true);
                 }
             } else {
                 first.get().setCustomer(adapter.getCustomer().getById(first.get().getCustomerId()));
+
+                boolean equal = first.get() == this.bill.getValue();
+
                 this.bill.setValue(first.get());
-                this.shouldUpdateSummary.setValue(true);
+
+                if (equal) {
+                    this.bill.forceUpdate();
+                }
             }
         }
     }
@@ -62,12 +68,22 @@ public class CashierPageViewModel extends SplitPageViewModel {
         super.init();
         Context<CashierContext> cashierContext = new Context<>(new CashierContext(getAdapter()));
         addContext(cashierContext);
-        cashierContext.getValue().loadBill();
+
+        var context = cashierContext.getValue();
+        context.loadBill();
 
         this.setLeft(new LeftSideCashierView());
         this.setRight(new PaymentSummaryView());
-    }
 
+        context.getCustomer().addListener((observableValue, prev, customer) -> {
+            if (customer != null) {
+                System.out.println("Customer changed. Loading bill");
+                context.loadBill(customer);
+            } else {
+                System.out.println("Customer is null");
+            }
+        });
+    }
 
     @Override
     public void onTabFocus() {
@@ -88,7 +104,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
             productBills.forEach(productBill -> {
                 getAdapter().getProductBill().delete(productBill);
             });
-            
+
             getAdapter().getBill().delete(bill);
             getAdapter().getCustomer().delete(customer);
         }

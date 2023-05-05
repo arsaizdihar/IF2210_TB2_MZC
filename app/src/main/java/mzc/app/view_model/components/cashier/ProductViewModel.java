@@ -72,7 +72,8 @@ public class ProductViewModel extends BaseViewModel {
             this.productBill.setAmount(next);
             getAdapter().getProductBill().persist(this.productBill);
             System.out.println("Updating counter. Telling to update summary.");
-            cashierContext.getShouldUpdateSummary().setValue(true);
+            cashierContext.getBill().setValue(getAdapter().getBill().getById(cashierContext.getBill().getValue().getId()));
+            cashierContext.getBill().forceUpdate();
         });
     }
 

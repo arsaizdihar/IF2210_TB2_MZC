@@ -20,27 +20,30 @@ public class CustomerSelectorViewModel extends BaseViewModel {
         super.init();
 
         var cashierContext = useContext(CashierPageViewModel.CashierContext.class).getValue();
-        var customer = cashierContext.getBill().getValue().getCustomer();
+        var customer = cashierContext.getCustomer().getValue();
 
         if (customer.getType() != CustomerType.BASIC) {
             throw new RuntimeException("Initial customer should be a basic");
         }
-        
-        customer.setName("Bukan Anggota");
+
         this.customerSelector.getItems().add(customer);
         this.customerSelector.getItems().addAll(getAdapter().getCustomer().getRegisteredCustomer());
-        this.customer.setValue(customer);
 
-        this.customer.bindBidirectional(this.customerSelector.valueProperty());
+        this.customer.setValue(customer);
+        this.customerSelector.setValue(customer);
+
+        this.customerSelector.setOnAction(e -> {
+            var value = this.customerSelector.valueProperty().getValue();
+            if (value != null) {
+                if (this.customer.getValue() != value) {
+                    this.customer.setValue(value);
+                }
+            }
+        });
 
         this.customer.addListener((observableValue, old, next) -> {
-            if (next == null) {
-                cashierContext.loadBill(customer);
-            } else {
-                if (cashierContext.getBill().getValue().getCustomer() != next) {
-                    System.out.println("Loading customer " + next);
-                    cashierContext.loadBill(next);
-                }
+            if (old != next) {
+                cashierContext.getCustomer().setValue(next);
             }
         });
     }
