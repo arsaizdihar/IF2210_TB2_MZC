@@ -20,7 +20,7 @@ public class Bill extends BaseModel {
     @Transient
     private transient boolean productsLoaded = false;
 
-    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
     private transient Set<ProductBill> products = new LinkedHashSet<>();
 
     @Setter(AccessLevel.NONE)

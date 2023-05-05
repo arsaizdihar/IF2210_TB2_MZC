@@ -24,7 +24,7 @@ public class ProductBill extends BaseModel {
 
     @EqualCheck
     @Setter(AccessLevel.NONE)
-    @Column(name = "billId")
+    @Transient
     private long billId;
 
     @ManyToOne(fetch = FetchType.LAZY)

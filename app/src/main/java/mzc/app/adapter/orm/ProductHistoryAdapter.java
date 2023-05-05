@@ -24,4 +24,18 @@ class ProductHistoryAdapter extends ModelAdapter<ProductHistory> implements IPro
                 .setParameter("id", id)
                 .stream().collect(Collectors.toSet());
     }
+
+    @Override
+    public void persist(@NotNull ProductHistory item) {
+        if (item.getId() == 0) {
+            item.getBill().getProducts().add(item);
+        }
+        super.persist(item);
+    }
+
+    @Override
+    public void delete(@NotNull ProductHistory model) {
+        model.getBill().getProducts().remove(model);
+        super.delete(model);
+    }
 }

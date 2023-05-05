@@ -35,4 +35,18 @@ public class FixedBillAdapter extends ModelAdapter<FixedBill> implements IFixedB
     public @NotNull Set<ProductHistory> getProducts(FixedBill bill) {
         return bill.getProducts();
     }
+
+    @Override
+    public void persist(@NotNull FixedBill item) {
+        if (item.getId() == 0) {
+            item.getCustomer().getFixedBills().add(item);
+        }
+        super.persist(item);
+    }
+
+    @Override
+    public void delete(@NotNull FixedBill model) {
+        model.getCustomer().getFixedBills().remove(model);
+        super.delete(model);
+    }
 }

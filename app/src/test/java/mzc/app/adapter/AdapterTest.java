@@ -76,7 +76,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {SQLAdapter.class})
+    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, SQLAdapter.class, ORMAdapter.class})
     public void testBill(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         Customer c = new Customer();
@@ -95,6 +95,9 @@ public class AdapterTest {
         Assertions.assertEquals(1, bills.size());
         Assertions.assertTrue(bill.equals(bills.iterator().next()));
         Assertions.assertTrue(bill.getCustomer().equals(c));
+
+        c = adapter.getCustomer().getById(c.getId());
+        Assertions.assertEquals(1, adapter.getCustomer().getBills(c).size());
 
         var product = new Product();
         adapter.getProduct().persist(product);

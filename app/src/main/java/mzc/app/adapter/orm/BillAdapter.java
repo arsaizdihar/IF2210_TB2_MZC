@@ -39,4 +39,18 @@ class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     protected Class<Bill> getType() {
         return Bill.class;
     }
+
+    @Override
+    public void persist(@NotNull Bill item) {
+        if (item.getId() == 0) {
+            item.getCustomer().getBills().add(item);
+        }
+        super.persist(item);
+    }
+
+    @Override
+    public void delete(@NotNull Bill model) {
+        model.getCustomer().getBills().remove(model);
+        super.delete(model);
+    }
 }

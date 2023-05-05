@@ -10,6 +10,7 @@
            database we are using, we are using mysql -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.dialect.storage_engine">innodb</property>
+        <property name="hibernate.connection.autocommit">true</property>
         <!-- This property enables us to update the
               table everytime the program runs-->
         <property name="hbm2ddl.auto">update</property>
