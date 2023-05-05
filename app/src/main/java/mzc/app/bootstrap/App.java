@@ -8,10 +8,13 @@ import mzc.app.adapter.orm.SessionManager;
 import mzc.app.modules.plugins.PluginLoader;
 import mzc.app.modules.setting.AppSetting;
 import mzc.app.modules.setting.AppSettingManager;
+import mzc.app.view.components.settings.DataStoreView;
+import mzc.app.view.components.settings.SettingsTabView;
 import org.hibernate.cfg.Configuration;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 public class App {
@@ -21,6 +24,10 @@ public class App {
     @Getter
     protected @NonNull Map<String, PageEntry> pages;
 
+    @Getter
+    protected @NonNull Map<String, Class<? extends SettingsTabView>> settingTabs;
+
+    @Getter
     protected PluginLoader pluginLoader;
 
     @Getter
@@ -38,6 +45,10 @@ public class App {
 
         // bootstrap page list
         this.pages = PageEntryFactory.createPageEntries();
+
+        // bootstrap setting tab list
+        this.settingTabs = new HashMap<>();
+        this.settingTabs.put("Data Store", DataStoreView.class);
 
         if (this.appSetting.getStorageMethod() == AdapterType.SQLORM) {
             this.hibernateConfiguration = SessionManager.getConfiguration();
