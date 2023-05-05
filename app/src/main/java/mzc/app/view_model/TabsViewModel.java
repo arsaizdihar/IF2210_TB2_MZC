@@ -13,7 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 
-@Getter @Setter
+@Getter
+@Setter
 public class TabsViewModel extends BaseViewModel {
     private TabPane tabPane = new TabPane();
 
@@ -51,16 +52,17 @@ public class TabsViewModel extends BaseViewModel {
             public <T extends PageView<?>> T createPage(Class<T> pageClass) {
                 try {
                     T view = pageClass.getDeclaredConstructor().newInstance();
-                    setupPage(view);
+                    addContext(view);
                     return tabs.createView(view);
-                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                         InvocationTargetException e) {
                     throw new RuntimeException(e);
                 }
             }
 
             @Override
             public <T extends PageView<?>> T createPage(T page) {
-                setupPage(page);
+                addContext(page);
                 return tabs.createView(page);
             }
         });
@@ -68,9 +70,10 @@ public class TabsViewModel extends BaseViewModel {
         public PageTab(@NotNull TabsViewModel tabs) {
             this.tabs = tabs;
             currentPage = new MainPageView();
-            setupPage(currentPage);
+            addContext(currentPage);
             tabs.createView(currentPage);
             tab = new Tab();
+            setupListeners(currentPage);
             tab.textProperty().bind(currentPage.getViewModel().getTitle());
             tab.setContent(currentPage.getView());
         }
@@ -79,6 +82,7 @@ public class TabsViewModel extends BaseViewModel {
             this.tabs = tabs;
             currentPage = pageContext.createPage(entry.getPageClass());
             tab = new Tab();
+            setupListeners(currentPage);
             tab.textProperty().bind(currentPage.getViewModel().getTitle());
             tab.setContent(currentPage.getView());
         }
@@ -88,19 +92,27 @@ public class TabsViewModel extends BaseViewModel {
                 throw new RuntimeException("Cannot change page to a page with different parent view");
             }
             currentPage = page;
-            setupPage(currentPage);
+            addContext(currentPage);
+            setupListeners(currentPage);
             tab.textProperty().bind(currentPage.getViewModel().getTitle());
             tab.setContent(currentPage.getView());
         }
 
-        void setupPage(PageView<?> pageView) {
-            pageView.getViewModel().addPageContext(this.pageContext);
-            tab.setOnClosed(e -> pageView.getViewModel().onTabClose());
+        void setupListeners(PageView<?> pageView) {
+            var newTab = this.tab;
+            this.tab.setOnCloseRequest(e -> {
+                pageView.getViewModel().onTabClose();
+            });
             tab.setOnSelectionChanged(e -> {
-                if (tab.isSelected()) {
+                if (newTab.isSelected()) {
                     pageView.getViewModel().onTabFocus();
                 }
             });
+        }
+
+        void addContext(PageView<?> pageView) {
+            pageView.getViewModel().addPageContext(this.pageContext);
+
         }
     }
 }
