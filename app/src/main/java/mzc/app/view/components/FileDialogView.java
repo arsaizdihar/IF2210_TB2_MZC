@@ -2,6 +2,7 @@ package mzc.app.view.components;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 import mzc.app.annotation.ModelInject;
 import mzc.app.view.base.BaseView;
 import mzc.app.view_model.components.FileDialogViewModel;
@@ -12,9 +13,20 @@ import java.util.function.Consumer;
 
 @ModelInject(FileDialogViewModel.class)
 public class FileDialogView extends BaseView<FileDialogViewModel> {
-    public FileDialogView(@NotNull Button triggerButton, @NotNull Consumer<File> onFileSelected) {
+    public  FileDialogView(@NotNull Button triggerButton, @NotNull Consumer<File> onFileSelected) {
         getViewModel().setButton(triggerButton);
         triggerButton.setOnAction((e) -> {
+            File file = getViewModel().getFileChooser().showOpenDialog(triggerButton.getScene().getWindow());
+            if (file != null) {
+                onFileSelected.accept(file);
+            }
+        });
+    }
+
+    public FileDialogView(@NotNull Button triggerButton, @NotNull Consumer<File> onFileSelected, String filterTitle, String... filterExts) {
+        getViewModel().setButton(triggerButton);
+        triggerButton.setOnAction((e) -> {
+            getViewModel().getFileChooser().setSelectedExtensionFilter(new FileChooser.ExtensionFilter(filterTitle, filterExts));
             File file = getViewModel().getFileChooser().showOpenDialog(triggerButton.getScene().getWindow());
             if (file != null) {
                 onFileSelected.accept(file);

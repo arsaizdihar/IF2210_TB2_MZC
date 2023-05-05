@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 @ModelInject(TextInputViewModel.class)
 public class TextInputView extends BaseView<TextInputViewModel> {
 
-    public TextInputView(String str, int width) {
-        getViewModel().setter(str, width);
+    public TextInputView(String str, int width, boolean isNumOnly) {
+        getViewModel().setter(str, width); getViewModel().numberOnly(isNumOnly);
     }
 
     @Override

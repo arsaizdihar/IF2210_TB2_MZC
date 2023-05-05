@@ -44,9 +44,9 @@ public class AddMemberViewModel extends RightSideViewModel {
     }
 
     private void setupLines() {
-        TextInputView nama = new TextInputView("Nama", 200);
+        TextInputView nama = new TextInputView("Nama", 200, false);
         createView(nama);
-        TextInputView nomorHandphone = new TextInputView("Nomor Handphone", 200);
+        TextInputView nomorHandphone = new TextInputView("Nomor Handphone", 200, false);
         createView(nomorHandphone);
         Label kategori = new Label("Tipe Anggota");
 
