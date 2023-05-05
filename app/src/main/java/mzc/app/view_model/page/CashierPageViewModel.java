@@ -31,6 +31,9 @@ public class CashierPageViewModel extends SplitPageViewModel {
             this.adapter = adapter;
         }
 
+        /**
+         * Load bill with new basic customer and
+         */
         public void loadBill() {
             Bill newBill = new Bill();
             Customer customer = new Customer();
@@ -45,16 +48,22 @@ public class CashierPageViewModel extends SplitPageViewModel {
             this.getGuestCustomer().setValue(customer);
         }
 
+        /**
+         * Load bill with existing customer
+         * @param customer customer to load bill
+         */
         public void loadBill(Customer customer) {
             var first = this.adapter.getBill().getByCustomerId(customer.getId()).stream().findFirst();
 
             if (first.isEmpty()) {
+                // if customer dont have bill, create new bill
                 if (this.bill.getValue() == null || this.bill.getValue().getCustomerId() != customer.getId()) {
                     Bill newBill = new Bill(customer);
                     this.adapter.getBill().persist(newBill);
                     this.bill.setValue(newBill);
                 }
             } else {
+                // if customer have bill, load it
                 first.get().setCustomer(adapter.getCustomer().getById(first.get().getCustomerId()));
 
                 boolean equal = first.get() == this.bill.getValue();
@@ -77,9 +86,11 @@ public class CashierPageViewModel extends SplitPageViewModel {
         var context = cashierContext.getValue();
         context.loadBill();
 
+
         this.setLeft(new LeftSideCashierView());
         this.setRight(new PaymentSummaryView());
 
+        // listen to customer change, if customer change, load bill
         context.getCustomer().addListener((observableValue, prev, customer) -> {
             if (customer != null) {
                 System.out.println("Customer changed. Loading bill for " + customer.getName());
@@ -103,6 +114,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
         var bill = context.getBill().getValue();
         var customer = bill.getCustomer();
 
+        // if customer is basic, delete bill and customer
         if (customer.getType() == CustomerType.BASIC) {
             var productBills = getAdapter().getBill().getProducts(bill);
 
