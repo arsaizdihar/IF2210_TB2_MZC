@@ -1,10 +1,12 @@
 package mzc.app.bootstrap;
 
+import mzc.app.view.page.MainPageView;
 import mzc.app.view.page.CashierPageView;
 import mzc.app.view.page.MainPageView;
 
 import mzc.app.view.page.MemberListPageView;
 import mzc.app.view.page.ProductListPageView;
+import mzc.app.view.page.SettingsPageView;
 
 import mzc.app.view.components.member_list.HistoryTransactionPageView;
 
@@ -27,7 +29,17 @@ public class PageEntryFactory {
         var cashier = new PageEntry("Kasir", "cashier", CashierPageView.class);
         pageEntries.put(cashier.getKey(), cashier);
 
+        var defaultPage = createDefaultPage();
+        var settingsPage = createSettingPage();
+        pageEntries.put(defaultPage.getKey(), defaultPage);
+        pageEntries.put(settingsPage.getKey(), settingsPage);
+
         return pageEntries;
     }
 
+    public static PageEntry createDefaultPage() {
+        return new PageEntry("Main Page", "main", MainPageView.class);
+    }
+
+    public static PageEntry createSettingPage() { return new PageEntry("Settings Page", "settings", SettingsPageView.class); }
 }
