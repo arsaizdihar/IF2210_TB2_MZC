@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product extends BaseModel {
+public class Product extends BaseModel implements ISoftDelete {
     @EqualCheck
     @Column
     private int stock = 0;
@@ -54,6 +54,10 @@ public class Product extends BaseModel {
     @Setter(AccessLevel.NONE)
     private transient Image image;
 
+    @EqualCheck
+    @Column
+    private Boolean deleted = false;
+
     public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category, String imagePath) {
         this.stock = stock;
         this.name = name;
@@ -61,6 +65,17 @@ public class Product extends BaseModel {
         this.buyPrice = buyPrice;
         this.category = category;
         this.imagePath = imagePath;
+        this.deleted = false;
+    }
+
+    public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category, String imagePath, Boolean deleted) {
+        this.stock = stock;
+        this.name = name;
+        this.price = price;
+        this.buyPrice = buyPrice;
+        this.category = category;
+        this.imagePath = imagePath;
+        this.deleted = deleted;
     }
 
     public IPrice getPriceView() {

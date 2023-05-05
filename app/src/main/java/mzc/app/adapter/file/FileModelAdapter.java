@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import mzc.app.adapter.base.IBasicAdapter;
 import mzc.app.model.BaseModel;
+import mzc.app.model.ISoftDelete;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -46,17 +47,28 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
 
     @Override
     public void deleteById(long id) {
-        getData().remove(Long.toString(id));
-        commit();
+        delete(getById(id));
     }
 
     @Override
     public void delete(@NotNull T model) {
-        deleteById(model.getId());
+        if (model instanceof ISoftDelete) {
+            ((ISoftDelete) model).setDeleted(true);
+        } else {
+            getData().remove(Long.toString(model.getId()));
+        }
+        commit();
     }
 
     @Override
     public @NotNull List<T> getAll() {
+        if (ISoftDelete.class.isAssignableFrom(this.getType())) {
+            return getData().values().stream().filter(each -> {
+                var model = (ISoftDelete) each;
+                return !model.getDeleted();
+            }).toList();
+        }
+
         return new ArrayList<>(getData().values());
     }
 

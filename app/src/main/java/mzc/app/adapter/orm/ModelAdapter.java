@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import lombok.Getter;
 import mzc.app.adapter.base.IBasicAdapter;
 import mzc.app.model.BaseModel;
+import mzc.app.model.ISoftDelete;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
@@ -28,17 +29,25 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
 
     @Override
     public void deleteById(long id) {
-        var entityManager = session.getEntityManagerFactory().createEntityManager();
-        var model = entityManager.find(getClass(), id);
-        entityManager.remove(model);
-        entityManager.flush();
-        entityManager.clear();
-        entityManager.close();
+        delete(getById(id));
     }
 
     @Override
     public void delete(@NotNull T model) {
-        deleteById(model.getId());
+        if (model instanceof ISoftDelete) {
+            ((ISoftDelete) model).setDeleted(true);
+            Transaction tx = session.beginTransaction();
+            session.persist(model);
+            tx.commit();
+
+        } else {
+            var entityManager = session.getEntityManagerFactory().createEntityManager();
+            var toDelete = entityManager.find(getClass(), Long.toString(model.getId()));
+            entityManager.remove(toDelete);
+            entityManager.flush();
+            entityManager.clear();
+            entityManager.close();
+        }
     }
 
     public void persist(@NotNull T item) {
@@ -52,7 +61,14 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<T> cr = cb.createQuery(getType());
         cr.from(getType());
+
+        if (ISoftDelete.class.isAssignableFrom(this.getType())) {
+            return session.createQuery(cr).stream().filter(each -> {
+                var model = (ISoftDelete) each;
+                return !model.getDeleted();
+            }).toList();
+        }
+
         return session.createQuery(cr).list();
     }
-
 }
