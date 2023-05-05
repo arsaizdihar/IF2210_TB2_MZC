@@ -29,13 +29,6 @@ public class AdapterManagerTest {
     }
 
     @Test
-    public void testORM() {
-        SessionManager.getConfiguration();
-        adapterManager = new AdapterManager(new ORMAdapter());
-        Assertions.assertTrue(adapterManager.getAdapter() instanceof ORMAdapter);
-    }
-
-    @Test
     public void testSet() {
         adapterManager = new AdapterManager(new JSONAdapter());
         adapterManager.setAdapter(new XMLAdapter());

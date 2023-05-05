@@ -45,7 +45,7 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
 
     @Override
     public @NotNull List<ProductBill> getProducts(Bill bill) {
-//        if (bill.isProductsLoaded()) return bill.getProducts();
+        if (bill.isProductsLoaded()) return bill.getProducts();
         List<ProductBill> result = getProductBillAdapter().getByBillId(bill.getId());
         bill.setProductsLoaded(true);
         bill.setProducts(result);

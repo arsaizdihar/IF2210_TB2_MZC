@@ -8,6 +8,7 @@ import mzc.app.model.ISoftDelete;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,12 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
         if (getData().size() == 0) return 1L;
         Long maxId = getData().keySet().stream().map(Long::parseLong).max(Long::compare).get();
         return maxId + 1;
+    }
+
+    @Override
+    public @NotNull List<T> getInIds(@NotNull List<Long> ids) {
+        var set = new HashSet<>(ids);
+        return getData().values().stream().filter(each -> set.contains(each.getId())).toList();
     }
 
     @Override

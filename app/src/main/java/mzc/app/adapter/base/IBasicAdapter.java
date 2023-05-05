@@ -15,4 +15,6 @@ public interface IBasicAdapter<T extends BaseModel> {
     void delete(@NotNull T model);
 
     @NotNull List<T> getAll();
+
+    @NotNull List<T> getInIds(@NotNull List<Long> ids);
 }

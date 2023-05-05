@@ -6,6 +6,7 @@ import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
+import mzc.app.adapter.sql.SQLAdapter;
 import mzc.app.adapter.xml.XMLAdapter;
 import mzc.app.modules.setting.AppSetting;
 import mzc.app.modules.setting.AppSettingManager;
@@ -26,7 +27,7 @@ public class AdapterManager {
             case XML -> adapter = new XMLAdapter();
             case JSON -> adapter = new JSONAdapter();
             case SQLORM -> adapter = new ORMAdapter();
-            case SQLRaw -> adapter = new ORMAdapter(); // temporary
+            case SQLRaw -> adapter = new SQLAdapter();
             default -> adapter = new JSONAdapter();
         }
     }
