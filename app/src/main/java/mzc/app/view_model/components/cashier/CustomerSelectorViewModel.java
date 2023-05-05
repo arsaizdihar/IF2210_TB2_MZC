@@ -21,13 +21,27 @@ public class CustomerSelectorViewModel extends BaseViewModel {
 
         var cashierContext = useContext(CashierPageViewModel.CashierContext.class).getValue();
         var customer = cashierContext.getCustomer().getValue();
+        var guestCustomer = cashierContext.getGuestCustomer().getValue();
 
         if (customer.getType() != CustomerType.BASIC) {
             throw new RuntimeException("Initial customer should be a basic");
         }
 
+        if (guestCustomer != customer) {
+            throw new RuntimeException("Initial customer and guest customer should be equal");
+        }
+
         this.customerSelector.getItems().add(customer);
         this.customerSelector.getItems().addAll(getAdapter().getCustomer().getRegisteredCustomer());
+
+        cashierContext.getGuestCustomer().addListener((observableValue, prev, next) -> {
+            if (next != null) {
+                this.customerSelector.getItems().add(next);
+                this.customerSelector.getItems().set(0, next);
+                this.customerSelector.getItems().addAll(getAdapter().getCustomer().getRegisteredCustomer());
+                this.customerSelector.setValue(next);
+            }
+        });
 
         this.customer.setValue(customer);
         this.customerSelector.setValue(customer);

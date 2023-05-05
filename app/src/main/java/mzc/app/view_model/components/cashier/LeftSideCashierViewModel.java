@@ -1,5 +1,6 @@
 package mzc.app.view_model.components.cashier;
 
+import mzc.app.model.Bill;
 import mzc.app.model.ProductBill;
 import mzc.app.view.components.cashier.ProductView;
 import mzc.app.view_model.components.split_page.LeftSideViewModel;
@@ -9,20 +10,20 @@ public class LeftSideCashierViewModel extends LeftSideViewModel {
     @Override
     public void init() {
         super.init();
-        this.reload();
-
         var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
+        this.reload(context.getBill().getValue());
+
         context.getBill().addListener(((observableValue, old, next) -> {
-            this.reload();
+            this.reload(next);
         }));
     }
 
-    public void reload() {
+    public void reload(Bill bill) {
         getListView().getItems().clear();
-        
+
         var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
         var products = getAdapter().getProduct().getAll();
-        var productBills = context.getBill().getValue().getProducts();
+        var productBills = getAdapter().getBill().getProducts(bill);
 
         var views = products.stream().map(product -> {
             var productBill = productBills.stream().filter(pb -> pb.getProductId() == product.getId()).findFirst();
