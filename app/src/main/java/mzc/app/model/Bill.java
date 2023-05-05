@@ -22,7 +22,7 @@ public class Bill extends BaseModel {
     private transient List<ProductBill> products = new ArrayList<>();
 
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false, name = "customerId")
+    @Column(name = "customerId")
     private long customerId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

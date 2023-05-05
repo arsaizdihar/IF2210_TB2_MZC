@@ -39,7 +39,7 @@ public class ProductHistory extends BaseModel {
     private Integer amount;
 
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false, name = "billId")
+    @Column(name = "billId")
     private long billId;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -9,11 +9,13 @@ import mzc.app.annotation.EqualCheck;
 
 @Entity(name = "productbill")
 @Table(name = "productbill")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProductBill extends BaseModel {
     @EqualCheck
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false, name = "productId")
+    @Column(name = "productId")
     private long productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,7 +24,7 @@ public class ProductBill extends BaseModel {
 
     @EqualCheck
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false, name = "billId")
+    @Column(name = "billId")
     private long billId;
 
     @ManyToOne(fetch = FetchType.LAZY)

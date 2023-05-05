@@ -1,15 +1,6 @@
 package mzc.app.bootstrap;
 
-import mzc.app.view.page.MainPageView;
-import mzc.app.view.page.CashierPageView;
-import mzc.app.view.page.MainPageView;
-
-import mzc.app.view.page.MemberListPageView;
-import mzc.app.view.page.ProductListPageView;
-import mzc.app.view.page.SettingsPageView;
-
-import mzc.app.view.components.member_list.HistoryTransactionPageView;
-
+import mzc.app.view.page.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,5 +32,7 @@ public class PageEntryFactory {
         return new PageEntry("Main Page", "main", MainPageView.class);
     }
 
-    public static PageEntry createSettingPage() { return new PageEntry("Settings Page", "settings", SettingsPageView.class); }
+    public static PageEntry createSettingPage() {
+        return new PageEntry("Settings Page", "settings", SettingsPageView.class);
+    }
 }

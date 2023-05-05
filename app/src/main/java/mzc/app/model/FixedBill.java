@@ -24,7 +24,7 @@ public class FixedBill extends BaseModel {
 
     @EqualCheck
     @Setter(AccessLevel.NONE)
-    @Column(insertable = false, updatable = false, name = "customerId")
+    @Column(name = "customerId")
     private long customerId;
 
     @ManyToOne(fetch = FetchType.LAZY)

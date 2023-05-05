@@ -8,6 +8,7 @@ import mzc.app.annotation.EqualCheck;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 @MappedSuperclass
@@ -49,17 +50,20 @@ public class BaseModel implements Serializable, Cloneable {
     @Override
     public BaseModel clone() {
         try {
-            BaseModel clone = (BaseModel) super.clone();
+            BaseModel clone = null;
+            try {
+                clone = this.getClass().getDeclaredConstructor().newInstance();
+            } catch (InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
             clone.setId(getId());
             Field[] fields = this.getClass().getDeclaredFields();
-            for (var field: fields) {
+            for (var field : fields) {
                 if (field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field.getModifiers())) continue;
                 field.setAccessible(true);
                 field.set(clone, field.get(this));
             }
             return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
