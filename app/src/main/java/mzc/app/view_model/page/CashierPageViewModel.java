@@ -39,19 +39,19 @@ public class CashierPageViewModel extends SplitPageViewModel {
         }
 
         public void loadBill(Customer customer) {
-            var first = customer.getBills().stream().findFirst();
+            var first = this.adapter.getBill().getByCustomerId(customer.getId()).stream().findFirst();
 
             if (first.isEmpty()) {
                 if (this.bill.getValue() == null || this.bill.getValue().getCustomerId() != customer.getId()) {
                     Bill newBill = new Bill(customer);
                     this.adapter.getBill().persist(newBill);
                     this.bill.setValue(newBill);
+                    this.shouldUpdateSummary.setValue(true);
                 }
             } else {
                 this.bill.setValue(first.get());
+                this.shouldUpdateSummary.setValue(true);
             }
-
-            this.shouldUpdateSummary.setValue(true);
         }
     }
 

@@ -50,17 +50,14 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
         paymentContext.getValue().getProducts().addListener((observableValue, prev, productBills) -> {
             paymentContext.getValue().getProductItems().getValue().clear();
 
-            System.out.println("Got product biils with size of " + productBills.size());
+            System.out.println("Listening to products (Product Bill) update. updating product items with size of " + productBills.size());
 
             productBills.forEach(productBill -> {
-                System.out.println(productBill.getProductId() + " with amount " + productBill.getAmount());
                 if (productBill.getAmount() > 0) {
                     ItemPrice itemPrice = new ItemPrice(productBill.getAmount(), PriceFactory.createPriceView(productBill.getProduct().getPrice()));
                     paymentContext.getValue().getProductItems().getValue().put(productBill, itemPrice);
                 }
             });
-
-            System.out.println("Listening to products (Product Bill) update. Updateing product items with size of " + paymentContext.getValue().getProductItems().getValue().size());
 
             paymentContext.getValue().getProductItems().forceUpdate();
         });
@@ -68,8 +65,8 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
         var cashierContext = useContext(CashierPageViewModel.CashierContext.class).getValue();
 
         cashierContext.getShouldUpdateSummary().addListener(((observableValue, prev, next) -> {
-            System.out.println("Listening to should update. got value " + next);
             if (next) {
+                System.out.println("Listening to should update. Updating");
                 reloadSummary();
             }
         }));

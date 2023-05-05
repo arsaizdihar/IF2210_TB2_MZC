@@ -26,13 +26,15 @@ public class CustomerSelectorViewModel extends BaseViewModel {
         this.customer.setValue(customer);
 
         this.customer.bindBidirectional(this.customerSelector.valueProperty());
-        this.customerSelector.setValue(this.customer.getValue());
 
         this.customer.addListener((observableValue, old, next) -> {
             if (next == null) {
                 cashierContext.loadBill(customer);
             } else {
-                cashierContext.loadBill(next);
+                if (cashierContext.getBill().getValue().getCustomer() != next) {
+                    System.out.println("Loading customer " + next);
+                    cashierContext.loadBill(next);
+                }
             }
         });
     }

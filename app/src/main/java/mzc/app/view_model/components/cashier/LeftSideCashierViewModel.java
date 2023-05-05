@@ -10,9 +10,16 @@ public class LeftSideCashierViewModel extends LeftSideViewModel {
     public void init() {
         super.init();
         this.reload();
+
+        var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
+        context.getBill().addListener(((observableValue, old, next) -> {
+            this.reload();
+        }));
     }
 
     public void reload() {
+        getListView().getItems().clear();
+        
         var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
         var products = getAdapter().getProduct().getAll();
         var productBills = context.getBill().getValue().getProducts();

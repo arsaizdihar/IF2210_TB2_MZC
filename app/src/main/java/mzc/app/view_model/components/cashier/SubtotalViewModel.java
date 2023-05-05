@@ -1,6 +1,8 @@
 package mzc.app.view_model.components.cashier;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.NonNull;
@@ -28,7 +30,16 @@ public class SubtotalViewModel extends BaseViewModel {
     protected State<List<PricePipelineResult>> pipelineResults = new State<>(new ArrayList<>());
 
     @Getter
-    protected VBox container = new VBox();
+    protected VBox pipelineContainer = new VBox();
+
+    @Getter
+    protected HBox container = new HBox();
+
+    @Getter
+    protected VBox actionsContainer = new VBox();
+
+    @Getter
+    protected CheckBox usePointsCheckbox = new CheckBox();
 
     @Override
     public void init() {
@@ -39,6 +50,21 @@ public class SubtotalViewModel extends BaseViewModel {
         context.getProductItems().addListener((observable, prev, productItems) -> {
             this.calculate(productItems.values().stream().toList());
         });
+
+        var cashierContext = useContext(CashierPageViewModel.CashierContext.class).getValue();
+        cashierContext.getBill().addListener((observableValue, prev, next) -> {
+            this.usePointsCheckbox.setDisable(next.getCustomer().getType() != CustomerType.MEMBER && next.getCustomer().getType() != CustomerType.VIP);
+        });
+
+        this.usePoints.bindBidirectional(this.usePointsCheckbox.selectedProperty());
+
+        var customerType = cashierContext.getBill().getValue().getCustomer().getType();
+
+        this.usePointsCheckbox.setDisable(customerType != CustomerType.MEMBER && customerType != CustomerType.VIP);
+
+        this.usePoints.addListener(((observableValue, aBoolean, t1) -> {
+            this.calculate(context.getProductItems().getValue().values().stream().toList());
+        }));
     }
 
     protected List<IPricePipeline> getPipelines() {
@@ -47,7 +73,7 @@ public class SubtotalViewModel extends BaseViewModel {
 
         List<IPricePipeline> pipelines = new ArrayList<>();
 
-        if (this.usePoints.getValue()) {
+        if (!this.usePointsCheckbox.isDisabled() && this.usePoints.getValue()) {
             if (customer.getType().equals(CustomerType.BASIC)) {
                 throw new RuntimeException("Basic member are not allowed to use points");
             }
@@ -66,14 +92,14 @@ public class SubtotalViewModel extends BaseViewModel {
         var calculator = new PriceCalculator(this.getPipelines());
         this.pipelineResults.setValue(calculator.calculate(new ItemListPrice(productItems)));
 
-        this.container.getChildren().clear();
+        this.pipelineContainer.getChildren().clear();
 
         this.getPipelineResults().getValue().forEach(result -> {
-            this.container.getChildren().add(new Label(result.getName() + " " + result.getNominal()));
+            this.pipelineContainer.getChildren().add(new Label(result.getName() + " " + result.getNominal()));
         });
 
         var lastResult = this.pipelineResults.getValue().get(this.pipelineResults.getValue().size() - 1);
 
-        this.container.getChildren().add(new Label("Total " + PriceFactory.createPriceView(lastResult.getTotal())));
+        this.pipelineContainer.getChildren().add(new Label("Total " + PriceFactory.createPriceView(lastResult.getTotal())));
     }
 }

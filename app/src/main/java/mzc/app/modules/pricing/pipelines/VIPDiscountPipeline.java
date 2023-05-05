@@ -1,8 +1,8 @@
 package mzc.app.modules.pricing.pipelines;
 
 import lombok.NonNull;
+import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.PricePipelineResult;
-import mzc.app.modules.pricing.price.DecimalPrice;
 import mzc.app.modules.pricing.price.IPrice;
 
 import java.math.BigDecimal;
@@ -12,8 +12,8 @@ public class VIPDiscountPipeline implements IPricePipeline {
 
     @Override
     public @NonNull PricePipelineResult calculate(IPrice input) {
-        IPrice nominal = new DecimalPrice(input.getValue().multiply(this.percentage).multiply(new BigDecimal(-1)));
-        IPrice total = new DecimalPrice(input.getValue().add(nominal.getValue()));
+        IPrice nominal = PriceFactory.createPriceView(input.getValue().multiply(this.percentage).multiply(new BigDecimal(-1)));
+        IPrice total = PriceFactory.createPriceView(input.getValue().add(nominal.getValue()));
         return new PricePipelineResult("Diskon VIP", nominal, total);
     }
 

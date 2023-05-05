@@ -1,8 +1,8 @@
 package mzc.app.modules.pricing.pipelines;
 
 import lombok.NonNull;
+import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.PricePipelineResult;
-import mzc.app.modules.pricing.price.DecimalPrice;
 import mzc.app.modules.pricing.price.IPrice;
 import mzc.app.modules.pricing.price.PositiveDecimalPrice;
 
@@ -17,8 +17,8 @@ public class PointPipeline implements IPricePipeline {
 
     @Override
     public @NonNull PricePipelineResult calculate(IPrice input) {
-        IPrice nominal = new DecimalPrice(new BigDecimal(this.userPoints * -1));
-        IPrice total = new PositiveDecimalPrice(input.getValue().add(nominal.getValue()));
+        IPrice nominal = PriceFactory.createPriceView(new BigDecimal(this.userPoints * -1));
+        IPrice total = PriceFactory.createPriceView(new PositiveDecimalPrice(input.getValue().add(nominal.getValue())));
         return new PricePipelineResult("Poin", nominal, total);
     }
 
