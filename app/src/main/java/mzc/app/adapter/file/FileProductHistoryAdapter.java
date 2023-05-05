@@ -25,7 +25,7 @@ public class FileProductHistoryAdapter extends FileModelAdapter<ProductHistory> 
 
     @Override
     public @NotNull List<ProductHistory> getByBillId(long id) {
-        var result = getData().values().stream().filter((v) -> v.getBillId() == id).collect(Collectors.toList());
+        var result = getClones(getData().values().stream().filter((v) -> v.getBillId() == id).collect(Collectors.toList()));
         result.forEach(p -> p.setBill(billAdapter.getById(p.getBillId())));
         return result;
     }

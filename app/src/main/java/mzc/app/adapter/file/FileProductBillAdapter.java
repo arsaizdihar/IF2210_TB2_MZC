@@ -22,7 +22,7 @@ public class FileProductBillAdapter extends FileModelAdapter<ProductBill> implem
     }
 
     public List<ProductBill> getByBillId(long billId) {
-        List<ProductBill> result = getData().values().stream().filter(p -> p.getBillId() == billId).collect(Collectors.toList());
+        List<ProductBill> result = getClones(getData().values().stream().filter(p -> p.getBillId() == billId).collect(Collectors.toList()));
         result.forEach(p -> p.setProduct(productAdapter.getById(p.getProductId())));
         return result;
     }

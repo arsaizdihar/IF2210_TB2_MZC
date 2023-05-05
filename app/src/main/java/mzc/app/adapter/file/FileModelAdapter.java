@@ -36,12 +36,12 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
     @Override
     public @NotNull List<T> getInIds(@NotNull List<Long> ids) {
         var set = new HashSet<>(ids);
-        return getData().values().stream().filter(each -> set.contains(each.getId())).toList();
+        return getClones(getData().values().stream().filter(each -> set.contains(each.getId())).toList());
     }
 
     @Override
     public T getById(long id) {
-        return getData().get(Long.toString(id));
+        return getClone(getData().get(Long.toString(id)));
     }
 
     public void persist(@NotNull T item) {
@@ -70,13 +70,23 @@ public abstract class FileModelAdapter<T extends BaseModel> implements IBasicAda
     @Override
     public @NotNull List<T> getAll() {
         if (ISoftDelete.class.isAssignableFrom(this.getType())) {
-            return getData().values().stream().filter(each -> {
+            return getClones(getData().values().stream().filter(each -> {
                 var model = (ISoftDelete) each;
                 return !model.getDeleted();
-            }).toList();
+            }).toList());
         }
 
-        return new ArrayList<>(getData().values());
+        return getClones(new ArrayList<>(getData().values()));
+    }
+
+    @SuppressWarnings("unchecked")
+    public T getClone(T model) {
+        if (model == null) return null;
+        return (T) model.clone();
+    }
+
+    public List<T> getClones(List<T> models) {
+        return models.stream().map(this::getClone).toList();
     }
 
     public void commit() {

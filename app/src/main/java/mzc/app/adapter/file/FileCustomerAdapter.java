@@ -30,7 +30,7 @@ public class FileCustomerAdapter extends FileModelAdapter<Customer> implements I
 
     @Override
     public List<Customer> getRegisteredCustomer() {
-        return getData().values().stream().filter(c -> c.getType() != CustomerType.BASIC).collect(Collectors.toList());
+        return getClones(getData().values().stream().filter(c -> c.getType() != CustomerType.BASIC).collect(Collectors.toList()));
     }
 
     @Override
