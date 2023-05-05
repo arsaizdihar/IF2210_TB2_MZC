@@ -3,7 +3,6 @@ package mzc.app.adapter.file;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.adapter.base.IBillAdapter;
-import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.ProductBill;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdapter {
     @Setter
-    private @NotNull ICustomerAdapter customerAdapter;
+    private @NotNull FileCustomerAdapter customerAdapter;
 
     @Getter
     private final @NotNull FileProductBillAdapter productBillAdapter;
@@ -35,7 +34,7 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
 
     @Override
     public @NotNull List<Bill> getByCustomerId(long customerId) {
-        return loadAllCustomers(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).collect(Collectors.toList()));
+        return loadAllCustomers(getClones(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).collect(Collectors.toList())));
     }
 
     @Override
@@ -45,7 +44,7 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
 
     @Override
     public @NotNull List<ProductBill> getProducts(Bill bill) {
-//        if (bill.isProductsLoaded()) return bill.getProducts();
+        if (bill.isProductsLoaded()) return bill.getProducts();
         List<ProductBill> result = getProductBillAdapter().getByBillId(bill.getId());
         bill.setProductsLoaded(true);
         bill.setProducts(result);

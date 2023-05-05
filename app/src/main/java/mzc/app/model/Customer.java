@@ -23,10 +23,10 @@ public class Customer extends BaseModel {
     @Column
     private String phone = "";
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
     private transient List<Bill> bills = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
     private transient List<FixedBill> fixedBills = new ArrayList<>();
 
     @EqualCheck
@@ -43,6 +43,9 @@ public class Customer extends BaseModel {
 
     @Transient
     private transient boolean billsLoaded = false;
+
+    @Transient
+    private transient boolean fixedBillsLoaded = false;
 
     public Customer(String name, String phone) {
         this.name = name;

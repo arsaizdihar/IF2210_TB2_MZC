@@ -29,10 +29,11 @@ public abstract class FileAdapter implements IMainAdapter {
         this.product = new FileProductAdapter(loader);
         this.productBill = new FileProductBillAdapter(loader, this.product);
         this.bill = new FileBillAdapter(loader, this.productBill);
-        this.customer = new FileCustomerAdapter(loader, bill);
-        this.bill.setCustomerAdapter(this.customer);
         this.productHistory = new FileProductHistoryAdapter(loader);
         this.fixedBill = new FileFixedBillAdapter(loader, productHistory);
+        this.customer = new FileCustomerAdapter(loader, bill, fixedBill);
+        this.bill.setCustomerAdapter(this.customer);
+        this.productHistory.setBillAdapter(this.fixedBill);
         this.fixedBill.setCustomerAdapter(this.customer);
     }
 

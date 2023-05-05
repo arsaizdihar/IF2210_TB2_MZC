@@ -18,14 +18,14 @@ public class Bill extends BaseModel {
     @Transient
     private transient boolean productsLoaded = false;
 
-    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private transient List<ProductBill> products = new ArrayList<>();
 
     @Setter(AccessLevel.NONE)
     @Column(insertable = false, updatable = false, name = "customerId")
     private long customerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
     private transient Customer customer;
 

@@ -8,11 +8,12 @@ import mzc.app.annotation.EqualCheck;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 @MappedSuperclass
 @Getter
 @Setter
-public class BaseModel implements Serializable {
+public class BaseModel implements Serializable, Cloneable {
     @EqualCheck
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,5 +44,24 @@ public class BaseModel implements Serializable {
     @Override
     public int hashCode() {
         return (int) this.id;
+    }
+
+    @Override
+    public BaseModel clone() {
+        try {
+            BaseModel clone = (BaseModel) super.clone();
+            clone.setId(getId());
+            Field[] fields = this.getClass().getDeclaredFields();
+            for (var field: fields) {
+                if (field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field.getModifiers())) continue;
+                field.setAccessible(true);
+                field.set(clone, field.get(this));
+            }
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

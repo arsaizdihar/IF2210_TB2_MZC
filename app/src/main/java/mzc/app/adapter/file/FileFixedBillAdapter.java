@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class FileFixedBillAdapter extends FileModelAdapter<FixedBill> implements IFixedBillAdapter {
     @Setter
-    private @NotNull ICustomerAdapter customerAdapter;
+    private @NotNull FileCustomerAdapter customerAdapter;
 
     @Getter
     private final @NotNull FileProductHistoryAdapter productHistoryAdapter;
@@ -30,7 +30,7 @@ public class FileFixedBillAdapter extends FileModelAdapter<FixedBill> implements
 
     @Override
     public @NotNull List<FixedBill> getByCustomerId(long customerId) {
-        return loadAllCustomers(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).collect(Collectors.toList()));
+        return loadAllCustomers(getClones(getData().values().stream().filter((v) -> Objects.equals(v.getCustomerId(), customerId)).collect(Collectors.toList())));
     }
 
     @Override

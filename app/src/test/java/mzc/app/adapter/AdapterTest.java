@@ -7,6 +7,7 @@ import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
 import mzc.app.adapter.orm.SessionManager;
+import mzc.app.adapter.sql.SQLAdapter;
 import mzc.app.adapter.xml.XMLAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
@@ -37,7 +38,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, ORMAdapter.class})
+    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, SQLAdapter.class, ORMAdapter.class})
     public void testCustomer(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         ICustomerAdapter customerAdapter = adapter.getCustomer();
@@ -46,13 +47,13 @@ public class AdapterTest {
         customers = customerAdapter.getAll();
         Assertions.assertEquals(0, customers.size());
 
-        Customer c1 = new Customer("a", "1234");
+        Customer c1 = new Customer("a\"", "1234");
         customerAdapter.persist(c1);
         customers = customerAdapter.getAll();
 
         Assertions.assertEquals(1, customers.size());
 
-        Assertions.assertEquals("a", customers.get(0).getName());
+        Assertions.assertEquals("a\"", customers.get(0).getName());
         Assertions.assertEquals("1234", customers.get(0).getPhone());
         Assertions.assertEquals(CustomerType.BASIC, customers.get(0).getType());
 
@@ -74,7 +75,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {ORMAdapter.class, JSONAdapter.class, XMLAdapter.class, OBJAdapter.class})
+    @ValueSource(classes = {ORMAdapter.class, JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, SQLAdapter.class})
     public void testBill(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         Customer c = new Customer();

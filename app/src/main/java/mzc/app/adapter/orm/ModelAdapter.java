@@ -50,6 +50,22 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
         }
     }
 
+    @Override
+    public @NotNull List<T> getInIds(@NotNull List<Long> ids) {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<T> cr = cb.createQuery(getType());
+        cr.from(getType()).get("id").in(ids);
+
+        if (ISoftDelete.class.isAssignableFrom(this.getType())) {
+            return session.createQuery(cr).stream().filter(each -> {
+                var model = (ISoftDelete) each;
+                return !model.getDeleted();
+            }).toList();
+        }
+
+        return session.createQuery(cr).list();
+    }
+
     public void persist(@NotNull T item) {
         Transaction tx = session.beginTransaction();
         session.persist(item);

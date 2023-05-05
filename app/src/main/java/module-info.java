@@ -15,6 +15,8 @@ open module mzc.app {
     requires transitive org.apache.commons.io;
     requires transitive com.fasterxml.jackson.dataformat.xml;
     requires transitive org.jetbrains.annotations;
+    requires transitive sql.formatter;
+    requires transitive com.zaxxer.hikari;
 
 //    opens mzc.app.view_model to javafx.fxml;
 //    opens mzc.app.bootstrap to javafx.graphics;

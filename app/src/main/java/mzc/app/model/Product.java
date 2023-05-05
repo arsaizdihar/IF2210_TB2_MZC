@@ -47,7 +47,7 @@ public class Product extends BaseModel implements ISoftDelete {
     @Setter(AccessLevel.PROTECTED)
     private String imagePath;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private transient List<ProductBill> bills = new ArrayList<>();
 
     @Transient
