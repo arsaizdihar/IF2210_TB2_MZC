@@ -1,6 +1,7 @@
 package mzc.plugin_currency;
 
 import lombok.Getter;
+import mzc.app.adapter.base.AdapterType;
 import mzc.app.bootstrap.App;
 import mzc.app.modules.plugins.Plugin;
 import mzc.app.modules.pricing.PriceFactory;
@@ -27,7 +28,9 @@ public class CurrencyPlugin extends Plugin {
     public void setup(App appContext) {
         appSetting = appContext.getAppSetting();
 
-        appContext.getHibernateConfiguration().addClass(Currency.class);
+        if (appSetting.getStorageMethod() == AdapterType.SQLORM) {
+            appContext.getHibernateConfiguration().addClass(Currency.class);
+        }
     }
 
     @Override

@@ -36,10 +36,12 @@ public class CustomerSelectorViewModel extends BaseViewModel {
 
         cashierContext.getGuestCustomer().addListener((observableValue, prev, next) -> {
             if (next != null) {
-                this.customerSelector.getItems().add(next);
                 this.customerSelector.getItems().set(0, next);
                 this.customerSelector.getItems().addAll(getAdapter().getCustomer().getRegisteredCustomer());
-                this.customerSelector.setValue(next);
+
+                if (this.customerSelector.getValue() == prev) {
+                    this.customerSelector.setValue(next);
+                }
             }
         });
 

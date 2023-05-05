@@ -40,8 +40,8 @@ public class CurrencyManager {
 
     public static List<Currency> getCurrencySeed() {
         List<Currency> currencies = new ArrayList<>();
-        currencies.add(new Currency("Rp", "Rupiah", new BigDecimal(1), true));
-        currencies.add(new Currency("$", "Dollar", new BigDecimal("14740.15")));
+        currencies.add(new Currency("Rp", "Rupiah", new BigDecimal(1)));
+        currencies.add(new Currency("$", "Dollar", new BigDecimal("14740.15"), true));
         currencies.add(new Currency("㍐", "Yuan", new BigDecimal("2132.51")));
         return currencies;
     }

@@ -50,6 +50,7 @@ public class AdapterManager {
         map.put(AdapterType.XML, XMLAdapter.class);
         map.put(AdapterType.OBJ, OBJAdapter.class);
         map.put(AdapterType.SQLORM, ORMAdapter.class);
+        map.put(AdapterType.SQLRaw, SQLAdapter.class);
         return map;
     }
 }

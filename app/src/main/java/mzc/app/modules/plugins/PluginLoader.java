@@ -6,25 +6,24 @@ import mzc.app.modules.setting.AppSettingManager;
 import org.hibernate.Session;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 import java.util.ServiceLoader;
 
 public class PluginLoader {
-    protected @NonNull List<File> pluginFiles;
+    protected @NonNull List<String> pluginFiles;
     protected ServiceLoader<Plugin> serviceLoader;
 
     public PluginLoader() {
-        this.pluginFiles = AppSettingManager.get().getActivePlugins().stream().map(File::new).toList();
+        this.pluginFiles = AppSettingManager.get().getActivePlugins();
     }
 
     public void loadPluginService() {
         List<URL> urls = this.pluginFiles.stream().map(each -> {
             try {
-                return each.toURI().toURL();
-            } catch (MalformedURLException e) {
+                return (new File(each)).toURI().toURL();
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }).toList();
