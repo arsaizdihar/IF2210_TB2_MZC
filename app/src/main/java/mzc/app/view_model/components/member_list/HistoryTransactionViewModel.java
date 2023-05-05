@@ -1,24 +1,18 @@
 package mzc.app.view_model.components.member_list;
 
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Customer;
-import mzc.app.utils.reactive.Context;
-import mzc.app.view_model.base.PageViewModel;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
 import org.jetbrains.annotations.NotNull;
 
 @Getter @Setter
-public class HistoryTransactionPageViewModel extends RightSideViewModel {
+public class HistoryTransactionViewModel extends RightSideViewModel {
 //    private final @NotNull VBox titleBox = new VBox();
 //    private final @NotNull BorderPane infoBox = new BorderPane();
     @Getter @Setter

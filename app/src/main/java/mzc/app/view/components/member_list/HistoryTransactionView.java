@@ -5,18 +5,16 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import mzc.app.annotation.ModelInject;
 import mzc.app.model.Customer;
 import mzc.app.view.components.split_view.RightSideView;
-import mzc.app.view_model.components.member_list.HistoryTransactionPageViewModel;
+import mzc.app.view_model.components.member_list.HistoryTransactionViewModel;
 import org.jetbrains.annotations.NotNull;
 
-@ModelInject(HistoryTransactionPageViewModel.class)
-public class HistoryTransactionPageView extends RightSideView<HistoryTransactionPageViewModel> {
+@ModelInject(HistoryTransactionViewModel.class)
+public class HistoryTransactionView extends RightSideView<HistoryTransactionViewModel> {
 
-    public HistoryTransactionPageView(Customer customer) {
+    public HistoryTransactionView(Customer customer) {
         super();
         getViewModel().setCustomer(customer);
         System.out.println("Masuk");
