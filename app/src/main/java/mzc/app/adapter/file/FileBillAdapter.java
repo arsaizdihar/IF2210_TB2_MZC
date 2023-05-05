@@ -3,7 +3,6 @@ package mzc.app.adapter.file;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.adapter.base.IBillAdapter;
-import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.ProductBill;
 import org.jetbrains.annotations.NotNull;

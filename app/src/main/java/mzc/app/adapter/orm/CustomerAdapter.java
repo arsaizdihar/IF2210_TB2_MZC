@@ -4,6 +4,7 @@ import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
 import mzc.app.model.CustomerType;
+import mzc.app.model.FixedBill;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.jetbrains.annotations.NotNull;
@@ -22,8 +23,13 @@ class CustomerAdapter extends ModelAdapter<Customer> implements ICustomerAdapter
     }
 
     @Override
-    public List<Bill> getBills(@NotNull Customer customer) {
+    public @NotNull List<Bill> getBills(@NotNull Customer customer) {
         return customer.getBills();
+    }
+
+    @Override
+    public @NotNull List<FixedBill> getFixedBills(@NotNull Customer customer) {
+        return customer.getFixedBills();
     }
 
     @Override

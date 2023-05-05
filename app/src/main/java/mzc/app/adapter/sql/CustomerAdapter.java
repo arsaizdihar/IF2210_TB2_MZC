@@ -5,6 +5,7 @@ import mzc.app.adapter.base.IBillAdapter;
 import mzc.app.adapter.base.ICustomerAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
+import mzc.app.model.FixedBill;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
@@ -25,12 +26,17 @@ public class CustomerAdapter extends ModelAdapter<Customer> implements ICustomer
     }
 
     @Override
-    public List<Bill> getBills(@NotNull Customer customer) {
+    public @NotNull List<Bill> getBills(@NotNull Customer customer) {
         if (customer.isBillsLoaded()) return customer.getBills();
         customer.setBillsLoaded(true);
         List<Bill> result = billAdapter.getByCustomerId(customer.getId());
         customer.setBills(result);
         return result;
+    }
+
+    @Override
+    public @NotNull List<FixedBill> getFixedBills(@NotNull Customer customer) {
+        return customer.getFixedBills();
     }
 
     @Override

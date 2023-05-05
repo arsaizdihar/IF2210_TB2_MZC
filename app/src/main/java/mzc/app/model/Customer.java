@@ -44,6 +44,9 @@ public class Customer extends BaseModel {
     @Transient
     private transient boolean billsLoaded = false;
 
+    @Transient
+    private transient boolean fixedBillsLoaded = false;
+
     public Customer(String name, String phone) {
         this.name = name;
         this.phone = phone;
