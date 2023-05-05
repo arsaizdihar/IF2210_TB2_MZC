@@ -20,8 +20,11 @@ public class TabsViewModel extends BaseViewModel {
     public void addNewTab() {
         tabPane.setStyle("-fx-background-color: white;");
         PageTab pageTab = new PageTab(this);
+        setupTab(pageTab);
+    }
+
+    private void setupTab(PageTab pageTab) {
         pageTab.getTab().setOnClosed(e -> {
-            System.out.println(tabPane.getTabs().size());
             if (tabPane.getTabs().size() == 0) {
                 tabPane.setStyle("-fx-background-color: transparent;");
             }
@@ -33,14 +36,7 @@ public class TabsViewModel extends BaseViewModel {
     public void addNewTab(PageEntry entry) {
         tabPane.setStyle("-fx-background-color: white;");
         PageTab pageTab = new PageTab(this, entry);
-        pageTab.getTab().setOnClosed(e -> {
-            System.out.println(tabPane.getTabs().size());
-            if (tabPane.getTabs().size() == 0) {
-                tabPane.setStyle("-fx-background-color: transparent;");
-            }
-        });
-        tabPane.getTabs().add(pageTab.getTab());
-        tabPane.getSelectionModel().select(pageTab.getTab());
+        setupTab(pageTab);
     }
 
 
@@ -55,7 +51,7 @@ public class TabsViewModel extends BaseViewModel {
             public <T extends PageView<?>> T createPage(Class<T> pageClass) {
                 try {
                     T view = pageClass.getDeclaredConstructor().newInstance();
-                    addPageContext(view);
+                    setupPage(view);
                     return tabs.createView(view);
                 } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                     throw new RuntimeException(e);
@@ -64,7 +60,7 @@ public class TabsViewModel extends BaseViewModel {
 
             @Override
             public <T extends PageView<?>> T createPage(T page) {
-                addPageContext(page);
+                setupPage(page);
                 return tabs.createView(page);
             }
         });
@@ -72,7 +68,7 @@ public class TabsViewModel extends BaseViewModel {
         public PageTab(@NotNull TabsViewModel tabs) {
             this.tabs = tabs;
             currentPage = new MainPageView();
-            addPageContext(currentPage);
+            setupPage(currentPage);
             tabs.createView(currentPage);
             tab = new Tab();
             tab.textProperty().bind(currentPage.getViewModel().getTitle());
@@ -92,13 +88,19 @@ public class TabsViewModel extends BaseViewModel {
                 throw new RuntimeException("Cannot change page to a page with different parent view");
             }
             currentPage = page;
-            addPageContext(currentPage);
+            setupPage(currentPage);
             tab.textProperty().bind(currentPage.getViewModel().getTitle());
             tab.setContent(currentPage.getView());
         }
 
-        void addPageContext(PageView<?> pageView) {
+        void setupPage(PageView<?> pageView) {
             pageView.getViewModel().addPageContext(this.pageContext);
+            tab.setOnClosed(e -> pageView.getViewModel().onTabClose());
+            tab.setOnSelectionChanged(e -> {
+                if (tab.isSelected()) {
+                    pageView.getViewModel().onTabFocus();
+                }
+            });
         }
     }
 }

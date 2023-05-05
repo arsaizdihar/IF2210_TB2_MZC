@@ -13,4 +13,13 @@ public class MemberListPageViewModel extends SplitPageViewModel {
         this.setLeft(new LeftSideMemberView());
     }
 
+    @Override
+    public void onTabFocus() {
+
+    }
+
+    @Override
+    public void onTabClose() {
+
+    }
 }

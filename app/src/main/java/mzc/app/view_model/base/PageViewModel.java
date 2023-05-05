@@ -65,4 +65,8 @@ public abstract class PageViewModel extends BaseViewModel {
     public TitleContext getTitle() {
         return title.getValue();
     }
+
+    public abstract void onTabFocus();
+
+    public abstract void onTabClose();
 }

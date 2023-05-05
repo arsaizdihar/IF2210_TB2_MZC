@@ -14,6 +14,16 @@ public class CashierPageViewModel extends SplitPageViewModel {
         super("Cashier");
     }
 
+    @Override
+    public void onTabFocus() {
+
+    }
+
+    @Override
+    public void onTabClose() {
+
+    }
+
     public static class CashierContext {
         @Getter
         private final State<Bill> bill = new State<>(null);

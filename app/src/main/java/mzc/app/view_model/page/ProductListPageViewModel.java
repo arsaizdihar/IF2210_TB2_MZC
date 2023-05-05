@@ -1,7 +1,6 @@
 package mzc.app.view_model.page;
 
 import mzc.app.view.components.product_list.LeftSideProductView;
-import mzc.app.view.components.product_list.RightSideProductView;
 
 public class ProductListPageViewModel extends SplitPageViewModel {
     public ProductListPageViewModel() {
@@ -12,5 +11,15 @@ public class ProductListPageViewModel extends SplitPageViewModel {
     public void init() {
         super.init();
         this.setLeft(new LeftSideProductView());
+    }
+
+    @Override
+    public void onTabFocus() {
+
+    }
+
+    @Override
+    public void onTabClose() {
+
     }
 }

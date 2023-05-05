@@ -57,4 +57,14 @@ public class MainPageViewModel extends PageViewModel {
             pageContext.changePage(page);
         });
     }
+
+    @Override
+    public void onTabFocus() {
+
+    }
+
+    @Override
+    public void onTabClose() {
+
+    }
 }

@@ -16,7 +16,9 @@ public class FileDialogView extends BaseView<FileDialogViewModel> {
         getViewModel().setButton(triggerButton);
         triggerButton.setOnAction((e) -> {
             File file = getViewModel().getFileChooser().showOpenDialog(triggerButton.getScene().getWindow());
-            onFileSelected.accept(file);
+            if (file != null) {
+                onFileSelected.accept(file);
+            }
         });
     }
     @Override
