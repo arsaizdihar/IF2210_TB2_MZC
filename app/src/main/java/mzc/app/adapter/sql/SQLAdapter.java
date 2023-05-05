@@ -4,11 +4,15 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.bootstrap.AppManager;
+import mzc.app.utils.FileManager;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class SQLAdapter implements IMainAdapter {
     @Getter
@@ -31,6 +35,13 @@ public class SQLAdapter implements IMainAdapter {
     public SQLAdapter() {
         ds = new HikariDataSource();
         ds.setJdbcUrl(AppManager.get().getAppSetting().getSqlRawDatabaseUrl());
+        try (var con = ds.getConnection()) {
+            ScriptRunner sr = new ScriptRunner(con);
+            Reader reader = new BufferedReader(new FileReader("schema.sql"));
+            sr.runScript(reader);
+        } catch (SQLException | FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         this.product = new ProductAdapter(ds);
         this.productBill = new ProductBillAdapter(ds, this.product);
         this.bill = new BillAdapter(ds, this.productBill);

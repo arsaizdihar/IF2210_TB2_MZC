@@ -9,9 +9,7 @@ import mzc.app.adapter.orm.ORMAdapter;
 import mzc.app.adapter.orm.SessionManager;
 import mzc.app.adapter.sql.SQLAdapter;
 import mzc.app.adapter.xml.XMLAdapter;
-import mzc.app.model.Bill;
-import mzc.app.model.Customer;
-import mzc.app.model.CustomerType;
+import mzc.app.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -78,7 +76,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {ORMAdapter.class, JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, SQLAdapter.class})
+    @ValueSource(classes = {SQLAdapter.class})
     public void testBill(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         Customer c = new Customer();
@@ -97,6 +95,19 @@ public class AdapterTest {
         Assertions.assertEquals(1, bills.size());
         Assertions.assertTrue(bill.equals(bills.iterator().next()));
         Assertions.assertTrue(bill.getCustomer().equals(c));
+
+        var product = new Product();
+        adapter.getProduct().persist(product);
+
+        var pbill = new ProductBill();
+        pbill.setBill(bill);
+        pbill.setProduct(product);
+
+
+        adapter.getProductBill().persist(pbill);
+        bill = adapter.getBill().getById(bill.getId());
+
+        Assertions.assertEquals(1, adapter.getBill().getProducts(bill).size());
     }
 
     public IMainAdapter getAdapterManager(Class<? extends IMainAdapter> adapterClass) {

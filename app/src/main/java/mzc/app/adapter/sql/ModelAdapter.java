@@ -170,6 +170,9 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
     public Object sanitizeField(Field field, T model) {
         try {
             var value = field.get(model);
+            if (value == null) {
+                return "NULL";
+            }
             if (value instanceof String) {
                 value = "\"" + sanitizeString((String) value) + "\"";
             } else if (value.getClass().isEnum()) {
