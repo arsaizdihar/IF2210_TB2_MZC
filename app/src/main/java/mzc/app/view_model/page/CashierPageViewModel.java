@@ -4,6 +4,7 @@ import lombok.Getter;
 import mzc.app.adapter.base.IMainAdapter;
 import mzc.app.model.Bill;
 import mzc.app.model.Customer;
+import mzc.app.model.CustomerType;
 import mzc.app.utils.reactive.Context;
 import mzc.app.utils.reactive.State;
 import mzc.app.view.components.cashier.LeftSideCashierView;
@@ -12,16 +13,6 @@ import mzc.app.view.components.cashier.PaymentSummaryView;
 public class CashierPageViewModel extends SplitPageViewModel {
     public CashierPageViewModel() {
         super("Cashier");
-    }
-
-    @Override
-    public void onTabFocus() {
-
-    }
-
-    @Override
-    public void onTabClose() {
-
     }
 
     public static class CashierContext {
@@ -75,5 +66,31 @@ public class CashierPageViewModel extends SplitPageViewModel {
 
         this.setLeft(new LeftSideCashierView());
         this.setRight(new PaymentSummaryView());
+    }
+
+
+    @Override
+    public void onTabFocus() {
+        var context = useContext(CashierContext.class).getValue();
+        context.loadBill(context.getBill().getValue().getCustomer());
+    }
+
+    @Override
+    public void onTabClose() {
+        var context = useContext(CashierContext.class).getValue();
+
+        var bill = context.getBill().getValue();
+        var customer = bill.getCustomer();
+
+        if (customer.getType() == CustomerType.BASIC) {
+            var productBills = getAdapter().getBill().getProducts(bill);
+
+            productBills.forEach(productBill -> {
+                getAdapter().getProductBill().delete(productBill);
+            });
+            
+            getAdapter().getBill().delete(bill);
+            getAdapter().getCustomer().delete(customer);
+        }
     }
 }

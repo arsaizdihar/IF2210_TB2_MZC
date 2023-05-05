@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SubtotalViewModel extends BaseViewModel {
     @Getter
@@ -124,7 +125,7 @@ public class SubtotalViewModel extends BaseViewModel {
         if (validation.size() > 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Checkout Failed");
-            alert.setHeaderText("Validasi gagal");
+            alert.setHeaderText(null);
             alert.setContentText(String.join("\n", validation));
             alert.showAndWait();
 
@@ -158,20 +159,31 @@ public class SubtotalViewModel extends BaseViewModel {
             return errors;
         }
 
+        AtomicBoolean outOfStock = new AtomicBoolean(false);
+        AtomicBoolean productDeleted = new AtomicBoolean(false);
+
         // check for out of stock or deleted products
         productBills.forEach(productBill -> {
             var product = productBill.getProduct();
 
             if (productBill.getAmount() > productBill.getProduct().getStock()) {
-                errors.add("Not enough stock for " + product.getName() + " requested " + productBill.getAmount() + " but only had " + product.getStock());
+                outOfStock.set(true);
             }
 
             if (product.getDeleted()) {
-                errors.add("Product " + product.getName() + " was deleted");
+                productDeleted.set(true);
                 // delete productBill for deleted product
                 getAdapter().getProductBill().delete(productBill);
             }
         });
+
+        if (outOfStock.get()) {
+            errors.add("Product out of stock");
+        }
+
+        if (productDeleted.get()) {
+            errors.add("Product Deleted");
+        }
 
         return errors;
     }
