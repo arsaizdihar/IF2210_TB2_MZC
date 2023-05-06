@@ -2,6 +2,7 @@ package mzc.app.view_model.components.member_list;
 
 import mzc.app.utils.reactive.Context;
 import mzc.app.view.components.member_list.AddMemberView;
+import mzc.app.view.components.member_list.EditMemberView;
 import mzc.app.view.components.member_list.HistoryTransactionView;
 import mzc.app.view.components.member_list.MemberView;
 import mzc.app.view_model.components.split_page.LeftSideViewModel;
@@ -14,7 +15,6 @@ public class LeftSideMemberListViewModel extends LeftSideViewModel {
         super.init();
         this.reload();
         setOnButtonClicked((e) -> {
-            // getChildren().getValue().add(createView(new HistoryTransactionPageView()));
             setRightSideAddMember();
             getChildren().forceUpdate();
         });
@@ -32,8 +32,14 @@ public class LeftSideMemberListViewModel extends LeftSideViewModel {
                 Context<SplitPageViewModel.SplitPageContext> context = useContext(SplitPageViewModel.SplitPageContext.class);
                 context.getValue().setRight(historyTransactionView);
                 getChildren().forceUpdate();
-
             });
+            memberview.getViewModel().getEditButton().setOnAction((e) -> {
+                EditMemberView editMemberView = new EditMemberView(customer);
+                Context<SplitPageViewModel.SplitPageContext> context = useContext(SplitPageViewModel.SplitPageContext.class);
+                context.getValue().setRight(editMemberView);
+                getChildren().forceUpdate();
+            });
+
             createView(memberview);
             return memberview.getView();
         });
@@ -47,6 +53,4 @@ public class LeftSideMemberListViewModel extends LeftSideViewModel {
         Context<SplitPageViewModel.SplitPageContext> context = useContext(SplitPageViewModel.SplitPageContext.class);
         context.getValue().setRight(right);
     }
-
-    private void setRightSideEditMember() { }
 }
