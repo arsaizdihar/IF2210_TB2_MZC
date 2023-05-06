@@ -2,6 +2,7 @@ package mzc.app.view;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,12 +21,13 @@ public class MenuView extends BaseView<MenuViewModel> {
 
     @Override
     public @NotNull Parent getView() {
-        VBox root = getViewModel().getRoot();
+        BorderPane root = getViewModel().getRoot();
+        root.setTop(getViewModel().getMenuBar());
         StackPane stackPane = new StackPane();
         VBox.setVgrow(stackPane, Priority.ALWAYS);
         var tabs = getViewModel().getTabsView().getView();
         stackPane.getChildren().addAll(getViewModel().getHomeView().getView(), tabs);
-        root.getChildren().addAll(getViewModel().getMenuBar(), stackPane);
-        return getViewModel().getRoot();
+        root.setCenter(stackPane);
+        return root;
     }
 }

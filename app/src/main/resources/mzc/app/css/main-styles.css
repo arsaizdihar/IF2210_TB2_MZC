@@ -45,15 +45,22 @@
 
 .settings-pane *.tab:selected {
     -fx-border-color: -fx-blue-600;
+    -fx-background-color: -fx-blue-200;
 }
 
 .settings-tab {
-    -fx-padding: 50px 70px;
+    -fx-padding: 30px 70px;
     -fx-font-size: 16px;
 }
 
 .settings-tab .settings-side {
     -fx-padding: 10px 30px;
+}
+
+.settings-tab *.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
 }
 
 .settings-tab .settings-left {

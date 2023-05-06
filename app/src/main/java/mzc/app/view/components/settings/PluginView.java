@@ -12,7 +12,8 @@ public class PluginView extends SettingsTabView<PluginViewModel>{
     @Override
     @NotNull
     public Node getView() {
-        getViewModel().getSettingsBoxR().getChildren().addAll(getViewModel().getPluginList(), getViewModel().getAddPluginDialog().getView());
-        return super.getView();
+        var root = super.getView();
+        getViewModel().getSettingsBoxL().getChildren().addAll(getViewModel().getPluginList(), getViewModel().getAddPluginDialog().getView());
+        return root;
     }
 }
