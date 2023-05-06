@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import lombok.Getter;
 import mzc.app.model.Product;
 import mzc.app.view_model.base.BaseViewModel;
@@ -24,7 +25,7 @@ public class ProductDisplayViewModel extends BaseViewModel {
     private HBox mainRow = new HBox();
     private StackPane main = new StackPane();
 
-    private Label namaBarang;
+    private Text namaBarang;
     private Label kategori;
     private Label hargaBeli;
     private Label hargaJual;
@@ -83,7 +84,7 @@ public class ProductDisplayViewModel extends BaseViewModel {
 
     public void setter(Product product) {
         produk = product;
-        namaBarang = new Label(product.getName());
+        namaBarang = new Text(product.getName());
         kategori = new Label(product.getCategory());
         hargaBeli = new Label("Beli "+product.getBuyPriceView());
         hargaJual = new Label(" Jual "+product.getPriceView());
@@ -93,6 +94,7 @@ public class ProductDisplayViewModel extends BaseViewModel {
 
     private void setstyle() {
         namaBarang.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        namaBarang.setWrappingWidth(450);
         kategori.setStyle("-fx-font-size: 10px; -fx-text-fill: gray");
         edit.setFitWidth(20);
         edit.setFitHeight(20);
