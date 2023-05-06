@@ -9,15 +9,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import lombok.Getter;
-import mzc.app.annotation.ModelInject;
 import mzc.app.model.Product;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
-import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
-import java.io.Console;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
-public class RightSideProductViewModel extends RightSideViewModel {
+public class AddProductViewModel extends RightSideViewModel {
     private VBox main;
     private HBox mainCol;
     private VBox list;
@@ -65,6 +61,7 @@ public class RightSideProductViewModel extends RightSideViewModel {
             Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getValue(), this.imagePath);
             getAdapter().getProduct().persist(product);
             System.out.println("Saved!");
+            this.main = new VBox();
         });
     }
 
