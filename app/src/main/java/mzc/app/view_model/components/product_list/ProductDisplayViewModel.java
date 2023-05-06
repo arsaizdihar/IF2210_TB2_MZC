@@ -85,8 +85,8 @@ public class ProductDisplayViewModel extends BaseViewModel {
         produk = product;
         namaBarang = new Label(product.getName());
         kategori = new Label(product.getCategory());
-        hargaBeli = new Label("Beli "+product.getBuyPrice().toString());
-        hargaJual = new Label(" Jual "+product.getPrice().toString());
+        hargaBeli = new Label("Beli "+product.getBuyPriceView());
+        hargaJual = new Label(" Jual "+product.getPriceView());
         stok = new Label("Stok "+Integer.toString(product.getStock()));
         productImage = product.getImage();
     }
