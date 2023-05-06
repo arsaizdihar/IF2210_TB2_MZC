@@ -1,5 +1,6 @@
 package mzc.app.view_model.components.member_list;
 
+import lombok.Getter;
 import mzc.app.utils.reactive.Context;
 import mzc.app.view.components.member_list.AddMemberView;
 import mzc.app.view.components.member_list.EditMemberView;
@@ -9,12 +10,24 @@ import mzc.app.view_model.components.split_page.LeftSideViewModel;
 import mzc.app.view_model.page.SplitPageViewModel;
 
 public class LeftSideMemberListViewModel extends LeftSideViewModel {
+    public static class ReloadContext {
+        private final Runnable reload;
 
+        public ReloadContext(Runnable reload) {
+            this.reload = reload;
+        }
+
+        public void reload() {
+            reload.run();
+        }
+    }
     @Override
     public void init() {
         super.init();
-        this.reload();
-        this.getButton().setVisible(false);
+        getButton().setVisible(false);
+        Context<ReloadContext> context = new Context<>(new ReloadContext(() -> this.reload()));
+        addContext(context);
+
         setOnButtonClicked((e) -> {
             setRightSideAddMember();
             getChildren().forceUpdate();
@@ -42,14 +55,13 @@ public class LeftSideMemberListViewModel extends LeftSideViewModel {
 
             createView(memberview);
             return memberview;
-        });
+        }).toList();
 
-        getChildren().getValue().addAll(memberViews.toList());
+        getChildren().getValue().addAll(memberViews);
         getChildren().forceUpdate();
     }
 
     private void setRightSideAddMember() {
-        // TODO Ganti dengan view yang sesuai yaitu Tambah/Ubah Member
         AddMemberView right = new AddMemberView();
         Context<SplitPageViewModel.SplitPageContext> context = useContext(SplitPageViewModel.SplitPageContext.class);
         context.getValue().setRight(right);

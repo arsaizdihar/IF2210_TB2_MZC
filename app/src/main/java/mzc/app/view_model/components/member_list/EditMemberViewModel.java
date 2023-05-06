@@ -32,6 +32,7 @@ public class EditMemberViewModel extends RightSideViewModel  {
     public void init()
     {
         super.init();
+        LeftSideMemberListViewModel.ReloadContext reload = useContext(LeftSideMemberListViewModel.ReloadContext.class).getValue();
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         customerDetails();
         editCustomerButton = new Button("Kirim");
@@ -50,6 +51,7 @@ public class EditMemberViewModel extends RightSideViewModel  {
                         System.out.println("Kategori: " + categoryField.getValue());
                         root.getChildren().clear();
                         // TODO tampilkan alert berhasil
+                        reload.reload();
                     }
                 }
         );
