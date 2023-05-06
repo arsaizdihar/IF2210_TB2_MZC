@@ -28,7 +28,13 @@ public class ProductViewModel extends BaseViewModel {
     private final @NotNull Button increment = new Button();
 
     @Getter
+    private final @NotNull ImageView plus = new ImageView(FileManager.getResourcePath("/mzc/app/assets/plus.png"));
+
+    @Getter
     private final @NotNull Button decrement = new Button();
+
+    @Getter
+    private final @NotNull ImageView minus = new ImageView(FileManager.getResourcePath("/mzc/app/assets/minus.png"));
 
     @Getter
     private final @NotNull HBox container = new HBox();
