@@ -7,7 +7,6 @@ import mzc.app.model.Bill;
 import mzc.app.model.ProductBill;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,7 +26,7 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
     public Bill getById(long id) {
         Bill res = super.getById(id);
         if (res != null) {
-            res.setCustomer(customerAdapter.getById(res.getId()));
+            res.setCustomer(customerAdapter.getById(res.getCustomerId()));
         }
         return res;
     }
