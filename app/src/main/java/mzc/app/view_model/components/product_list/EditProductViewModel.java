@@ -65,6 +65,7 @@ public class EditProductViewModel extends RightSideViewModel {
         this.main.setSpacing(60);
         this.main.setStyle("-fx-font-size: 16px;");
 
+        LeftSideProductViewModel.ReloadContext reload = useContext(LeftSideProductViewModel.ReloadContext.class).getValue();
         setOnButtonClicked((e) -> {
             product.setName(this.namaBarang.getViewModel().getVal());
             product.setStock(Integer.parseInt(this.stok.getViewModel().getVal()));
@@ -79,6 +80,7 @@ public class EditProductViewModel extends RightSideViewModel {
             getAdapter().getProduct().persist(product);
             System.out.println("Saved!");
             this.main.getChildren().clear();
+            reload.reload();
         });
     }
 
