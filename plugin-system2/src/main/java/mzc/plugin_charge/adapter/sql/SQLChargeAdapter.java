@@ -1,9 +1,9 @@
-package mzc.plugin_system2.adapter.sql;
+package mzc.plugin_charge.adapter.sql;
 
 import com.zaxxer.hikari.HikariDataSource;
 import mzc.app.adapter.sql.ModelAdapter;
-import mzc.plugin_system2.adapter.base.IChargeAdapter;
-import mzc.plugin_system2.models.Charge;
+import mzc.plugin_charge.adapter.base.IChargeAdapter;
+import mzc.plugin_charge.models.Charge;
 import org.jetbrains.annotations.NotNull;
 
 public class SQLChargeAdapter extends ModelAdapter<Charge> implements IChargeAdapter {

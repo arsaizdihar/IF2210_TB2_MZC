@@ -1,7 +1,8 @@
-package mzc.app.view.page;
+package mzc.plugin_charge.view;
 
 import mzc.app.annotation.ModelInject;
-import mzc.app.view_model.page.CashierPageViewModel;
+import mzc.app.view.page.SplitPageView;
+import mzc.plugin_charge.view_model.CashierPageViewModel;
 
 @ModelInject(CashierPageViewModel.class)
 public class CashierPageView extends SplitPageView<CashierPageViewModel> {

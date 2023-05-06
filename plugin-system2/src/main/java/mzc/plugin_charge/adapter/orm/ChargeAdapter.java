@@ -1,8 +1,8 @@
-package mzc.plugin_system2.adapter.orm;
+package mzc.plugin_charge.adapter.orm;
 
 import mzc.app.adapter.orm.ModelAdapter;
-import mzc.plugin_system2.adapter.base.IChargeAdapter;
-import mzc.plugin_system2.models.Charge;
+import mzc.plugin_charge.adapter.base.IChargeAdapter;
+import mzc.plugin_charge.models.Charge;
 import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 

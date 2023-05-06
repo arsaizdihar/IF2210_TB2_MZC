@@ -1,4 +1,4 @@
-package mzc.plugin_system2.models;
+package mzc.plugin_charge.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,16 +28,16 @@ public class Charge extends BaseModel {
 
     @EqualCheck
     @Column
-    private String key;
+    private String identifier;
 
     @EqualCheck
     @Column
     private String name;
 
-    public Charge(PricePipelineType type, BigDecimal value, String key, String name) {
+    public Charge(PricePipelineType type, BigDecimal value, String identifier, String name) {
         this.type = type;
         this.value = value;
-        this.key = key;
+        this.identifier = identifier;
         this.name = name;
     }
 }

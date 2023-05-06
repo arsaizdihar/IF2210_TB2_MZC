@@ -8,6 +8,7 @@ import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.price.ItemPrice;
 import mzc.app.utils.reactive.Context;
 import mzc.app.utils.reactive.State;
+import mzc.app.view.base.BaseView;
 import mzc.app.view.components.cashier.CustomerSelectorView;
 import mzc.app.view.components.cashier.ItemsView;
 import mzc.app.view.components.cashier.SubtotalView;
@@ -24,16 +25,16 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
     }
 
     @Getter
-    private CustomerSelectorView customerSelector = new CustomerSelectorView();
+    protected CustomerSelectorView customerSelector = new CustomerSelectorView();
 
     @Getter
-    private SubtotalView totalView = new SubtotalView();
+    protected BaseView<? extends SubtotalViewModel> totalView = new SubtotalView();
 
     @Getter
-    private ItemsView itemsView = new ItemsView();
+    protected ItemsView itemsView = new ItemsView();
 
     @Getter
-    private VBox container = new VBox();
+    protected VBox container = new VBox();
 
 
     @Override
@@ -53,6 +54,10 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
         createView(this.itemsView);
         createView(this.totalView);
         reloadSummary(cashierContext.getBill().getValue());
+
+        getContainer().getChildren().add(getCustomerSelector().getView());
+        getContainer().getChildren().add(getItemsView().getView());
+        getContainer().getChildren().add(getTotalView().getView());
     }
 
     public void reloadSummary(Bill bill) {

@@ -46,4 +46,10 @@ open module mzc.app {
     exports mzc.app.view_model.components.ui;
     exports mzc.app.view.components.settings;
     exports mzc.app.utils.reactive;
+    exports mzc.app.view_model.page;
+    exports mzc.app.view.page;
+    exports mzc.app.view.components.cashier;
+    exports mzc.app.view.components.split_view;
+    exports mzc.app.view_model.components.cashier;
+    exports mzc.app.view.base;
 }
