@@ -169,7 +169,8 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
     }
 
     public String sanitizeString(String string) {
-        return string.replace("\"", "\\\"");
+        String value = string.replace("\\", "\\\\");
+        return value.replace("\"", "\\\"");
     }
 
     public Object sanitizeField(Field field, T model) {

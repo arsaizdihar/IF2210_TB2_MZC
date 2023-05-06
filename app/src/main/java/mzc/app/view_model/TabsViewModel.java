@@ -18,12 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 public class TabsViewModel extends BaseViewModel {
     private TabPane tabPane = new TabPane();
 
-    public void addNewTab() {
-        tabPane.setStyle("-fx-background-color: white;");
-        PageTab pageTab = new PageTab(this);
-        setupTab(pageTab);
-    }
-
     private void setupTab(PageTab pageTab) {
         pageTab.getTab().setOnClosed(e -> {
             if (tabPane.getTabs().size() == 0) {
