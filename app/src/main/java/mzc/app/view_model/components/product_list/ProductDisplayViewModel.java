@@ -1,5 +1,7 @@
 package mzc.app.view_model.components.product_list;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -17,6 +19,7 @@ import java.util.Objects;
 @Getter
 public class ProductDisplayViewModel extends BaseViewModel {
 
+    private Product produk;
     private Image productImage;
     private HBox mainRow = new HBox();
     private StackPane main = new StackPane();
@@ -67,10 +70,19 @@ public class ProductDisplayViewModel extends BaseViewModel {
         this.main.getChildren().add(icons);
         this.main.getChildren().add(buttons);
         setstyle();
-
+        setOnButtonClicked((e) -> {
+            // edit
+            System.out.println("Edit item");
+        }, (e) -> {
+            // delete
+            System.out.println("Delete item");
+            getAdapter().getProduct().delete(this.produk);
+            getAdapter().getProduct().persist(this.produk);
+                });
     }
 
     public void setter(Product product) {
+        produk = product;
         namaBarang = new Label(product.getName());
         kategori = new Label(product.getCategory());
         hargaBeli = new Label("Beli "+product.getBuyPrice().toString());
@@ -86,9 +98,20 @@ public class ProductDisplayViewModel extends BaseViewModel {
         edit.setFitHeight(20);
         bin.setFitWidth(20);
         bin.setFitHeight(20);
-        editButton.setVisible(false);
-        binButton.setVisible(false);
+        editButton.setOpacity(0);
+        binButton.setOpacity(0);
         editButton.setPrefSize(20, 20);
         binButton.setPrefSize(20, 20);
+    }
+
+    public void setOnButtonClicked(EventHandler<ActionEvent> handler1, EventHandler<ActionEvent> handler2) {
+        if (this.editButton == null) {
+            throw new RuntimeException("Must set button first");
+        }
+        if (this.binButton == null) {
+            throw new RuntimeException("Must set button first");
+        }
+        this.editButton.setOnAction(handler1);
+        this.binButton.setOnAction(handler2);
     }
 }
