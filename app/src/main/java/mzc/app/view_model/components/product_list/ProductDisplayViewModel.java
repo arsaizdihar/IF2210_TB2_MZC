@@ -71,6 +71,7 @@ public class ProductDisplayViewModel extends BaseViewModel {
         this.main.getChildren().add(icons);
         this.main.getChildren().add(buttons);
         setstyle();
+        LeftSideProductViewModel.ReloadContext reload = useContext(LeftSideProductViewModel.ReloadContext.class).getValue();
         setOnButtonClicked((e) -> {
             // edit
             System.out.println("Edit item");
@@ -79,6 +80,7 @@ public class ProductDisplayViewModel extends BaseViewModel {
             System.out.println("Delete item");
             getAdapter().getProduct().delete(this.produk);
             getAdapter().getProduct().persist(this.produk);
+            reload.reload();
                 });
     }
 
