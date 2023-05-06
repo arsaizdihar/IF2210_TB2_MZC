@@ -59,7 +59,7 @@ public class AddMemberViewModel extends RightSideViewModel {
         this.mainCol.setSpacing(100);
         this.main = new VBox(tambahBarang, this.mainCol, addCustomerButton);
         this.main.setAlignment(Pos.CENTER);
-        this.main.setSpacing(100);
+        this.main.setSpacing(60);
         this.main.setStyle("-fx-font-size: 16px;");
 
         setOnButtonClicked((e) -> {
