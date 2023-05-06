@@ -45,6 +45,11 @@ public class FileBillAdapter extends FileModelAdapter<Bill> implements IBillAdap
     public @NotNull Set<ProductBill> getProducts(Bill bill) {
         if (bill.isProductsLoaded()) return bill.getProducts();
         Set<ProductBill> result = getProductBillAdapter().getByBillId(bill.getId());
+
+        result.forEach(productBill -> {
+            productBill.setBill(bill);
+        });
+
         bill.setProductsLoaded(true);
         bill.setProducts(result);
         return result;
