@@ -113,7 +113,6 @@ public class ProductDisplayViewModel extends BaseViewModel {
         if (this.binButton == null) {
             throw new RuntimeException("Must set button first");
         }
-        this.editButton.setOnAction(handler1);
         this.binButton.setOnAction(handler2);
     }
 }

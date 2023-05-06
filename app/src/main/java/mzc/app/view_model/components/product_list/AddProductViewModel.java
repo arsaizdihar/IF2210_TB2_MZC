@@ -58,6 +58,9 @@ public class AddProductViewModel extends RightSideViewModel {
         this.main.setStyle("-fx-font-size: 16px;");
 
         setOnButtonClicked((e) -> {
+            if (this.imagePath.startsWith("file:/")) {
+                this.imagePath = this.imagePath.substring("file:/".length());
+            }
             Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getValue(), this.imagePath);
             getAdapter().getProduct().persist(product);
             System.out.println("Saved!");
@@ -88,7 +91,9 @@ public class AddProductViewModel extends RightSideViewModel {
     }
 
     private void setupImage() {
-        Image placeholder = (new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/product.png")).toExternalForm()));
+        this.imagePath = Objects.requireNonNull(getClass().getResource("/mzc/app/assets/product.png")).toExternalForm();
+        Image placeholder = new Image(this.imagePath);
+        this.imageFile = placeholder;
         ImageView imageView = new ImageView(placeholder);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
