@@ -5,30 +5,43 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import lombok.Getter;
+import mzc.app.view.components.ui.FormGroupView;
 import mzc.app.view_model.base.BaseViewModel;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
 public class TextInputViewModel extends BaseViewModel {
     @Getter
-    @NotNull Label label = new Label();
-
-    @Getter
     @NotNull TextField textField = new TextField();
 
     @Getter
-    @NotNull VBox main = new VBox();
+    @NotNull HBox fieldContainer = new HBox();
+
+    @Getter
+    FormGroupView formGroup;
+
     public void init() {
-        this.main.getChildren().add(this.label);
-        this.main.getChildren().add(this.textField);
+        createForm();
+        this.fieldContainer.getChildren().add(this.textField);
+        HBox.setHgrow(this.textField, Priority.ALWAYS);
+    }
 
-
+    private void createForm() {
+        if (this.formGroup == null) {
+            this.formGroup = new FormGroupView(this.fieldContainer);
+            createView(formGroup);
+        }
     }
 
     public void setter(String str, int width) {
-        this.label.setText(str);
-        this.textField.setPromptText(str);
+        setter(str);
         this.textField.setPrefWidth(width);
+    }
+
+    public void setter(String str) {
+        createForm();
+        this.getFormGroup().getViewModel().getLabel().setText(str);
+        this.textField.setPromptText(str);
     }
 
     public String getVal() {
@@ -38,7 +51,7 @@ public class TextInputViewModel extends BaseViewModel {
     public void numberOnly(boolean bool) {
 
         if (bool) {
-            textField.textProperty().addListener(new ChangeListener<String>() {
+            textField.textProperty().addListener(new ChangeListener<>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue,
                                     String newValue) {

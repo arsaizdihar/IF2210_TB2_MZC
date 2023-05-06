@@ -16,9 +16,12 @@ public class DataStoreView extends SettingsTabView<DataStoreViewModel> {
     @Override
     @NotNull
     public Node getView() {
-        getViewModel().getLeftBox().getChildren().addAll(getViewModel().getSelectMethod());
-        getViewModel().getRightBox().getChildren().addAll(getViewModel().getStorageLocation());
-        return super.getView();
+        var root = super.getView();
+        getViewModel().getSettingsBoxL().getChildren().addAll(getViewModel().getSelectMethod().getChildren());
+        getViewModel().getSelectMethod().setFillWidth(true);
+        getViewModel().getSettingsBoxR().getChildren().addAll(getViewModel().getStorageLocation().getChildren());
+        getViewModel().getStorageLocation().setFillWidth(true);
+        return root;
     }
 
 }

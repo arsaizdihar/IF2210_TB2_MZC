@@ -2,22 +2,22 @@
     -fx-font-family: "Poppins";
 }
 
-#tab-pane *.tab-header-background {
+.tab-pane *.tab-header-background {
     -fx-background-color: -fx-gray-200;
 }
 
-#tab-pane *.tab-content-area {
+.tab-pane *.tab-content-area {
     -fx-padding: 5px 0 0 0;
 }
 
-#tab-pane *.tab {
+.tab-pane *.tab {
     -fx-background-color: "white";
     -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: transparent;
     -fx-border-width: 2px;
 }
 
-#tab-pane *.add-tab {
+.tab-pane *.add-tab {
     -fx-border-style: solid;
     -fx-border-width: 1px;
     -fx-border-color: -fx-gray-400;
@@ -26,13 +26,45 @@
     -fx-font-size: 16px;
 }
 
-#tab-pane *.tab:selected {
+.tab-pane *.tab:selected {
     -fx-border-color: -fx-gray-600;
 }
 
-#tab-pane *.tab:selected .focus-indicator {
+.tab-pane *.tab:selected .focus-indicator {
     -fx-border-style: hidden;
 }
+
+.settings-pane *.tab {
+    -fx-background-color: -fx-blue-50;
+    -fx-cursor: hand;
+}
+
+.settings-pane *.tab-header-background {
+    -fx-background-color: -fx-blue-400;
+}
+
+.settings-pane *.tab:selected {
+    -fx-border-color: -fx-blue-600;
+}
+
+.settings-tab {
+    -fx-padding: 50px 70px;
+    -fx-font-size: 16px;
+}
+
+.settings-tab .settings-side {
+    -fx-padding: 10px 30px;
+}
+
+.settings-tab .settings-left {
+    -fx-border-style: hidden solid hidden hidden;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-gray-600;
+}
+
+.settings-tab .settings-side *.settings .text-field {
+}
+
 
 #split-page *.left-side .title {
     -fx-font-size: 24px;
@@ -57,8 +89,15 @@
 }
 
 .text-field {
-
     -fx-display-caret: true;
+}
+
+.form-group-label {
+    -fx-font-weight: bold;
+}
+
+.form-group {
+    -fx-padding: 8px 0;
 }
 
 .label.history-title {
@@ -72,4 +111,29 @@
 
 .button {
     -fx-cursor: hand;
+}
+
+.btn-primary {
+    -fx-background-color: -fx-blue-600;
+}
+
+.btn-primary:hover {
+    -fx-background-color: -fx-blue-400;
+}
+
+.btn-primary:pressed {
+    -fx-background-color: -fx-blue-700;
+}
+
+.btn-success {
+    -fx-background-color: -fx-green-600;
+    -fx-text-fill: white;
+}
+
+.btn-success:hover {
+    -fx-background-color: -fx-green-500;
+}
+
+.btn-success:pressed {
+    -fx-background-color: -fx-green-700;
 }

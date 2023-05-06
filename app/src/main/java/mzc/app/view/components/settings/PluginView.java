@@ -12,7 +12,7 @@ public class PluginView extends SettingsTabView<PluginViewModel>{
     @Override
     @NotNull
     public Node getView() {
-        getViewModel().getLeftBox().getChildren().addAll(getViewModel().getPluginList(), getViewModel().getAddPluginDialog().getView(), getViewModel().getPluginsButton());
+        getViewModel().getSettingsBoxR().getChildren().addAll(getViewModel().getPluginList(), getViewModel().getAddPluginDialog().getView());
         return super.getView();
     }
 }

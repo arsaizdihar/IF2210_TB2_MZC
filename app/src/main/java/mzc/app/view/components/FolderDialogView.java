@@ -13,10 +13,13 @@ import java.util.function.Consumer;
 @ModelInject(FolderDialogViewModel.class)
 public class FolderDialogView extends BaseView<FolderDialogViewModel> {
     public FolderDialogView(@NotNull Button triggerButton, @NotNull Consumer<File> onFileSelected) {
+        triggerButton.getStyleClass().addAll("btn", "btn-primary");
         getViewModel().setButton(triggerButton);
         triggerButton.setOnAction((e) -> {
             File file = getViewModel().getDirectoryChooser().showDialog(triggerButton.getScene().getWindow());
-            onFileSelected.accept(file);
+            if (file != null) {
+                onFileSelected.accept(file);
+            }
         });
     }
     @Override

@@ -38,7 +38,7 @@ public class LeftSideView<T extends LeftSideViewModel> extends BaseView<T> {
         spacer.getChildren().add(getViewModel().getTitleLabel());
         getViewModel().getTitleLabel().getStyleClass().add("title");
         if (getViewModel().getButton() != null) {
-            getViewModel().getButton().getStyleClass().add("btn");
+            getViewModel().getButton().getStyleClass().addAll("btn", "btn-primary");
             hBox.getChildren().add(getViewModel().getButton());
         }
         var vbox = getViewModel().getVBox();

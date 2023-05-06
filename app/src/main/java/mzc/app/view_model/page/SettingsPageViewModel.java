@@ -1,8 +1,10 @@
 package mzc.app.view_model.page;
 
 import javafx.geometry.Side;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.bootstrap.AppManager;
@@ -27,7 +29,14 @@ public class SettingsPageViewModel extends PageViewModel {
     public void init() {
         super.init();
         AppManager.get().getSettingTabs().entrySet().forEach(stringClassEntry -> {
-            var tab = new Tab(stringClassEntry.getKey());
+            var tab = new Tab();
+            Label label = new Label(stringClassEntry.getKey());
+            label.setRotate(90);
+            label.setMaxHeight(200);
+            StackPane stackPane = new StackPane(new Group(label));
+            stackPane.setPrefHeight(200);
+            stackPane.setRotate(90);
+            tab.setGraphic(stackPane);
             tab.setClosable(false);
             tab.setOnSelectionChanged(e -> {
                 if (tab.isSelected()) {

@@ -19,8 +19,6 @@ public class PluginViewModel extends SettingsTabViewModel {
             String absolutePath = file.getAbsolutePath();
             setting.getActivePlugins().add(absolutePath);
         });
-    @Getter
-    private final Button pluginsButton = new Button("Simpan Perubahan");
 
     public PluginViewModel() { super(); }
     @Override
@@ -31,7 +29,7 @@ public class PluginViewModel extends SettingsTabViewModel {
             Label label = new Label(plugin.toString());
             pluginList.getChildren().add(label);
         });
-        pluginsButton.setOnAction(
+        getSaveButtonL().setOnAction(
             event -> {
                 setting.save();
             }

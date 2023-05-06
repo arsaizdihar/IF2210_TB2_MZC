@@ -8,6 +8,8 @@ import mzc.app.adapter.base.AdapterType;
 import mzc.app.modules.setting.AppSetting;
 import mzc.app.modules.setting.AppSettingManager;
 import mzc.app.view.components.FolderDialogView;
+import mzc.app.view.components.ui.FormGroupView;
+import mzc.app.view.components.ui.TextInputView;
 
 public class DataStoreViewModel extends SettingsTabViewModel {
     @Getter
@@ -27,41 +29,42 @@ public class DataStoreViewModel extends SettingsTabViewModel {
     @Getter
     private final RadioButton sqlOrm = new RadioButton("SQL - ORM");
     @Getter
-    private final Button saveMethodButton = new Button("Simpan Perubahan");
-    @Getter
     private final VBox storageLocation = new VBox();
-    @Getter final HBox jsonBox = new HBox();
-    @Getter final Label jsonLabel = new Label("Lokasi penyimpanan JSON");
-    @Getter final Label jsonLocation = new Label(setting.getJSONPath());
-    @Getter final FolderDialogView jsonFolder = new FolderDialogView(new Button("Pilih Folder"),
-                folder -> {
-                    jsonLocation.setText(folder.getAbsolutePath());
-                }
-            );
-    @Getter final HBox xmlBox = new HBox();
-    @Getter final Label xmlLabel = new Label("Lokasi penyimpanan XML");
-    @Getter final Label xmlLocation = new Label(setting.getXMLPath());
-    @Getter final FolderDialogView xmlFolder = new FolderDialogView(new Button("Pilih Folder"),
-                folder -> {
-                    xmlLocation.setText(folder.getAbsolutePath());
-                }
-            );
-    @Getter final HBox objBox = new HBox();
-    @Getter final Label objLabel = new Label("Lokasi penyimpanan OBJ");
-    @Getter final Label objLocation = new Label(setting.getOBJPath());
-    @Getter final FolderDialogView objFolder = new FolderDialogView(new Button("Pilih Folder"),
-                folder -> {
-                    objLocation.setText(folder.getAbsolutePath());
-                }
-            );
-    @Getter final HBox sqlRawBox = new HBox();
-    @Getter final Label sqlRawLabel = new Label("Lokasi penyimpanan SQL Raw");
-    @Getter final TextField sqlRawLocation = new TextField(setting.getSqlRawDatabaseUrl());
-    @Getter final HBox sqlOrmBox = new HBox();
-    @Getter final Label sqlOrmLabel = new Label("Lokasi penyimpanan SQL ORM");
-    @Getter final TextField sqlOrmLocation = new TextField(setting.getSqlOrmDatabaseUrl());
     @Getter
-    private final Button saveLocationButton = new Button("Simpan Perubahan");
+    final HBox jsonBox = new HBox();
+    @Getter
+    final Label jsonLocation = new Label(setting.getJSONPath());
+    @Getter
+    final FolderDialogView jsonFolder = new FolderDialogView(new Button("Pilih Folder"),
+            folder -> {
+                jsonLocation.setText(folder.getAbsolutePath());
+            }
+    );
+    @Getter
+    final HBox xmlBox = new HBox();
+    @Getter
+    final Label xmlLocation = new Label(setting.getXMLPath());
+    @Getter
+    final FolderDialogView xmlFolder = new FolderDialogView(new Button("Pilih Folder"),
+            folder -> {
+                xmlLocation.setText(folder.getAbsolutePath());
+            }
+    );
+    @Getter
+    final HBox objBox = new HBox();
+    @Getter
+    final Label objLocation = new Label(setting.getOBJPath());
+    @Getter
+    final FolderDialogView objFolder = new FolderDialogView(new Button("Pilih Folder"),
+            folder -> {
+                objLocation.setText(folder.getAbsolutePath());
+            }
+    );
+    @Getter
+    TextInputView sqlRawInput;
+    @Getter
+    TextInputView sqlOrmInput;
+
     public DataStoreViewModel() {
         super();
     }
@@ -70,10 +73,15 @@ public class DataStoreViewModel extends SettingsTabViewModel {
     public void init() {
         super.init();
         json.setToggleGroup(storageMethod);
+        json.getStyleClass().add("toggle-btn");
         xml.setToggleGroup(storageMethod);
+        xml.getStyleClass().add("toggle-btn");
         obj.setToggleGroup(storageMethod);
+        obj.getStyleClass().add("toggle-btn");
         sqlRaw.setToggleGroup(storageMethod);
+        sqlRaw.getStyleClass().add("toggle-btn");
         sqlOrm.setToggleGroup(storageMethod);
+        sqlOrm.getStyleClass().add("toggle-btn");
 
         var currentStorageMethod = setting.getStorageMethod();
 
@@ -89,21 +97,21 @@ public class DataStoreViewModel extends SettingsTabViewModel {
             sqlOrm.setSelected(true);
         }
 
-        saveMethodButton.setOnAction(
-            event -> {
-                if (json.isSelected()) {
-                    setting.setStorageMethod(AdapterType.JSON);
-                } else if (xml.isSelected()) {
-                    setting.setStorageMethod(AdapterType.XML);
-                } else if (obj.isSelected()) {
-                    setting.setStorageMethod(AdapterType.OBJ);
-                } else if (sqlRaw.isSelected()) {
-                    setting.setStorageMethod(AdapterType.SQLRaw);
-                } else if (sqlOrm.isSelected()) {
-                    setting.setStorageMethod(AdapterType.SQLORM);
+        getSaveButtonL().setOnAction(
+                event -> {
+                    if (json.isSelected()) {
+                        setting.setStorageMethod(AdapterType.JSON);
+                    } else if (xml.isSelected()) {
+                        setting.setStorageMethod(AdapterType.XML);
+                    } else if (obj.isSelected()) {
+                        setting.setStorageMethod(AdapterType.OBJ);
+                    } else if (sqlRaw.isSelected()) {
+                        setting.setStorageMethod(AdapterType.SQLRaw);
+                    } else if (sqlOrm.isSelected()) {
+                        setting.setStorageMethod(AdapterType.SQLORM);
+                    }
+                    setting.save();
                 }
-                setting.save();
-            }
         );
 
         createView(jsonFolder);
@@ -114,21 +122,37 @@ public class DataStoreViewModel extends SettingsTabViewModel {
         jsonBox.getChildren().addAll(jsonFolder.getView(), jsonLocation);
         xmlBox.getChildren().addAll(xmlFolder.getView(), xmlLocation);
         objBox.getChildren().addAll(objFolder.getView(), objLocation);
-        sqlRawBox.getChildren().addAll(sqlRawLocation);
-        sqlOrmBox.getChildren().addAll(sqlOrmLocation);
 
-        saveLocationButton.setOnAction(
+        sqlRawInput = new TextInputView("Lokasi penyimpanan SQL Raw", false);
+        createView(sqlRawInput);
+        sqlRawInput.getViewModel().getTextField().setText(setting.getSqlRawDatabaseUrl());
+
+        sqlOrmInput = new TextInputView("Lokasi penyimpanan SQL ORM", false);
+        createView(sqlOrmInput);
+        sqlOrmInput.getViewModel().getTextField().setText(setting.getSqlOrmDatabaseUrl());
+
+        getSaveButtonR().setOnAction(
                 event -> {
                     setting.setJSONPath(jsonLocation.getText());
                     setting.setXMLPath(xmlLocation.getText());
                     setting.setOBJPath(objLocation.getText());
-                    setting.setSqlRawDatabaseUrl(sqlRawLocation.getText());
-                    setting.setSqlOrmDatabaseUrl(sqlOrmLocation.getText());
+                    setting.setSqlRawDatabaseUrl(sqlOrmInput.getViewModel().getVal());
+                    setting.setSqlOrmDatabaseUrl(sqlOrmInput.getViewModel().getVal());
                     setting.save();
                 }
         );
 
-        selectMethod.getChildren().addAll(json, xml, obj, sqlRaw, sqlOrm, saveMethodButton);
-        storageLocation.getChildren().addAll(jsonLabel ,jsonBox, xmlLabel, xmlBox, objLabel, objBox, sqlRawLabel, sqlRawBox, sqlOrmLabel, sqlOrmBox, saveLocationButton);
+        selectMethod.getChildren().addAll(json, xml, obj, sqlRaw, sqlOrm);
+        var jsonForm = new FormGroupView(jsonBox);
+        jsonForm.setLabel("Lokasi penyimpanan JSON");
+        createView(jsonForm);
+        var xmlForm = new FormGroupView(xmlBox);
+        xmlForm.setLabel("Lokasi penyimpanan XML");
+        createView(xmlForm);
+        var objForm = new FormGroupView(objBox);
+        objForm.setLabel("Lokasi penyimpanan OBJ");
+        createView(objForm);
+
+        storageLocation.getChildren().addAll(jsonForm.getView(), xmlForm.getView(), objForm.getView(), sqlRawInput.getView(), sqlOrmInput.getView());
     }
 }

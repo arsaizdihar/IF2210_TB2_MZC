@@ -16,9 +16,13 @@ public class TextInputView extends BaseView<TextInputViewModel> {
         getViewModel().setter(str, width); getViewModel().numberOnly(isNumOnly);
     }
 
+    public TextInputView(String str, boolean isNumOnly) {
+        getViewModel().setter(str); getViewModel().numberOnly(isNumOnly);
+    }
+
     @Override
     public @NotNull Node getView() {
-        return getViewModel().getMain();
+        return getViewModel().getFormGroup().getView();
     }
 
 }
