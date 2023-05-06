@@ -1,19 +1,17 @@
 package mzc.plugin_system2;
 
 import lombok.Getter;
+import mzc.app.adapter.base.AdapterType;
+import mzc.app.adapter.sql.Schema;
 import mzc.app.bootstrap.App;
 import mzc.app.modules.plugins.Plugin;
 import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_system2.adapter.ChargeManager;
 import mzc.plugin_system2.models.Charge;
-import org.hibernate.Session;
 
 public class ChargePlugin extends Plugin {
     @Getter
     protected static AppSetting appSetting;
-
-    @Getter
-    protected static Session session;
 
     public ChargePlugin() {
         super("Charge Plugin");
@@ -23,13 +21,15 @@ public class ChargePlugin extends Plugin {
     public void setup(App appContext) {
         appSetting = appContext.getAppSetting();
 
-        appContext.getHibernateConfiguration().addClass(Charge.class);
+        if (appSetting.getStorageMethod() == AdapterType.SQLORM) {
+            appContext.getHibernateConfiguration().addClass(Charge.class);
+        } else if (appSetting.getStorageMethod() == AdapterType.SQLRaw) {
+            Schema.setValue(Schema.getValue() + " " + mzc.plugin_system2.adapter.sql.Schema.getValue());
+        }
     }
 
     @Override
-    public void postSetup(Session hibernateSession) {
-        session = hibernateSession;
-
+    public void postSetup() {
         var adapter = ChargeManager.getAdapter();
 
         if (adapter.getAll().size() == 0) {

@@ -3,7 +3,6 @@ package mzc.app.adapter.sql;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import mzc.app.adapter.base.IMainAdapter;
-import mzc.app.modules.setting.AppSettingManager;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,8 +29,7 @@ public class SQLAdapter implements IMainAdapter {
     private final @NotNull HikariDataSource ds;
 
     public SQLAdapter() {
-        ds = new HikariDataSource();
-        ds.setJdbcUrl(AppSettingManager.get().getSqlRawDatabaseUrl());
+        ds = ConnectionManager.getDatastore();
         try (var con = ds.getConnection()) {
             ScriptRunner sr = new ScriptRunner(con);
             Reader reader = new StringReader(Schema.getValue());

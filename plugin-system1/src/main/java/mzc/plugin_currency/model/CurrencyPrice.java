@@ -14,9 +14,9 @@ public class CurrencyPrice implements IPrice {
 
     private final @NonNull Currency currency;
 
-    public CurrencyPrice(@NonNull BigDecimal price) {
+    public CurrencyPrice(BigDecimal price) {
         this.currency = CurrencyManager.getDefaultCurrency();
-        this.convertedValue = price.divide(this.currency.getConversion(), RoundingMode.UNNECESSARY);
+        this.convertedValue = price.divide(this.currency.getConversion(), RoundingMode.HALF_UP);
         this.defaultValue = price;
     }
 
