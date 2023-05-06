@@ -1,10 +1,12 @@
 package mzc.app.bootstrap;
 
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.adapter.Datastore;
 import mzc.app.adapter.base.AdapterType;
 import mzc.app.adapter.orm.SessionManager;
+import mzc.app.adapter.sql.ConnectionManager;
 import mzc.app.modules.plugins.PluginLoader;
 import mzc.app.modules.setting.AppSetting;
 import mzc.app.modules.setting.AppSettingManager;
@@ -34,6 +36,9 @@ public class App {
     @Getter
     protected Configuration hibernateConfiguration;
 
+    @Getter
+    protected HikariDataSource hikariDataSource;
+
     public App() {
         try {
             Files.createDirectories(Paths.get("./data"));
@@ -54,23 +59,22 @@ public class App {
 
         if (this.appSetting.getStorageMethod() == AdapterType.SQLORM) {
             this.hibernateConfiguration = SessionManager.getConfiguration();
+        } else if (this.appSetting.getStorageMethod() == AdapterType.SQLRaw) {
+            ConnectionManager.setupConnection();
+            this.hikariDataSource = ConnectionManager.getDatastore();
         }
-
-        // load adapter
-        Datastore.initManager();
     }
 
     public void init() {
         this.pluginLoader = new PluginLoader();
         this.pluginLoader.loadPluginService();
         this.pluginLoader.loadPlugin(this);
+
+        // load adapter
+        Datastore.initManager();
     }
 
     public void postInit() {
-        if (this.appSetting.getStorageMethod() == AdapterType.SQLORM) {
-            this.pluginLoader.postLoadPlugin(SessionManager.getSession());
-        } else {
-            this.pluginLoader.postLoadPlugin(null);
-        }
+        this.pluginLoader.postLoadPlugin();
     }
 }

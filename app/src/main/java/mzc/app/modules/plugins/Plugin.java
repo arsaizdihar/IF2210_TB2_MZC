@@ -3,7 +3,6 @@ package mzc.app.modules.plugins;
 import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.bootstrap.App;
-import org.hibernate.Session;
 
 public abstract class Plugin {
     @Getter
@@ -15,5 +14,5 @@ public abstract class Plugin {
 
     abstract public void setup(App appContext);
 
-    abstract public void postSetup(Session session);
+    abstract public void postSetup();
 }

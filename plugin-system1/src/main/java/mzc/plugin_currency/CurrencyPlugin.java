@@ -2,6 +2,7 @@ package mzc.plugin_currency;
 
 import lombok.Getter;
 import mzc.app.adapter.base.AdapterType;
+import mzc.app.adapter.sql.Schema;
 import mzc.app.bootstrap.App;
 import mzc.app.modules.plugins.Plugin;
 import mzc.app.modules.pricing.PriceFactory;
@@ -9,16 +10,11 @@ import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_currency.adapter.CurrencyManager;
 import mzc.plugin_currency.model.Currency;
 import mzc.plugin_currency.model.CurrencyPrice;
-import org.hibernate.Session;
 
 public class CurrencyPlugin extends Plugin {
 
     @Getter
     private static AppSetting appSetting;
-
-    @Getter
-    private static Session session;
-
 
     public CurrencyPlugin() {
         super("Multicurrency");
@@ -30,13 +26,13 @@ public class CurrencyPlugin extends Plugin {
 
         if (appSetting.getStorageMethod() == AdapterType.SQLORM) {
             appContext.getHibernateConfiguration().addClass(Currency.class);
+        } else if (appSetting.getStorageMethod() == AdapterType.SQLRaw) {
+            Schema.setValue(Schema.getValue() + " " + mzc.plugin_currency.adapter.sql.Schema.getValue());
         }
     }
 
     @Override
-    public void postSetup(Session hibernateSession) {
-        session = hibernateSession;
-
+    public void postSetup() {
         var adapter = CurrencyManager.getAdapter();
 
         if (adapter.getAll().size() == 0) {
@@ -50,7 +46,7 @@ public class CurrencyPlugin extends Plugin {
         try {
             PriceFactory.setPriceView(CurrencyPrice.class);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initizlie currency price view");
+            throw new RuntimeException("Failed to initialize currency price view");
         }
     }
 }

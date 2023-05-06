@@ -1,6 +1,11 @@
 package mzc.app.adapter.sql;
 
-public record Schema() {
+import lombok.Getter;
+import lombok.Setter;
+
+public class Schema {
+    @Getter
+    @Setter
     private static String value =
             """
                     create table if not exists customer
@@ -79,8 +84,4 @@ public record Schema() {
                             ON UPDATE CASCADE
                     );
                     """;
-
-    public static String getValue() {
-        return Schema.value;
-    }
 }

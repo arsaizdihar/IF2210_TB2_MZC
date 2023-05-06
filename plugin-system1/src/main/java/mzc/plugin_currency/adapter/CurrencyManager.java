@@ -1,6 +1,8 @@
 package mzc.plugin_currency.adapter;
 
 import lombok.Getter;
+import mzc.app.adapter.orm.SessionManager;
+import mzc.app.adapter.sql.ConnectionManager;
 import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_currency.CurrencyPlugin;
 import mzc.plugin_currency.adapter.base.ICurrencyAdapter;
@@ -8,6 +10,7 @@ import mzc.plugin_currency.adapter.file.JSONCurrencyAdapter;
 import mzc.plugin_currency.adapter.file.OBJCurrencyAdapter;
 import mzc.plugin_currency.adapter.file.XMLCurrencyAdapter;
 import mzc.plugin_currency.adapter.orm.CurrencyAdapter;
+import mzc.plugin_currency.adapter.sql.SQLCurrencyAdapter;
 import mzc.plugin_currency.model.Currency;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,8 +32,8 @@ public class CurrencyManager {
                 case OBJ -> adapter = new OBJCurrencyAdapter();
                 case XML -> adapter = new XMLCurrencyAdapter();
                 case JSON -> adapter = new JSONCurrencyAdapter();
-                case SQLORM -> adapter = new CurrencyAdapter(CurrencyPlugin.getSession());
-                case SQLRaw -> adapter = new CurrencyAdapter(CurrencyPlugin.getSession()); // temporary
+                case SQLORM -> adapter = new CurrencyAdapter(SessionManager.getSession());
+                case SQLRaw -> adapter = new SQLCurrencyAdapter(ConnectionManager.getDatastore()); // temporary
                 default -> adapter = new JSONCurrencyAdapter();
             }
         }

@@ -3,7 +3,6 @@ package mzc.app.modules.plugins;
 import lombok.NonNull;
 import mzc.app.bootstrap.App;
 import mzc.app.modules.setting.AppSettingManager;
-import org.hibernate.Session;
 
 import java.io.File;
 import java.net.URL;
@@ -39,9 +38,9 @@ public class PluginLoader {
         }
     }
 
-    public void postLoadPlugin(Session session) {
+    public void postLoadPlugin() {
         for (Plugin plugin : this.serviceLoader) {
-            plugin.postSetup(session);
+            plugin.postSetup();
         }
     }
 }

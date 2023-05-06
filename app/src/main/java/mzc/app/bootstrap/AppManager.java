@@ -10,4 +10,8 @@ public class AppManager {
 
         return app;
     }
+
+    public static void resetApp() {
+        app = null;
+    }
 }

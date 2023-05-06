@@ -34,6 +34,7 @@ open module mzc.app {
     exports mzc.app.bootstrap;
     exports mzc.app.annotation;
     exports mzc.app.model;
+    exports mzc.app.adapter.sql;
     exports mzc.app.adapter.obj;
     exports mzc.app.adapter.file;
     exports mzc.app.adapter.xml;

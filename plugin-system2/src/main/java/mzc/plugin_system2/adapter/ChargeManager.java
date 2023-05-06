@@ -2,6 +2,8 @@ package mzc.plugin_system2.adapter;
 
 import lombok.Getter;
 import lombok.NonNull;
+import mzc.app.adapter.orm.SessionManager;
+import mzc.app.adapter.sql.ConnectionManager;
 import mzc.app.modules.pricing.pipelines.PricePipelineType;
 import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_system2.ChargePlugin;
@@ -10,6 +12,7 @@ import mzc.plugin_system2.adapter.file.JSONChargeAdapter;
 import mzc.plugin_system2.adapter.file.OBJChargeAdapter;
 import mzc.plugin_system2.adapter.file.XMLChargeAdapter;
 import mzc.plugin_system2.adapter.orm.ChargeAdapter;
+import mzc.plugin_system2.adapter.sql.SQLChargeAdapter;
 import mzc.plugin_system2.models.Charge;
 
 import java.math.BigDecimal;
@@ -32,8 +35,8 @@ public class ChargeManager {
                 case OBJ -> adapter = new OBJChargeAdapter();
                 case XML -> adapter = new XMLChargeAdapter();
                 case JSON -> adapter = new JSONChargeAdapter();
-                case SQLORM -> adapter = new ChargeAdapter(ChargePlugin.getSession());
-                case SQLRaw -> adapter = new ChargeAdapter(ChargePlugin.getSession()); // temporary
+                case SQLORM -> adapter = new ChargeAdapter(SessionManager.getSession());
+                case SQLRaw -> adapter = new SQLChargeAdapter(ConnectionManager.getDatastore()); // temporary
                 default -> adapter = new JSONChargeAdapter();
             }
         }
