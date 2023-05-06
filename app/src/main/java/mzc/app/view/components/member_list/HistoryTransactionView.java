@@ -7,6 +7,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import mzc.app.annotation.ModelInject;
 import mzc.app.model.Customer;
+import mzc.app.model.FixedBill;
 import mzc.app.view.components.split_view.RightSideView;
 import mzc.app.view_model.components.member_list.HistoryTransactionViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +18,6 @@ public class HistoryTransactionView extends RightSideView<HistoryTransactionView
     public HistoryTransactionView(Customer customer) {
         super();
         getViewModel().setCustomer(customer);
-        System.out.println("Masuk");
     }
     @Override
     public @NotNull Node getView() {
@@ -44,13 +44,8 @@ public class HistoryTransactionView extends RightSideView<HistoryTransactionView
         infoBox.getChildren().add(printButton);
         printButton.getStyleClass().add("btn");
 
-        var listView = getViewModel().getListView();
-        root.getChildren().add(listView);
-        VBox.setVgrow(listView, Priority.ALWAYS);
 
-
-
-
+        getViewModel().showFixedBills();
 
 
 //        button.setPrefWidth(200);

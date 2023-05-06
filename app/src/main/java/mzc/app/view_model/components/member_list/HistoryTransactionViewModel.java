@@ -8,8 +8,13 @@ import javafx.scene.layout.*;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Customer;
+import mzc.app.model.FixedBill;
+import mzc.app.view.components.member_list.HistoryTransactionEntryView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
 
 @Getter @Setter
 public class HistoryTransactionViewModel extends RightSideViewModel {
@@ -37,11 +42,27 @@ public class HistoryTransactionViewModel extends RightSideViewModel {
     @Override
     public void init() {
         super.init();
+    }
 
+    public void showFixedBills() {
+        System.out.println(getCustomer().getName());
+        var fixedBills = getAdapter().getFixedBill().getByCustomerId(getCustomer().getId());
+        System.out.println(fixedBills);
 
-
-
-
+        if (fixedBills.isEmpty()){
+            Label emptyLabel = new Label("Tidak ada riwayat transaksi");
+            root.getChildren().add(emptyLabel);
+        } else {
+            for (var fixedBill: fixedBills) {
+                var productHistories = getAdapter().getFixedBill().getProducts(fixedBill);
+                var historyTransactionEntryView = new HistoryTransactionEntryView(productHistories);
+                createView(historyTransactionEntryView);
+//                System.out.println(fixedBill.getProducts());
+//                historyTransactionEntryView.getViewModel().setFixedBill(fixedBill);
+//                System.out.println(historyTransactionEntryView.getViewModel().getFixedBill().getProducts());
+                root.getChildren().add(historyTransactionEntryView.getView());
+            }
+        }
     }
 
 }
