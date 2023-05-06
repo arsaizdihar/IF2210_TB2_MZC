@@ -2,6 +2,7 @@ package mzc.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,8 @@ import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.price.IPrice;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "producthistory")
@@ -47,6 +50,10 @@ public class ProductHistory extends BaseModel {
     @JoinColumn(name = "billId", nullable = false, referencedColumnName = "id")
     private transient FixedBill bill;
 
+    @Transient
+    @JsonIgnore
+    private static final Map<String, Image> imageCache = new HashMap<>();
+
     public ProductHistory(String name, BigDecimal price, BigDecimal buyPrice, String category, String image, Integer amount, FixedBill bill) {
         this.name = name;
         this.price = price;
@@ -72,6 +79,15 @@ public class ProductHistory extends BaseModel {
         billId = bill.getId();
     }
 
+    @JsonIgnore
+    public Image getImageView() {
+        var imagePath = imageCache.get(image);
+        if (imagePath == null) {
+            imagePath = new Image("file:" + image);
+            imageCache.put(image, imagePath);
+        }
+        return imagePath;
+    }
     @JsonIgnore
     public IPrice getPriceView() {
         return PriceFactory.createPriceView(this.price);
