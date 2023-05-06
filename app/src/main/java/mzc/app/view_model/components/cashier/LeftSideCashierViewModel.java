@@ -6,6 +6,8 @@ import mzc.app.view.components.cashier.ProductView;
 import mzc.app.view_model.components.split_page.LeftSideViewModel;
 import mzc.app.view_model.page.CashierPageViewModel;
 
+import java.util.stream.Collectors;
+
 public class LeftSideCashierViewModel extends LeftSideViewModel {
     @Override
     public void init() {
@@ -22,14 +24,15 @@ public class LeftSideCashierViewModel extends LeftSideViewModel {
 
         var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
         var products = getAdapter().getProduct().getAll();
-        var productBills = getAdapter().getBill().getProducts(bill);
+        var productBills = getAdapter().getBill().getProducts(bill).stream().collect(Collectors.toMap(ProductBill::getProductId, pb -> pb));
+
         getChildren().getValue().clear();
 
         var views = products.stream().map(product -> {
-            var productBill = productBills.stream().filter(pb -> pb.getProductId() == product.getId()).findFirst();
+            var productBill = productBills.get(product.getId());
 
-            if (productBill.isPresent()) {
-                var view = new ProductView(productBill.get());
+            if (productBill != null) {
+                var view = new ProductView(productBill);
                 createView(view);
                 return view;
             }

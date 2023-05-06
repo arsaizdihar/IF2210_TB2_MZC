@@ -87,7 +87,6 @@ public class CashierPageViewModel extends SplitPageViewModel {
     @Override
     public void init() {
         super.init();
-        System.out.println("CashierPageViewModel initializing");
         Context<CashierContext> cashierContext = new Context<>(new CashierContext(getAdapter()));
         addContext(cashierContext);
 
@@ -96,10 +95,7 @@ public class CashierPageViewModel extends SplitPageViewModel {
         // listen to customer change, if customer change, load bill
         context.getCustomer().addListener((observableValue, prev, customer) -> {
             if (customer != null) {
-                System.out.println("Customer changed. Loading bill for " + customer.getName());
                 context.loadBill(customer);
-            } else {
-                System.out.println("Customer is null");
             }
         });
 

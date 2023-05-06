@@ -2,13 +2,20 @@ package mzc.app.utils;
 
 import mzc.app.adapter.base.AdapterConfig;
 import org.apache.commons.io.FilenameUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.UUID;
 
 public class FileManager {
+    private static class BufferResourceLoader {
+
+    }
+
+    private static BufferResourceLoader buffer = new BufferResourceLoader();
     public static void copyFile(String src, String dst) throws IOException {
         Path dstPath = Paths.get(dst);
         if (!dstPath.getParent().toFile().exists()) {
@@ -35,5 +42,9 @@ public class FileManager {
         Path path = Paths.get(realPath);
         String filename = UUID.randomUUID() + "." + FilenameUtils.getExtension(path.getFileName().toString());
         return Paths.get(AdapterConfig.getBaseDataPath(), "files", filename).toAbsolutePath().toString();
+    }
+
+    public static @NotNull String getResourcePath(String path) {
+        return Objects.requireNonNull(buffer.getClass().getResource(path)).toExternalForm();
     }
 }

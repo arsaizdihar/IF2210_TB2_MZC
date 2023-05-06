@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import lombok.Getter;
 import mzc.app.model.Product;
+import mzc.app.utils.FileManager;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
@@ -91,7 +92,7 @@ public class AddProductViewModel extends RightSideViewModel {
     }
 
     private void setupImage() {
-        this.imagePath = Objects.requireNonNull(getClass().getResource("/mzc/app/assets/product.png")).toExternalForm();
+        this.imagePath = FileManager.getResourcePath("/mzc/app/assets/product.png");
         Image placeholder = new Image(this.imagePath);
         this.imageFile = placeholder;
         ImageView imageView = new ImageView(placeholder);

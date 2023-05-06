@@ -4,6 +4,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -13,6 +14,7 @@ import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Customer;
+import mzc.app.utils.FileManager;
 import mzc.app.view_model.base.BaseViewModel;
 
 import java.util.Objects;
@@ -20,7 +22,12 @@ import java.util.Objects;
 public class MemberViewModel extends BaseViewModel {
     @Getter @Setter
     private Customer customer;
-    @Getter private final ImageView avatar = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/avatar.png")).toExternalForm());
+
+    @Getter(lazy = true)
+    private static final Image image = new Image(FileManager.getResourcePath("/mzc/app/assets/avatar.png"));
+
+    @Getter
+    private final ImageView avatar = new ImageView(getImage());
     @Getter private HBox memberBox = new HBox();
 
     @Getter private VBox memberInfo = new VBox();

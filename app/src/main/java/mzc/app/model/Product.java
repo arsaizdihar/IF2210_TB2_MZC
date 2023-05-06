@@ -14,10 +14,7 @@ import mzc.app.utils.FileManager;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name = "product")
 @Table(name = "product")
@@ -53,13 +50,13 @@ public class Product extends BaseModel implements ISoftDelete {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private transient Set<ProductBill> bills = new LinkedHashSet<>();
 
-    @Transient
-    @Setter(AccessLevel.NONE)
-    private transient Image image;
-
     @EqualCheck
     @Column
     private Boolean deleted = false;
+
+    @Transient
+    @JsonIgnore
+    private static final Map<String, Image> imageCache = new HashMap<>();
 
     public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category, String imagePath) {
         this.stock = stock;
@@ -93,8 +90,10 @@ public class Product extends BaseModel implements ISoftDelete {
 
     @JsonIgnore
     public Image getImage() {
+        var image = imageCache.get(imagePath);
         if (image == null) {
             image = new Image("file:" + imagePath);
+            imageCache.put(imagePath, image);
         }
         return image;
     }
@@ -102,6 +101,7 @@ public class Product extends BaseModel implements ISoftDelete {
     public void updateImage(String realPath) throws IOException {
         String dstPath = FileManager.getRandomizedDataStorePath(realPath);
         FileManager.copyFile(realPath, dstPath);
+        imageCache.remove(dstPath);
         imagePath = dstPath;
     }
 

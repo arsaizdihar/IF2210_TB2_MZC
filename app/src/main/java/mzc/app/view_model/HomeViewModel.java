@@ -11,8 +11,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import lombok.Getter;
+import mzc.app.utils.FileManager;
 import mzc.app.view_model.base.BaseViewModel;
-import mzc.app.view_model.base.PageViewModel;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,13 +23,12 @@ import java.util.Objects;
 
 @Getter
 public class HomeViewModel extends BaseViewModel {
-    private Label clock = new Label();
-    private Label date = new Label();
+    private final Label clock = new Label();
+    private final Label date = new Label();
     private final List<Image> listImagePath = new ArrayList<>();
     private int imageIdx = 0;
-    private ImageView logo = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-0.png")).toExternalForm());
-    private Label ourTeam = new Label("Our Team");
-    private HBox teamMember;
+    private final ImageView logo = new ImageView(FileManager.getResourcePath("/mzc/app/assets/mzc-0.png"));
+    private final Label ourTeam = new Label("Our Team");
 
     private VBox mainMenu;
 
@@ -41,13 +40,13 @@ public class HomeViewModel extends BaseViewModel {
 
     @Override
     public void init() {
-        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-0.png")).toExternalForm()));
-        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-1.png")).toExternalForm()));
-        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-2.png")).toExternalForm()));
-        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-3.png")).toExternalForm()));
-        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-4.png")).toExternalForm()));
-        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-5.png")).toExternalForm()));
-        this.listImagePath.add(new Image(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/mzc-6.png")).toExternalForm()));
+        this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-0.png")));
+        this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-1.png")));
+        this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-2.png")));
+        this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-3.png")));
+        this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-4.png")));
+        this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-5.png")));
+        this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-6.png")));
         updateTime();
         updateDate();
         // Container for datetime
@@ -58,7 +57,7 @@ public class HomeViewModel extends BaseViewModel {
         this.ourTeam.setFont(new Font("Gotham", 12));
         this.logo.setFitWidth(150);
         this.logo.setPreserveRatio(true);
-        ImageView team = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/our-team.png")).toExternalForm());
+        ImageView team = new ImageView(FileManager.getResourcePath("/mzc/app/assets/our-team.png"));
         VBox teamMember = new VBox(this.ourTeam, team);
         teamMember.setAlignment(Pos.CENTER);
         this.mainMenu = new VBox(datetime, teamMember);
