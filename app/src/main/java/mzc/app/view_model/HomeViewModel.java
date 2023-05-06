@@ -29,14 +29,15 @@ public class HomeViewModel extends BaseViewModel {
     private int imageIdx = 0;
     private final ImageView logo = new ImageView(FileManager.getResourcePath("/mzc/app/assets/mzc-0.png"));
     private final Label ourTeam = new Label("Our Team");
+    private int wallpaperIdx = 0;
+    private final List<Image> listWallpaperPath = new ArrayList<>();
+    private final ImageView wallpaper = new ImageView(FileManager.getResourcePath("/mzc/app/assets/Wallpaper1.png"));
 
     private VBox mainMenu;
 
 
     private StackPane mainCol;
 
-    public HomeViewModel() {
-    }
 
     @Override
     public void init() {
@@ -47,14 +48,18 @@ public class HomeViewModel extends BaseViewModel {
         this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-4.png")));
         this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-5.png")));
         this.listImagePath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/mzc-6.png")));
+        this.listWallpaperPath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/Wallpaper1.png")));
+        this.listWallpaperPath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/Wallpaper2.png")));
+        this.listWallpaperPath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/Wallpaper3.png")));
+        this.listWallpaperPath.add(new Image(FileManager.getResourcePath("/mzc/app/assets/Wallpaper4.png")));
         updateTime();
         updateDate();
+        updateWallpaper();
         // Container for datetime
         VBox datetime = new VBox(this.clock, this.date);
         datetime.setAlignment(Pos.CENTER);
 
-        this.ourTeam.setStyle("-fx-font-family: Helvetica; -fx-font-size: 3em;");
-        this.ourTeam.setFont(new Font("Gotham", 12));
+        this.ourTeam.setStyle("-fx-font-family: Poppins; -fx-font-size: 3em; -fx-font-weight: bold;");
         this.logo.setFitWidth(150);
         this.logo.setPreserveRatio(true);
         ImageView team = new ImageView(FileManager.getResourcePath("/mzc/app/assets/our-team.png"));
@@ -64,7 +69,7 @@ public class HomeViewModel extends BaseViewModel {
         this.mainMenu.setAlignment(Pos.CENTER);
         this.mainMenu.setSpacing(100);
         this.mainMenu.setPadding(new Insets(100, 0, 0, 0));
-        this.mainCol = new StackPane(this.mainMenu, this.logo);
+        this.mainCol = new StackPane(this.wallpaper, this.mainMenu, this.logo);
         this.mainCol.setAlignment(Pos.TOP_LEFT);
 
         Thread updateTimeThread = new Thread(() -> {
@@ -83,13 +88,27 @@ public class HomeViewModel extends BaseViewModel {
         });
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
+        Thread updateWallpaperThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(60000); // Wait for 1 second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(() -> {
+                    updateWallpaper();
+                });
+            }
+        });
+        updateWallpaperThread.setDaemon(true);
+        updateWallpaperThread.start();
     }
 
     private void updateTime() {
         LocalTime currentTime = LocalTime.now();
         String formattedTime = String.format("%02d:%02d:%02d", currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond());
         this.clock.setText(formattedTime);
-        this.clock.setStyle("-fx-font-family: Helvetica; -fx-font-size: 6em;");
+        this.clock.setStyle("-fx-font-family: Poppins; -fx-font-size: 6em;");
     }
 
     private void updateDate() {
@@ -97,7 +116,7 @@ public class HomeViewModel extends BaseViewModel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
         String formattedDate = currentDate.format(formatter);
         this.date.setText(formattedDate);
-        this.date.setStyle("-fx-font-family: Helvetica; -fx-font-size: 2em;");
+        this.date.setStyle("-fx-font-family: Poppins; -fx-font-size: 2em;");
     }
 
     private void updateLogo() {
@@ -105,5 +124,12 @@ public class HomeViewModel extends BaseViewModel {
         this.logo.setFitHeight(150);
         this.logo.setPreserveRatio(true);
         this.logo.setImage(this.listImagePath.get(this.imageIdx));
+    }
+
+    private void updateWallpaper() {
+        this.wallpaperIdx = (this.wallpaperIdx+1) % this.listWallpaperPath.size();
+        this.wallpaper.setFitWidth(1295);
+        this.wallpaper.setFitHeight(695);
+        this.wallpaper.setImage(this.listWallpaperPath.get(this.wallpaperIdx));
     }
 }
