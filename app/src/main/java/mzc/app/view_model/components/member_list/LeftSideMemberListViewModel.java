@@ -14,6 +14,7 @@ public class LeftSideMemberListViewModel extends LeftSideViewModel {
     public void init() {
         super.init();
         this.reload();
+        this.getButton().setVisible(false);
         setOnButtonClicked((e) -> {
             setRightSideAddMember();
             getChildren().forceUpdate();
