@@ -9,6 +9,7 @@ import mzc.app.model.Customer;
 import mzc.app.model.FixedBill;
 import mzc.app.model.ProductHistory;
 import mzc.app.modules.pricing.PriceFactory;
+import mzc.app.modules.pricing.price.ItemListPrice;
 import mzc.app.modules.pricing.price.ItemPrice;
 import mzc.app.view.base.BaseView;
 import mzc.app.view_model.base.BaseViewModel;
@@ -16,6 +17,8 @@ import mzc.app.view_model.components.member_list.HistoryTransactionEntryViewMode
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @ModelInject(HistoryTransactionEntryViewModel.class)
@@ -50,7 +53,9 @@ public class HistoryTransactionEntryView extends BaseView<HistoryTransactionEntr
 
     public void reloadSummary() {
 
+        List<ItemPrice> itemPrices = new ArrayList<>();
 
+        BigDecimal total = BigDecimal.ZERO;
         for (ProductHistory productHistory : getViewModel().getProductHistories()) {
             BorderPane container = new BorderPane();
 
@@ -58,10 +63,19 @@ public class HistoryTransactionEntryView extends BaseView<HistoryTransactionEntr
             Label nameLabel = new Label(productHistory.getName());
             Label price = new Label(itemPrice.toString());
 
+            itemPrices.add(itemPrice);
+
+
             container.setLeft(nameLabel);
             container.setRight(price);
             getViewModel().getRoot().getChildren().add(container);
         }
+
+        var subtotal = (new ItemListPrice(itemPrices).getValue());
+        var subtotalView = PriceFactory.createPriceView(subtotal);
+        getViewModel().getTotalLabel().setText(subtotalView.toString());
+        getViewModel().getRoot().getChildren().add(getViewModel().getTotalLabel());
+
     }
 
 }

@@ -30,12 +30,11 @@ public class HistoryTransactionEntryViewModel extends BaseViewModel {
     @Getter
     Label itemsLabel = new Label("Items");
     @Getter
-    Label totalLabel;
+    Label totalLabel = new Label("Total");
 //    @Getter
 
     @Override
     public void init() {
         super.init();
     }
-
 }
