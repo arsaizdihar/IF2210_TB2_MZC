@@ -29,8 +29,15 @@ public class ReportPageView extends PageView<ReportPageViewModel> {
         var printButton = getViewModel().getPrintButton();
         headerBox.getChildren().add(printButton);
 
-        var listView = getViewModel().getListView();
-        root.getChildren().add(listView);
+        var scrollPane = getViewModel().getScrollPane();
+        root.getChildren().add(scrollPane);
+        scrollPane.setContent(getViewModel().getContainer());
+
+
+        getViewModel().iterateFixedBill();
+
+        getViewModel().getScrollPane().setFitToWidth(true);
+        getViewModel().getContainer().setFillWidth(true);
 
 
 

@@ -4,12 +4,16 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.Setter;
+import mzc.app.model.FixedBill;
+import mzc.app.view.components.report.ReportEntryView;
 import mzc.app.view_model.base.PageViewModel;
+import mzc.app.view_model.components.report.ReportEntryViewModel;
 import org.jetbrains.annotations.NotNull;
 
 @Getter @Setter
@@ -25,7 +29,9 @@ public class ReportPageViewModel extends PageViewModel {
     @Getter
     private final @NotNull Button printButton = new Button("Print To PDF");
     @Getter
-    final @NotNull ListView<Node> listView = new ListView<>();
+    private final @NotNull ScrollPane scrollPane = new ScrollPane();
+    @Getter
+    private final @NotNull VBox container = new VBox();
     public ReportPageViewModel() {
         super("Laporan Penjualan");
     }
@@ -40,5 +46,18 @@ public class ReportPageViewModel extends PageViewModel {
     @Override
     public void onTabClose() {
 
+    }
+
+    public void createEntry(FixedBill fixedBill) {
+        var entry = new ReportEntryView(fixedBill);
+        createView(entry);
+        container.getChildren().add(entry.getView());
+    }
+
+    public void iterateFixedBill() {
+        var fixedBills = getAdapter().getFixedBill().getAll();
+        for (var fixedBill : fixedBills) {
+            createEntry(fixedBill);
+        }
     }
 }
