@@ -120,6 +120,7 @@ public class AddProductViewModel extends RightSideViewModel {
 
 
         this.imageHolder.getChildren().add(fileDialogView.getView());
+        this.imageHolder.setSpacing(10);
     }
 
     public void setOnButtonClicked(EventHandler<ActionEvent> handler) {
