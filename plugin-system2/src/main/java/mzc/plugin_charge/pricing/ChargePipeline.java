@@ -1,4 +1,4 @@
-package mzc.plugin_system2.pricing;
+package mzc.plugin_charge.pricing;
 
 import lombok.NonNull;
 import mzc.app.modules.pricing.PricePipelineResult;
@@ -7,7 +7,7 @@ import mzc.app.modules.pricing.pipelines.PricePipelineType;
 import mzc.app.modules.pricing.price.DecimalPrice;
 import mzc.app.modules.pricing.price.IPrice;
 import mzc.app.modules.pricing.price.PositiveDecimalPrice;
-import mzc.plugin_system2.models.Charge;
+import mzc.plugin_charge.models.Charge;
 
 public class ChargePipeline implements IPricePipeline {
     private final @NonNull Charge charge;

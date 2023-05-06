@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.NonNull;
@@ -47,6 +48,9 @@ public class SubtotalViewModel extends BaseViewModel {
     @Getter
     protected Button checkoutButton = new Button();
 
+    @Getter
+    protected final VBox container = new VBox();
+
     @Override
     public void init() {
         super.init();
@@ -79,6 +83,17 @@ public class SubtotalViewModel extends BaseViewModel {
         });
 
         this.checkoutButton.setDisable(true);
+
+        HBox info = new HBox();
+        info.getChildren().add(getActionsContainer());
+        info.getChildren().add(getPipelineContainer());
+
+        getUsePointsCheckbox().setText("Gunakan poin");
+        getCheckoutButton().setText("Checkout");
+        getActionsContainer().getChildren().add(getUsePointsCheckbox());
+
+        container.getChildren().add(info);
+        container.getChildren().add(getCheckoutButton());
     }
 
     protected List<IPricePipeline> getPipelines() {

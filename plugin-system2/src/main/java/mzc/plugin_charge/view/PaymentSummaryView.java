@@ -1,9 +1,9 @@
-package mzc.app.view.components.cashier;
+package mzc.plugin_charge.view;
 
 import javafx.scene.Node;
 import mzc.app.annotation.ModelInject;
 import mzc.app.view.components.split_view.RightSideView;
-import mzc.app.view_model.components.cashier.PaymentSummaryViewModel;
+import mzc.plugin_charge.view_model.PaymentSummaryViewModel;
 import org.jetbrains.annotations.NotNull;
 
 @ModelInject(PaymentSummaryViewModel.class)

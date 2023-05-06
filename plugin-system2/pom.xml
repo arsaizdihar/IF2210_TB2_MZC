@@ -9,6 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>mzc.plugin_charge</groupId>
     <artifactId>plugin-system2</artifactId>
 
     <properties>
