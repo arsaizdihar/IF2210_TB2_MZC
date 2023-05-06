@@ -1,7 +1,6 @@
 package mzc.plugin_currency.adapter;
 
 import lombok.Getter;
-import mzc.app.adapter.orm.SessionManager;
 import mzc.app.adapter.sql.ConnectionManager;
 import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_currency.CurrencyPlugin;
@@ -10,6 +9,7 @@ import mzc.plugin_currency.adapter.file.JSONCurrencyAdapter;
 import mzc.plugin_currency.adapter.file.OBJCurrencyAdapter;
 import mzc.plugin_currency.adapter.file.XMLCurrencyAdapter;
 import mzc.plugin_currency.adapter.orm.CurrencyAdapter;
+import mzc.plugin_currency.adapter.orm.SessionManager;
 import mzc.plugin_currency.adapter.sql.SQLCurrencyAdapter;
 import mzc.plugin_currency.model.Currency;
 import org.jetbrains.annotations.NotNull;

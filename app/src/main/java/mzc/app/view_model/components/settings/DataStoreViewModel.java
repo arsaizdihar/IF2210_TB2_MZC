@@ -2,7 +2,10 @@ package mzc.app.view_model.components.settings;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
@@ -146,7 +149,7 @@ public class DataStoreViewModel extends SettingsTabViewModel {
                     setting.setJSONPath(jsonLocation.getText());
                     setting.setXMLPath(xmlLocation.getText());
                     setting.setOBJPath(objLocation.getText());
-                    setting.setSqlRawDatabaseUrl(sqlOrmInput.getViewModel().getVal());
+                    setting.setSqlRawDatabaseUrl(sqlRawInput.getViewModel().getVal());
                     setting.setSqlOrmDatabaseUrl(sqlOrmInput.getViewModel().getVal());
                     setting.save();
                     showInfoAlert(true);

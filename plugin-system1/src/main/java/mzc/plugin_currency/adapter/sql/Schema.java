@@ -9,6 +9,7 @@ public class Schema {
             (
                 id bigint auto_increment primary key,
                 name varchar(255) null,
+                symbol varchar(255) null,
                 conversion     decimal(38, 2) null,
                 isDefaultCurrency bit null
             );

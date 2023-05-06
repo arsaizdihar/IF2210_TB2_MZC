@@ -4,10 +4,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import mzc.app.annotation.ModelInject;
 import mzc.app.model.Customer;
-import mzc.app.model.FixedBill;
 import mzc.app.view.components.split_view.RightSideView;
 import mzc.app.view_model.components.member_list.HistoryTransactionViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -18,10 +16,10 @@ public class HistoryTransactionView extends RightSideView<HistoryTransactionView
     public HistoryTransactionView(Customer customer) {
         super();
         getViewModel().setCustomer(customer);
+        init();
     }
-    @Override
-    public @NotNull Node getView() {
 
+    public void init() {
         var root = getViewModel().getRoot();
         root.setAlignment(Pos.TOP_CENTER);
 
@@ -46,8 +44,10 @@ public class HistoryTransactionView extends RightSideView<HistoryTransactionView
 
 
         getViewModel().showFixedBills();
+    }
 
-
+    @Override
+    public @NotNull Node getView() {
 //        button.setPrefWidth(200);
 //        button.setPrefHeight(50);
 //        button.setFont(Font.font("Arial", FontWeight.BOLD, 20));
