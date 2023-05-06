@@ -24,9 +24,9 @@ import java.util.Objects;
 public class AddProductViewModel extends RightSideViewModel {
     private VBox main;
     private HBox mainCol;
-    private VBox list;
-    private VBox image = new VBox();
-    private Button kirim;
+    private VBox listInput;
+    private VBox imageHolder = new VBox();
+    private Button addButton;
 
     private TextInputView namaBarang;
     private TextInputView hargaBeli;
@@ -45,14 +45,14 @@ public class AddProductViewModel extends RightSideViewModel {
         tambahBarang.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         setupLines();
         setupImage();
-        this.kirim = new Button("Kirim");
-        this.kirim.setPrefWidth(100);
-        this.kirim.getStyleClass().addAll("btn", "btn-success");
-        this.kirim.setStyle("-fx-font-weight: bold;");
-        this.mainCol = new HBox(this.list, this.image);
+        this.addButton = new Button("Kirim");
+        this.addButton.setPrefWidth(100);
+        this.addButton.getStyleClass().addAll("btn", "btn-success");
+        this.addButton.setStyle("-fx-font-weight: bold;");
+        this.mainCol = new HBox(this.listInput, this.imageHolder);
         this.mainCol.setAlignment(Pos.CENTER);
         this.mainCol.setSpacing(100);
-        this.main = new VBox(tambahBarang, this.mainCol, kirim);
+        this.main = new VBox(tambahBarang, this.mainCol, addButton);
         this.main.setAlignment(Pos.CENTER);
         this.main.setSpacing(100);
         this.main.setStyle("-fx-font-size: 16px;");
@@ -83,8 +83,8 @@ public class AddProductViewModel extends RightSideViewModel {
         createView(hargaJual);
         stok = new TextInputView("Stok", 200, true);
         createView(stok);
-        this.list = new VBox(namaBarang.getView(), kat, hargaBeli.getView(), hargaJual.getView(), stok.getView());
-        this.list.setSpacing(15);
+        this.listInput = new VBox(namaBarang.getView(), kat, hargaBeli.getView(), hargaJual.getView(), stok.getView());
+        this.listInput.setSpacing(15);
     }
 
     private void setupImage() {
@@ -92,7 +92,7 @@ public class AddProductViewModel extends RightSideViewModel {
         ImageView imageView = new ImageView(placeholder);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
-        this.image.getChildren().add(imageView);
+        this.imageHolder.getChildren().add(imageView);
         Button pilihGambar = new Button("Pilih Gambar");
         var fileDialogView = new FileDialogView(pilihGambar, file -> {
             try {
@@ -119,14 +119,14 @@ public class AddProductViewModel extends RightSideViewModel {
         pilihGambar.getStyleClass().add("btn");
 
 
-        this.image.getChildren().add(fileDialogView.getView());
+        this.imageHolder.getChildren().add(fileDialogView.getView());
     }
 
     public void setOnButtonClicked(EventHandler<ActionEvent> handler) {
-        if (this.kirim == null) {
+        if (this.addButton == null) {
             throw new RuntimeException("Must set button first");
         }
-        this.kirim.setOnAction(handler);
+        this.addButton.setOnAction(handler);
     }
 }
 
