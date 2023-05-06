@@ -1,20 +1,19 @@
 package mzc.app.view_model.components.member_list;
 
-import javafx.geometry.Orientation;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Customer;
-import mzc.app.utils.FileManager;
 import mzc.app.view_model.base.BaseViewModel;
 
 import java.util.Objects;
@@ -22,76 +21,93 @@ import java.util.Objects;
 public class MemberViewModel extends BaseViewModel {
     @Getter @Setter
     private Customer customer;
-
-    @Getter(lazy = true)
-    private static final Image image = new Image(FileManager.getResourcePath("/mzc/app/assets/avatar.png"));
-
-    @Getter
-    private final ImageView avatar = new ImageView(getImage());
+    private final ImageView avatar = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/avatar.png")).toExternalForm());
+    @Getter StackPane root = new StackPane();
     @Getter private HBox memberBox = new HBox();
-
     @Getter private VBox memberInfo = new VBox();
     @Getter private Text customerName = new Text();
-    @Getter private Label customerType = new Label();
-    @Getter private Label customerPhone = new Label();
-    @Getter private Label customerPoints = new Label();
-    @Getter private HBox wrapperButton = new HBox();
-    @Getter private Button transactionButton = new Button("Transaction");
-    @Getter private Button editButton = new Button("Edit");
+    @Getter private Text customerType = new Text();
+    @Getter private Text customerPhone = new Text();
+    @Getter private Text customerPoints = new Text();
+    private final ImageView edit = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/edit.png")).toExternalForm());
+    private final ImageView history = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/list.png")).toExternalForm());
+    private final ImageView active = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/check-mark.png")).toExternalForm());
+    private final ImageView inactive = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/x-icon.png")).toExternalForm());
+    @Getter private Button transactionButton = new Button();
+    @Getter private Button editButton = new Button();
     @Getter private Button setActiveButton = new Button();
     @Override
     public void init() {
-        // TODO : set binding and context
         super.init();
-        reload();
-    }
-    public void reload() {
         LeftSideMemberListViewModel.ReloadContext reload = useContext(LeftSideMemberListViewModel.ReloadContext.class).getValue();
-        memberBox.setSpacing(10);
         setActiveButton.setOnAction(
                 event -> {
                     if (customer.isDeactivated()) {
                         customer.setDeactivated(false);
                         getAdapter().getCustomer().persist(customer);
-                        setActiveButton.setText("Deactivate");
                     } else {
                         customer.setDeactivated(true);
                         getAdapter().getCustomer().persist(customer);
-                        setActiveButton.setText("Activate");
                     }
                     reload.reload();
                 }
         );
-        avatar.setFitWidth(64);
-        avatar.setFitHeight(64);
-        memberInfo.setPrefWidth(435);
+        memberBox.setSpacing(5);
 
+        avatar.setFitWidth(90);
+        avatar.setFitHeight(90);
+        memberBox.getChildren().add(avatar);
 
         customerName.setText(customer.getName());
-        customerName.setWrappingWidth(435);
         memberInfo.getChildren().add(customerName);
 
         customerType.setText(customer.getType().toString() + (customer.isDeactivated() ? " (deactivated)" : ""));
+        customerName.setWrappingWidth(490);
         memberInfo.getChildren().add(customerType);
 
         HBox infoSeparator = new HBox();
         infoSeparator.setBackground(Background.fill(Color.TRANSPARENT));
-        infoSeparator.setPrefHeight(2);
+        infoSeparator.setPrefHeight(4);
         memberInfo.getChildren().add(infoSeparator);
 
-        // TODO : tambah icon phone
-        customerPhone.setText(customer.getPhone());
+        customerPhone.setText(customer.getPhone() + " (📞)");
         memberInfo.getChildren().add(customerPhone);
 
         customerPoints.setText("Points " + customer.getPoints());
         memberInfo.getChildren().add(new Label(customerPoints.getText()));
 
-        memberBox.getChildren().add(avatar);
+        memberInfo.setSpacing(2);
         memberBox.getChildren().add(memberInfo);
 
-        wrapperButton.getChildren().add(transactionButton);
-        wrapperButton.getChildren().add(editButton);
-        wrapperButton.getChildren().add(setActiveButton);
-        memberBox.getChildren().add(wrapperButton);
+        HBox icons = new HBox(history, edit, customer.isDeactivated() ? active : inactive);
+        icons.setAlignment(Pos.TOP_RIGHT);
+        icons.setSpacing(5);
+        icons.setPadding(new Insets(5, 0, 5, 0));
+        HBox buttons = new HBox(transactionButton, editButton, setActiveButton);
+        buttons.setAlignment(Pos.TOP_RIGHT);
+        buttons.setSpacing(5);
+        buttons.setPadding(new Insets(5, 0, 5, 0));
+        root.getChildren().add(memberBox);
+        root.getChildren().add(icons);
+        root.getChildren().add(buttons);
+
+        customerName.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+
+        customerType.setStyle("-fx-font-size: 10px; -fx-text-fill: gray");
+
+        history.setFitWidth(20);
+        history.setFitHeight(20);
+        edit.setFitWidth(20);
+        edit.setFitHeight(20);
+        active.setFitWidth(20);
+        active.setFitHeight(20);
+        inactive.setFitWidth(20);
+        inactive.setFitHeight(20);
+        transactionButton.setOpacity(0);
+        transactionButton.setPrefSize(20, 20);
+        editButton.setOpacity(0);
+        editButton.setPrefSize(20, 20);
+        setActiveButton.setOpacity(0);
+        setActiveButton.setPrefSize(20, 20);
     }
 }

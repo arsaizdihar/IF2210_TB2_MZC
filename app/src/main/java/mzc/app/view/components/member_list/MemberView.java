@@ -12,8 +12,7 @@ public class MemberView extends BaseView<MemberViewModel> {
 
     public MemberView(Customer customer) {
         getViewModel().setCustomer(customer);
-        getViewModel().getSetActiveButton().setText(customer.isDeactivated() ? "Activate" : "Deactivate");
     }
     @Override
-    public @NotNull Node getView() { return getViewModel().getMemberBox(); }
+    public @NotNull Node getView() { return getViewModel().getRoot(); }
 }
