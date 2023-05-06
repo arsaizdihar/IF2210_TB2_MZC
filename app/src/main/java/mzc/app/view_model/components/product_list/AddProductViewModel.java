@@ -14,6 +14,7 @@ import mzc.app.model.Product;
 import mzc.app.utils.FileManager;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
+import mzc.app.view_model.components.member_list.LeftSideMemberListViewModel;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -60,6 +61,7 @@ public class AddProductViewModel extends RightSideViewModel {
         this.main.setSpacing(60);
         this.main.setStyle("-fx-font-size: 16px;");
 
+        LeftSideProductViewModel.ReloadContext reload = useContext(LeftSideProductViewModel.ReloadContext.class).getValue();
         setOnButtonClicked((e) -> {
             if (this.imagePath.startsWith("file:/")) {
                 this.imagePath = this.imagePath.substring("file:/".length());
@@ -67,6 +69,7 @@ public class AddProductViewModel extends RightSideViewModel {
             Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getViewModel().getVal(), this.imagePath);
             getAdapter().getProduct().persist(product);
             this.main.getChildren().clear();
+            reload.reload();
         });
     }
 
