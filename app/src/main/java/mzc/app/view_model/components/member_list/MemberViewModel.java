@@ -39,6 +39,7 @@ public class MemberViewModel extends BaseViewModel {
         reload();
     }
     public void reload() {
+        LeftSideMemberListViewModel.ReloadContext reload = useContext(LeftSideMemberListViewModel.ReloadContext.class).getValue();
         memberBox.setSpacing(10);
         setActiveButton.setOnAction(
                 event -> {
@@ -51,6 +52,7 @@ public class MemberViewModel extends BaseViewModel {
                         getAdapter().getCustomer().persist(customer);
                         setActiveButton.setText("Activate");
                     }
+                    reload.reload();
                 }
         );
         avatar.setFitWidth(64);
