@@ -19,11 +19,11 @@ public class LeftSideCashierViewModel extends LeftSideViewModel {
     }
 
     public void reload(Bill bill) {
-        getListView().getItems().clear();
 
         var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
         var products = getAdapter().getProduct().getAll();
         var productBills = getAdapter().getBill().getProducts(bill);
+        getChildren().getValue().clear();
 
         var views = products.stream().map(product -> {
             var productBill = productBills.stream().filter(pb -> pb.getProductId() == product.getId()).findFirst();
@@ -31,7 +31,7 @@ public class LeftSideCashierViewModel extends LeftSideViewModel {
             if (productBill.isPresent()) {
                 var view = new ProductView(productBill.get());
                 createView(view);
-                return view.getView();
+                return view;
             }
 
             var newProductBill = new ProductBill();
@@ -39,9 +39,10 @@ public class LeftSideCashierViewModel extends LeftSideViewModel {
             newProductBill.setBill(context.getBill().getValue());
             var view = new ProductView(newProductBill);
             createView(view);
-            return view.getView();
+            return view;
         });
 
-        getListView().getItems().addAll(views.toList());
+        getChildren().getValue().addAll(views.toList());
+        getChildren().forceUpdate();
     }
 }

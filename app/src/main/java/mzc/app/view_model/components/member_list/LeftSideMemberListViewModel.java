@@ -21,14 +21,13 @@ public class LeftSideMemberListViewModel extends LeftSideViewModel {
     }
 
     public void reload() {
-        getListView().getItems().clear();
-
         var customers = getAdapter().getCustomer().getAll();
+        getChildren().getValue().clear();
 
         var memberViews = customers.stream().map(customer -> {
             var memberview = new MemberView(customer);
             memberview.getViewModel().getTransactionButton().setOnAction((e) -> {
-                HistoryTransactionView historyTransactionView = new HistoryTransactionView(customer);
+                HistoryTransactionView historyTransactionView = createView(new HistoryTransactionView(customer));
                 Context<SplitPageViewModel.SplitPageContext> context = useContext(SplitPageViewModel.SplitPageContext.class);
                 context.getValue().setRight(historyTransactionView);
                 getChildren().forceUpdate();
@@ -41,10 +40,11 @@ public class LeftSideMemberListViewModel extends LeftSideViewModel {
             });
 
             createView(memberview);
-            return memberview.getView();
+            return memberview;
         });
 
-        getListView().getItems().addAll(memberViews.toList());
+        getChildren().getValue().addAll(memberViews.toList());
+        getChildren().forceUpdate();
     }
 
     private void setRightSideAddMember() {

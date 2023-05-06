@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -40,13 +41,20 @@ public class LeftSideView<T extends LeftSideViewModel> extends BaseView<T> {
         if (getViewModel().getButton() != null) {
             getViewModel().getButton().getStyleClass().addAll("btn", "btn-primary");
             hBox.getChildren().add(getViewModel().getButton());
+        } else {
+//            tak ada tapi berguna apakah itu?
+//            kalo ga percaya  coba hapus ini
+            var button  =  new Button();
+            button.setVisible(false);
+            hBox.getChildren().add(button);
         }
         var vbox = getViewModel().getVBox();
         vbox.getChildren().addAll(hBox);
         vbox.setPadding(new Insets(20));
         vbox.getStyleClass().add("left-side");
-        vbox.getChildren().add(getViewModel().getListView());
-        VBox.setVgrow(getViewModel().getListView(), Priority.ALWAYS);
+        vbox.getChildren().add(getViewModel().getScrollPane());
+        getViewModel().getScrollPane().setFitToWidth(true);
+        getViewModel().getContainer().setFillWidth(true);
     }
 
 

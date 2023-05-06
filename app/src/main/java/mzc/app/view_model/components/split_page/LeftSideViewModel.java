@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
@@ -27,7 +28,10 @@ public class LeftSideViewModel extends BaseViewModel {
     final @NotNull HBox hBox = new HBox();
 
     @Getter
-    final @NotNull ListView<Node> listView = new ListView<>();
+    final @NotNull ScrollPane scrollPane = new ScrollPane();
+
+    @Getter
+    final @NotNull VBox container = new VBox();
 
     @Getter
     protected State<List<BaseView<?>>> children = new State<>(new ArrayList<>());
@@ -59,14 +63,9 @@ public class LeftSideViewModel extends BaseViewModel {
     @Override
     public void init() {
         super.init();
+        scrollPane.setContent(container);
         children.addListener((o, b, newChildren) -> {
-            listView.getItems().clear();
-            for (var child: newChildren) {
-                if (child.getViewModel().getParentView() == null) {
-                    createView(child);
-                }
-                listView.getItems().add(child.getView());
-            }
+            container.getChildren().setAll(newChildren.stream().map(BaseView::getView).toList());
         });
     }
 }

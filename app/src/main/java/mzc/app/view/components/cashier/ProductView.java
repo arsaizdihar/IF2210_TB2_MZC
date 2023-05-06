@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import mzc.app.annotation.ModelInject;
 import mzc.app.model.ProductBill;
 import mzc.app.view.base.BaseView;
@@ -28,8 +29,8 @@ public class ProductView extends BaseView<ProductViewModel> {
         container.setMinWidth(0);
         container.setPrefWidth(1);
         var imageView = new ImageView(product.getImage());
-        imageView.setFitHeight(125);
-        imageView.setFitWidth(125);
+        imageView.setFitHeight(90);
+        imageView.setFitWidth(90);
         container.getChildren().add(imageView);
 
         var productInfo = getViewModel().getProductInfo();
@@ -64,6 +65,6 @@ public class ProductView extends BaseView<ProductViewModel> {
 
     @Override
     public @NotNull Node getView() {
-        return getViewModel().getContainer();
+        return new StackPane(getViewModel().getContainer());
     }
 }

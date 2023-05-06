@@ -29,6 +29,8 @@ public class ReportPageView extends PageView<ReportPageViewModel> {
         var printButton = getViewModel().getPrintButton();
         headerBox.getChildren().add(printButton);
 
+        var listView = getViewModel().getListView();
+        root.getChildren().add(listView);
 
 
 
