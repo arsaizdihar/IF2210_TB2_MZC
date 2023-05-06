@@ -1,5 +1,7 @@
 package mzc.app.view_model.components.settings;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,6 +16,8 @@ import mzc.app.view.components.ui.TextInputView;
 public class DataStoreViewModel extends SettingsTabViewModel {
     @Getter
     private final AppSetting setting = AppSettingManager.get();
+    @Getter
+    private final Label leftSubtitle = new Label("Pilih metode penyimpanan data");
     @Getter
     private final VBox selectMethod = new VBox();
     @Getter
@@ -111,17 +115,23 @@ public class DataStoreViewModel extends SettingsTabViewModel {
                         setting.setStorageMethod(AdapterType.SQLORM);
                     }
                     setting.save();
+                    showInfoAlert(true);
                 }
         );
 
         createView(jsonFolder);
         createView(xmlFolder);
         createView(objFolder);
-
+        jsonLocation.setPadding(new Insets(0, 0, 0, 4));
+        xmlLocation.setPadding(new Insets(0, 0, 0, 4));
+        objLocation.setPadding(new Insets(0, 0, 0, 4));
 
         jsonBox.getChildren().addAll(jsonFolder.getView(), jsonLocation);
+        jsonBox.setAlignment(Pos.CENTER_LEFT);
         xmlBox.getChildren().addAll(xmlFolder.getView(), xmlLocation);
+        xmlBox.setAlignment(Pos.CENTER_LEFT);
         objBox.getChildren().addAll(objFolder.getView(), objLocation);
+        objBox.setAlignment(Pos.CENTER_LEFT);
 
         sqlRawInput = new TextInputView("Lokasi penyimpanan SQL Raw", false);
         createView(sqlRawInput);
@@ -139,10 +149,12 @@ public class DataStoreViewModel extends SettingsTabViewModel {
                     setting.setSqlRawDatabaseUrl(sqlOrmInput.getViewModel().getVal());
                     setting.setSqlOrmDatabaseUrl(sqlOrmInput.getViewModel().getVal());
                     setting.save();
+                    showInfoAlert(true);
                 }
         );
+        leftSubtitle.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-        selectMethod.getChildren().addAll(json, xml, obj, sqlRaw, sqlOrm);
+        selectMethod.getChildren().addAll(leftSubtitle, json, xml, obj, sqlRaw, sqlOrm);
         var jsonForm = new FormGroupView(jsonBox);
         jsonForm.setLabel("Lokasi penyimpanan JSON");
         createView(jsonForm);
@@ -152,6 +164,7 @@ public class DataStoreViewModel extends SettingsTabViewModel {
         var objForm = new FormGroupView(objBox);
         objForm.setLabel("Lokasi penyimpanan OBJ");
         createView(objForm);
+
 
         storageLocation.getChildren().addAll(jsonForm.getView(), xmlForm.getView(), objForm.getView(), sqlRawInput.getView(), sqlOrmInput.getView());
     }

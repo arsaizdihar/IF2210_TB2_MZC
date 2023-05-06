@@ -107,13 +107,19 @@ public class Product extends BaseModel implements ISoftDelete {
 
     public static List<Product> getSeed(String path) {
         List<Product> products = new ArrayList<>();
+        String dstPath = FileManager.getRandomizedDataStorePath(path);
+        try {
+            FileManager.copyFile(path, dstPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        path = dstPath;
         products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("12000"), "Minuman", path));
         products.add(new Product(0, "Americano", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", path));
         products.add(new Product(5, "Teh Earl Grey", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", path));
         products.add(new Product(10, "Chicken Katsu Mushroom Butter Chicken", new BigDecimal("24000"), new BigDecimal("16000"), "Makanan", path));
         products.add(new Product(0, "Chicken Katsu Curry Rice", new BigDecimal("28000"), new BigDecimal("20000"), "Makanan", path));
         products.add(new Product(5, "Nasi Goreng Bawang Merah", new BigDecimal("25000"), new BigDecimal("12000"), "Makanan", path));
-
         return products;
     }
 }
