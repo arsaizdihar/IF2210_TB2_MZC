@@ -99,6 +99,10 @@
     -fx-display-caret: true;
 }
 
+.text-field.normal-disabled:disabled {
+    -fx-text-fill: black;
+}
+
 .form-group-label {
     -fx-font-weight: bold;
 }

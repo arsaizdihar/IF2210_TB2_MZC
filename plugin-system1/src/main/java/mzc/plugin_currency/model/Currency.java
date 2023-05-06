@@ -45,4 +45,9 @@ public class Currency extends BaseModel {
         this.conversion = conversion;
         this.isDefaultCurrency = isDefaultCurrency;
     }
+
+    @Override
+    public String toString() {
+        return name + " (" + symbol + ")";
+    }
 }

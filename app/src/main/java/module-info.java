@@ -40,4 +40,10 @@ open module mzc.app {
     exports mzc.app.adapter.xml;
     exports mzc.app.adapter.json;
     exports mzc.app.adapter.orm;
+    exports mzc.app.view.components;
+    exports mzc.app.view.components.ui;
+    exports mzc.app.view_model.components.settings;
+    exports mzc.app.view_model.components.ui;
+    exports mzc.app.view.components.settings;
+    exports mzc.app.utils.reactive;
 }

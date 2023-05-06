@@ -56,7 +56,7 @@ public class Product extends BaseModel implements ISoftDelete {
 
     @Transient
     @JsonIgnore
-    private static final Map<String, Image> imageCache = new HashMap<>();
+    private transient static final Map<String, Image> imageCache = new HashMap<>();
 
     public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category, String imagePath) {
         this.stock = stock;

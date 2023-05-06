@@ -9,6 +9,7 @@ import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_currency.adapter.CurrencyManager;
 import mzc.plugin_currency.model.CurrencyPrice;
+import mzc.plugin_currency.view.CurrencySettingView;
 
 public class CurrencyPlugin extends Plugin {
 
@@ -28,6 +29,8 @@ public class CurrencyPlugin extends Plugin {
         } else if (appSetting.getStorageMethod() == AdapterType.SQLRaw) {
             Schema.setValue(Schema.getValue() + " " + mzc.plugin_currency.adapter.sql.Schema.getValue());
         }
+
+        appContext.getSettingTabs().put("Currency", CurrencySettingView.class);
     }
 
     @Override
