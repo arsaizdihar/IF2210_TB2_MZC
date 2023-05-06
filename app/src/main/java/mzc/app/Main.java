@@ -30,7 +30,7 @@ public class Main {
                 Customer.getSeeder().forEach(customerAdapter::persist);
             }
         }
-
+        
         Application.launch(GUIApp.class);
     }
 }

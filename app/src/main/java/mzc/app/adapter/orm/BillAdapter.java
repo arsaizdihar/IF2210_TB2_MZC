@@ -10,7 +10,6 @@ import mzc.app.model.ProductBill;
 import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -50,7 +49,9 @@ class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
 
     @Override
     public void delete(@NotNull Bill model) {
-        model.getCustomer().getBills().remove(model);
+        model.getCustomer().getBills().removeIf(
+                b -> b.getId() == model.getId()
+        );
         super.delete(model);
     }
 }

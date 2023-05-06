@@ -80,7 +80,11 @@ public class ProductViewModel extends BaseViewModel {
                 throw new RuntimeException("Different customer id for old and new bill");
             }
 
-            cashierContext.getBill().setValue(newBill);
+            if (oldBill == newBill) {
+                cashierContext.getBill().forceUpdate();
+            } else {
+                cashierContext.getBill().setValue(newBill);
+            }
         });
     }
 

@@ -67,12 +67,17 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
             } else {
                 List<? super Object> params = new ArrayList<>();
                 params.add(getTableName());
+                StringBuilder sb = new StringBuilder();
                 for (var field : fields) {
                     field.setAccessible(true);
-                    params.add(field.getName());
-                    params.add(" = ");
-                    params.add(sanitizeField(field, model));
+                    sb.append(field.getName());
+                    sb.append(" = ");
+                    sb.append(sanitizeField(field, model));
+                    sb.append(", ");
                 }
+                sb.delete(sb.length() - 2, sb.length());
+                params.add(sb.toString());
+                params.add(model.getId());
                 var query = SqlFormatter.format("UPDATE ? SET ? WHERE id = ?",
                         FormatConfig.builder().params(params).build());
                 try (var con = ds.getConnection(); var stat = con.prepareStatement(query)) {
@@ -115,7 +120,7 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
     @Override
     public @NotNull Set<T> getAll() {
         var query = SqlFormatter.format("SELECT * FROM ?", Collections.singletonList(getTableName()));
-        try(var con = ds.getConnection(); var stat = con.prepareStatement(query); var rs = stat.executeQuery()) {
+        try (var con = ds.getConnection(); var stat = con.prepareStatement(query); var rs = stat.executeQuery()) {
             return deserializeResults(rs);
         } catch (SQLException e) {
             return new LinkedHashSet<>();

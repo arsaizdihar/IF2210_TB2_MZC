@@ -46,7 +46,9 @@ public class FixedBillAdapter extends ModelAdapter<FixedBill> implements IFixedB
 
     @Override
     public void delete(@NotNull FixedBill model) {
-        model.getCustomer().getFixedBills().remove(model);
+        model.getCustomer().getFixedBills().removeIf(
+                b -> b.getId() == model.getId()
+        );
         super.delete(model);
     }
 }

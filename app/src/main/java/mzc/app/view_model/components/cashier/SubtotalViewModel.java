@@ -256,7 +256,7 @@ public class SubtotalViewModel extends BaseViewModel {
         }
 
         // delete product bill
-        productBills.forEach(productBill -> {
+        productBills.stream().toList().forEach(productBill -> {
             getAdapter().getProductBill().delete(productBill);
         });
 

@@ -1,5 +1,6 @@
 package mzc.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import javafx.scene.image.Image;
 import lombok.AccessLevel;
@@ -80,14 +81,17 @@ public class Product extends BaseModel implements ISoftDelete {
         this.deleted = deleted;
     }
 
+    @JsonIgnore
     public IPrice getPriceView() {
         return PriceFactory.createPriceView(this.price);
     }
 
+    @JsonIgnore
     public IPrice getBuyPriceView() {
         return PriceFactory.createPriceView(this.buyPrice);
     }
 
+    @JsonIgnore
     public Image getImage() {
         if (image == null) {
             image = new Image("file:" + imagePath);
@@ -99,25 +103,16 @@ public class Product extends BaseModel implements ISoftDelete {
         String dstPath = FileManager.getRandomizedDataStorePath(realPath);
         FileManager.copyFile(realPath, dstPath);
         imagePath = dstPath;
-        image = null;
     }
 
     public static List<Product> getSeed(String path) {
         List<Product> products = new ArrayList<>();
-        products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("12000"), "Minuman", ""));
-        products.add(new Product(0, "Americano", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", ""));
-        products.add(new Product(5, "Teh Earl Grey", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", ""));
-        products.add(new Product(10, "Chicken Katsu Mushroom Butter Chicken", new BigDecimal("24000"), new BigDecimal("16000"), "Makanan", ""));
-        products.add(new Product(0, "Chicken Katsu Curry Rice", new BigDecimal("28000"), new BigDecimal("20000"), "Makanan", ""));
-        products.add(new Product(5, "Nasi Goreng Bawang Merah", new BigDecimal("25000"), new BigDecimal("12000"), "Makanan", ""));
-
-        products.forEach(product -> {
-            try {
-                product.updateImage(path);
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        });
+        products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("12000"), "Minuman", path));
+        products.add(new Product(0, "Americano", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", path));
+        products.add(new Product(5, "Teh Earl Grey", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", path));
+        products.add(new Product(10, "Chicken Katsu Mushroom Butter Chicken", new BigDecimal("24000"), new BigDecimal("16000"), "Makanan", path));
+        products.add(new Product(0, "Chicken Katsu Curry Rice", new BigDecimal("28000"), new BigDecimal("20000"), "Makanan", path));
+        products.add(new Product(5, "Nasi Goreng Bawang Merah", new BigDecimal("25000"), new BigDecimal("12000"), "Makanan", path));
 
         return products;
     }

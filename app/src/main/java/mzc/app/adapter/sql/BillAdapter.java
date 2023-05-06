@@ -12,7 +12,9 @@ import mzc.app.model.ProductBill;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
@@ -25,6 +27,13 @@ public class BillAdapter extends ModelAdapter<Bill> implements IBillAdapter {
     public BillAdapter(@NotNull HikariDataSource ds, @NotNull ProductBillAdapter productBillAdapter) {
         super(ds);
         this.productBillAdapter = productBillAdapter;
+    }
+
+    @Override
+    public Bill getById(long id) {
+        var model = super.getById(id);
+        model.setCustomer(customerAdapter.getById(model.getCustomerId()));
+        return model;
     }
 
     @Override

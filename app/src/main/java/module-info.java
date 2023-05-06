@@ -18,6 +18,7 @@ open module mzc.app {
     requires transitive sql.formatter;
     requires transitive com.zaxxer.hikari;
     requires transitive org.mybatis;
+    requires com.fasterxml.jackson.annotation;
 
 //    opens mzc.app.view_model to javafx.fxml;
 //    opens mzc.app.bootstrap to javafx.graphics;

@@ -26,7 +26,8 @@ public class ProductBillAdapter extends ModelAdapter<ProductBill> implements IPr
 
     @Override
     public void delete(@NotNull ProductBill model) {
-        model.getProduct().getBills().remove(model);
+        model.getProduct().getBills().removeIf(b -> b.getId() == model.getId());
+        model.getBill().getProducts().removeIf(b -> b.getId() == model.getId());
         super.delete(model);
     }
 }

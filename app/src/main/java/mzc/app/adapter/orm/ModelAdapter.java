@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,15 +39,14 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
             ((ISoftDelete) model).setDeleted(true);
             Transaction tx = session.beginTransaction();
             session.persist(model);
+            session.flush();
             tx.commit();
 
         } else {
-            var entityManager = session.getEntityManagerFactory().createEntityManager();
-            var toDelete = entityManager.find(getClass(), Long.toString(model.getId()));
-            entityManager.remove(toDelete);
-            entityManager.flush();
-            entityManager.clear();
-            entityManager.close();
+            Transaction tx = session.beginTransaction();
+            session.remove(model);
+            session.flush();
+            tx.commit();
         }
     }
 

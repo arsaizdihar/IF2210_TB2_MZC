@@ -35,7 +35,7 @@ class ProductHistoryAdapter extends ModelAdapter<ProductHistory> implements IPro
 
     @Override
     public void delete(@NotNull ProductHistory model) {
-        model.getBill().getProducts().remove(model);
+        model.getBill().getProducts().removeIf(p -> p.getId() == model.getId());
         super.delete(model);
     }
 }

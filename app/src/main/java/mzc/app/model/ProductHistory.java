@@ -1,5 +1,6 @@
 package mzc.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -71,10 +72,12 @@ public class ProductHistory extends BaseModel {
         billId = bill.getId();
     }
 
+    @JsonIgnore
     public IPrice getPriceView() {
         return PriceFactory.createPriceView(this.price);
     }
 
+    @JsonIgnore
     public IPrice getBuyPriceView() {
         return PriceFactory.createPriceView(this.buyPrice);
     }
