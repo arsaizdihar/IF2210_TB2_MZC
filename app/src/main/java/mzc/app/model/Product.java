@@ -2,6 +2,7 @@ package mzc.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -54,10 +55,6 @@ public class Product extends BaseModel implements ISoftDelete {
     @Column
     private Boolean deleted = false;
 
-    @Transient
-    @JsonIgnore
-    private transient static final Map<String, Image> imageCache = new HashMap<>();
-
     public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category, String imagePath) {
         this.stock = stock;
         this.name = name;
@@ -90,18 +87,17 @@ public class Product extends BaseModel implements ISoftDelete {
 
     @JsonIgnore
     public Image getImage() {
-        var image = imageCache.get(imagePath);
-        if (image == null) {
-            image = new Image("file:" + imagePath);
-            imageCache.put(imagePath, image);
-        }
-        return image;
+        return FileManager.getImage(this.imagePath);
+    }
+
+    @JsonIgnore
+    public Task<Image> getImageTask() {
+        return FileManager.getImageAsync(this.imagePath);
     }
 
     public void updateImage(String realPath) throws IOException {
         String dstPath = FileManager.getRandomizedDataStorePath(realPath);
         FileManager.copyFile(realPath, dstPath);
-        imageCache.remove(dstPath);
         imagePath = dstPath;
     }
 

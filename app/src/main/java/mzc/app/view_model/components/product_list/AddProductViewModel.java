@@ -8,12 +8,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import lombok.Getter;
 import mzc.app.model.Product;
 import mzc.app.utils.FileManager;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,8 +35,8 @@ public class AddProductViewModel extends RightSideViewModel {
     private TextInputView hargaBeli;
     private TextInputView hargaJual;
     private TextInputView stok;
+    private TextInputView kategoriField;
 
-    private ComboBox<String> kategoriField;
     private Image imageFile;
     private String imagePath;
 
@@ -62,32 +64,29 @@ public class AddProductViewModel extends RightSideViewModel {
             if (this.imagePath.startsWith("file:/")) {
                 this.imagePath = this.imagePath.substring("file:/".length());
             }
-            Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getValue(), this.imagePath);
+            Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getViewModel().getVal(), this.imagePath);
             getAdapter().getProduct().persist(product);
-            System.out.println("Saved!");
             this.main.getChildren().clear();
         });
     }
 
     private void setupLines() {
+        var categories = getAdapter().getProduct().getCategories();
+
         namaBarang = new TextInputView("Nama Barang", 200, false);
         createView(namaBarang);
-        Label kategori = new Label("Kategori");
 
-        kategoriField = new ComboBox<>(FXCollections.observableArrayList(
-                "Option 1",
-                "Option 2",
-                "Option 3"
-        ));
-        kategoriField.setPrefWidth(200);
-        VBox kat = new VBox(kategori, kategoriField);
+        kategoriField = new TextInputView("Kategori", 200, false);
+        createView(kategoriField);
+        TextFields.bindAutoCompletion(kategoriField.getViewModel().getTextField(), categories);
+
         hargaBeli = new TextInputView("Harga Beli", 200, true);
         createView(hargaBeli);
         hargaJual = new TextInputView("Harga Jual", 200, true);
         createView(hargaJual);
         stok = new TextInputView("Stok", 200, true);
         createView(stok);
-        this.listInput = new VBox(namaBarang.getView(), kat, hargaBeli.getView(), hargaJual.getView(), stok.getView());
+        this.listInput = new VBox(namaBarang.getView(), kategoriField.getView(), hargaBeli.getView(), hargaJual.getView(), stok.getView());
         this.listInput.setSpacing(15);
     }
 
@@ -120,7 +119,10 @@ public class AddProductViewModel extends RightSideViewModel {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }, "Images (*.png, *.jpg, *.jpeg)", "*.png", "*.jpg", ".jpeg");
+        });
+        fileDialogView.getViewModel().getFileChooser().getExtensionFilters().addAll(
+          new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", ".jpeg")
+        );
         createView(fileDialogView);
         pilihGambar.getStyleClass().add("btn");
 

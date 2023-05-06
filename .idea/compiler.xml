@@ -27,4 +27,9 @@
       <module name="plugin-base" target="17" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="app" options="--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls" />
+    </option>
+  </component>
 </project>

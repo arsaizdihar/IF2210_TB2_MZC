@@ -22,17 +22,6 @@ public class FileDialogView extends BaseView<FileDialogViewModel> {
             }
         });
     }
-
-    public FileDialogView(@NotNull Button triggerButton, @NotNull Consumer<File> onFileSelected, String filterTitle, String... filterExts) {
-        getViewModel().setButton(triggerButton);
-        triggerButton.setOnAction((e) -> {
-            getViewModel().getFileChooser().setSelectedExtensionFilter(new FileChooser.ExtensionFilter(filterTitle, filterExts));
-            File file = getViewModel().getFileChooser().showOpenDialog(triggerButton.getScene().getWindow());
-            if (file != null) {
-                onFileSelected.accept(file);
-            }
-        });
-    }
     @Override
     public @NotNull Node getView() {
         return getViewModel().getButton();

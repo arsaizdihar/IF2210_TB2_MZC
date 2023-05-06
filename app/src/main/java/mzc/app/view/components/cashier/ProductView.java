@@ -28,7 +28,7 @@ public class ProductView extends BaseView<ProductViewModel> {
         var container = getViewModel().getContainer();
         container.setMinWidth(0);
         container.setPrefWidth(1);
-        var imageView = new ImageView(product.getImage());
+        var imageView = getViewModel().getImageView();
         imageView.setFitHeight(90);
         imageView.setFitWidth(90);
         container.getChildren().add(imageView);

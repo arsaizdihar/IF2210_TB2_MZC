@@ -3,10 +3,12 @@ package mzc.app.view_model.components.cashier;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.model.ProductBill;
+import mzc.app.utils.FileManager;
 import mzc.app.utils.reactive.State;
 import mzc.app.view_model.base.BaseViewModel;
 import mzc.app.view_model.page.CashierPageViewModel;
@@ -33,6 +35,10 @@ public class ProductViewModel extends BaseViewModel {
 
     @Getter
     private final @NotNull VBox productInfo = new VBox();
+
+    @Getter
+    private final @NotNull ImageView imageView = new ImageView();
+
 
     @Override
     public void init() {
@@ -86,6 +92,18 @@ public class ProductViewModel extends BaseViewModel {
                 cashierContext.getBill().setValue(newBill);
             }
         });
+
+//        load image non blocking
+        var imageTask = getProductBill().getProduct().getImageTask();
+        imageTask.setOnSucceeded(e -> {
+            var image = imageTask.getValue();
+            imageView.setImage(image);
+        });
+        FileManager.runImageTask(imageTask);
+
+//        load image blocking
+//        var image = getProductBill().getProduct().getImage();
+//        imageView.setImage(image);
     }
 
     public void setProductBill(ProductBill productBill) {
