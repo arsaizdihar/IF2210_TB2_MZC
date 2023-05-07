@@ -81,9 +81,14 @@ public class SubtotalViewModel extends mzc.app.view_model.components.cashier.Sub
             } else {
                 type = PricePipelineType.PERCENTAGE;
             }
-            var charge = new Charge(type, (new BigDecimal(discountValue.getText())).multiply(BigDecimal.valueOf(-1)), "additional", "Diskon Tambahan");
 
-            prev.add(new ChargePipeline(charge, 40));
+            try {
+                var charge = new Charge(type, (new BigDecimal(discountValue.getText())).multiply(BigDecimal.valueOf(-1)), "additional", "Diskon Tambahan");
+                prev.add(new ChargePipeline(charge, 40));
+            } catch (Exception ignored) {
+
+            }
+
         }
 
         return prev;
