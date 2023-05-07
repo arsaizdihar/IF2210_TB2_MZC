@@ -28,7 +28,7 @@ public class App {
     protected @NonNull Map<String, PageEntry> pages;
 
     @Getter
-    protected @NonNull Map<String, Class<? extends SettingsTabView>> settingTabs;
+    protected @NonNull Map<String, Class<? extends SettingsTabView<?>>> settingTabs;
 
     @Getter
     protected PluginLoader pluginLoader;

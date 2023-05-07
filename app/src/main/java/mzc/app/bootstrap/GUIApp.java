@@ -2,6 +2,7 @@ package mzc.app.bootstrap;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import mzc.app.view.MainView;
@@ -13,6 +14,7 @@ public class GUIApp extends Application {
     @SneakyThrows
     @Override
     public void start(Stage stage) {
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/mzc/app/assets/app-icon-1.png"))));
         MainView mainView = new MainView();
         Scene scene = new Scene(mainView.getView(), 1280, 720);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
