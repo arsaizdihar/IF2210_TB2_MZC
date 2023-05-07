@@ -21,12 +21,13 @@ Secara umum, aplikasi kami bekerja serupa dengan sebuah web browser, dimana terd
 * Plugin Extensible
 * Settings
 
-## Screenshots
+## Screenshot
 
 ![Screenshot 1](.\app\src\main\resources\mzc\app\assets\image6.png)
 ![Screenshot 2](.\app\src\main\resources\mzc\app\assets\image3.png)
 ![Screenshot 3](.\app\src\main\resources\mzc\app\assets\image9.png)
 ![Screenshot 4](.\app\src\main\resources\mzc\app\assets\image4.png)
+![Screenshot 5](.\app\src\main\resources\mzc\app\assets\screenshot_cashier.png)
 
 
 ## Running The Program
