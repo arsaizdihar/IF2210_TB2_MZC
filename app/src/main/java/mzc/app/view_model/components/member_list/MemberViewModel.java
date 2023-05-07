@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -84,6 +85,9 @@ public class MemberViewModel extends BaseViewModel {
         icons.setAlignment(Pos.TOP_RIGHT);
         icons.setSpacing(5);
         icons.setPadding(new Insets(5, 0, 5, 0));
+        setActiveButton.setTooltip(customer.isDeactivated() ? new Tooltip("Aktifkan") : new Tooltip("Nonaktifkan"));
+        editButton.setTooltip(new Tooltip("Ubah"));
+        transactionButton.setTooltip(new Tooltip("Riwayat Transaksi"));
         HBox buttons = new HBox(transactionButton, editButton, setActiveButton);
         buttons.setAlignment(Pos.TOP_RIGHT);
         buttons.setSpacing(5);
