@@ -10,6 +10,6 @@ import org.jetbrains.annotations.NotNull;
 public class CustomerChartView extends PageView<CustomerChartViewModel> {
     @Override
     public @NotNull Node getView() {
-        return null;
+        return getViewModel().getStackedBarChart();
     }
 }

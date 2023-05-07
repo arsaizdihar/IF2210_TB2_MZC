@@ -1,6 +1,10 @@
 package mzc.chart.view_model;
 
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import lombok.Getter;
 import mzc.app.utils.Tuple;
 import mzc.app.view_model.base.PageViewModel;
 
@@ -16,9 +20,18 @@ public class SalesChartViewModel extends PageViewModel {
         super("Grafik Penjualan");
     }
 
+    @Getter
+    private LineChart<String, Number> lineChart;
+
+    private boolean initial = true;
+
     @Override
     public void onTabFocus() {
-
+        if (initial) {
+            initial = false;
+        } else {
+            reload();
+        }
     }
 
     @Override
@@ -26,7 +39,26 @@ public class SalesChartViewModel extends PageViewModel {
 
     }
 
-    public XYChart.Series<String, Double> getSalesSeries(boolean isProfit) {
+    @Override
+    public void init() {
+        super.init();
+
+        var xAxis = new CategoryAxis();
+        xAxis.setLabel("Tanggal");
+        var yAxis = new NumberAxis();
+        yAxis.setLabel("Pemasukan/Keuntungan (Rupiah)");
+        this.lineChart = new LineChart<>(xAxis, yAxis);
+
+        reload();
+    }
+
+    public void reload() {
+        lineChart.getData().clear();
+        lineChart.getData().add(getSalesSeries(true));
+        lineChart.getData().add(getSalesSeries(false));
+    }
+
+    public XYChart.Series<String, Number> getSalesSeries(boolean isProfit) {
         var profit = getAdapter().getFixedBill().getAll().stream().map(fixedBill -> {
             var histories = getAdapter().getProductHistory().getByBillId(fixedBill.getId());
 
@@ -45,11 +77,15 @@ public class SalesChartViewModel extends PageViewModel {
 
         var profitGrouped = profit.collect(Collectors.groupingBy(Tuple<String, BigDecimal>::getX));
 
-        XYChart.Series<String, Double> series = new XYChart.Series<>();
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
 
-        profitGrouped.keySet().stream().sorted().forEach(key -> {
-            series.getData().add(new XYChart.Data<>(key, profitGrouped.get(key).stream().map(each -> each.y.doubleValue()).reduce((double) 0, Double::sum)));
-        });
+        if (isProfit) {
+            series.setName("Keuntungan");
+        } else {
+            series.setName("Pemasukan");
+        }
+
+        profitGrouped.keySet().stream().sorted().forEach(key -> series.getData().add(new XYChart.Data<>(key, profitGrouped.get(key).stream().map(each -> each.y.doubleValue()).reduce((double) 0, Double::sum))));
 
         return series;
     }

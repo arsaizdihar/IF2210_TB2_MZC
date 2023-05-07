@@ -10,6 +10,6 @@ import org.jetbrains.annotations.NotNull;
 public class SalesChartView extends PageView<SalesChartViewModel> {
     @Override
     public @NotNull Node getView() {
-        return null;
+        return getViewModel().getLineChart();
     }
 }
