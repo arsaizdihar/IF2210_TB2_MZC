@@ -67,20 +67,29 @@ public class EditProductViewModel extends RightSideViewModel {
 
         LeftSideProductViewModel.ReloadContext reload = useContext(LeftSideProductViewModel.ReloadContext.class).getValue();
         setOnButtonClicked((e) -> {
-            product.setName(this.namaBarang.getViewModel().getVal());
-            product.setStock(Integer.parseInt(this.stok.getViewModel().getVal()));
-            product.setPrice(BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())));
-            product.setBuyPrice(BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())));
-            product.setCategory(this.kategoriField.getViewModel().getVal());
-            try {
-                product.updateImage(this.imagePath);
-            } catch (IOException ex) {
-                System.out.println("Image not found");
+            if (this.namaBarang.getViewModel().getVal() != "") {
+                product.setName(this.namaBarang.getViewModel().getVal());
+                product.setStock(Integer.parseInt(this.stok.getViewModel().getVal()));
+                product.setPrice(BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())));
+                product.setBuyPrice(BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())));
+                product.setCategory(this.kategoriField.getViewModel().getVal());
+                try {
+                    product.updateImage(this.imagePath);
+                } catch (IOException ex) {
+                    System.out.println("Image not found");
+                }
+                getAdapter().getProduct().persist(product);
+                System.out.println("Saved!");
+                this.main.getChildren().clear();
+                reload.reload();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Validation Failed");
+                alert.setHeaderText("Name field cannot be empty");
+                alert.setContentText("Pastikan nama produk tidak kosong");
+
+                alert.showAndWait();
             }
-            getAdapter().getProduct().persist(product);
-            System.out.println("Saved!");
-            this.main.getChildren().clear();
-            reload.reload();
         });
     }
 

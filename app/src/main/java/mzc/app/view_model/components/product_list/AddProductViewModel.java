@@ -66,10 +66,19 @@ public class AddProductViewModel extends RightSideViewModel {
             if (this.imagePath.startsWith("file:/")) {
                 this.imagePath = this.imagePath.substring("file:/".length());
             }
-            Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getViewModel().getVal(), this.imagePath);
-            getAdapter().getProduct().persist(product);
-            this.main.getChildren().clear();
-            reload.reload();
+            if (this.namaBarang.getViewModel().getVal() != "") {
+                Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getViewModel().getVal(), this.imagePath);
+                getAdapter().getProduct().persist(product);
+                this.main.getChildren().clear();
+                reload.reload();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Validation Failed");
+                alert.setHeaderText("Name field cannot be empty");
+                alert.setContentText("Pastikan nama produk tidak kosong");
+
+                alert.showAndWait();
+            }
         });
     }
 
