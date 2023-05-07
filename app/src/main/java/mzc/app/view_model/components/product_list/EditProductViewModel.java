@@ -49,7 +49,7 @@ public class EditProductViewModel extends RightSideViewModel {
     @Override
     public void init() {
 
-        Label tambahBarang = new Label("Tambah Barang");
+        Label tambahBarang = new Label("Ubah Data Barang");
         tambahBarang.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         setupLines();
         setupImage();
