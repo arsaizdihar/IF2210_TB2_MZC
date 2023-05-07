@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
+import java.sql.Timestamp;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -31,9 +32,18 @@ public class FixedBill extends BaseModel {
     @JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
     private transient Customer customer;
 
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp createdAt;
 
     public FixedBill(Customer customer) {
         setCustomer(customer);
+        createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    public FixedBill(Customer customer, Timestamp timestamp) {
+        setCustomer(customer);
+        createdAt = timestamp;
     }
 
     public void setCustomer(Customer customer) {

@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -183,6 +184,8 @@ public abstract class ModelAdapter<T extends BaseModel> implements IBasicAdapter
                 value = "\"" + sanitizeString((String) value) + "\"";
             } else if (value.getClass().isEnum()) {
                 value = ((Enum<?>) value).ordinal();
+            } else if (value instanceof Timestamp) {
+                value = "\"" + value + "\"";
             }
             return value;
         } catch (IllegalAccessException e) {

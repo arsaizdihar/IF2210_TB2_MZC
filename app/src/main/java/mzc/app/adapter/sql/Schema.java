@@ -36,6 +36,7 @@ public class Schema {
                         id         bigint auto_increment
                             primary key,
                         customerId bigint null,
+                        createdAt timestamp null,
                         foreign key (customerId) references customer (id)
                             ON DELETE CASCADE
                             ON UPDATE CASCADE
