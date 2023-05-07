@@ -14,6 +14,7 @@ public class ReportPageView extends PageView<ReportPageViewModel> {
     @Override
     public @NotNull Node getView() {
         var root = getViewModel().getRoot();
+//        root.setPrefWidth(400);
         root.setAlignment(Pos.TOP_CENTER);
 
         var headerBox = getViewModel().getHeaderBox();
@@ -26,8 +27,8 @@ public class ReportPageView extends PageView<ReportPageViewModel> {
         var title = getViewModel().getTitleLabel();
         spaser.getChildren().add(title);
 
-        var printButton = getViewModel().getPrintButton();
-        headerBox.getChildren().add(printButton);
+        headerBox.getChildren().add(getViewModel().getPrintButton());
+        getViewModel().createPrintButton();
 
         var scrollPane = getViewModel().getScrollPane();
         root.getChildren().add(scrollPane);

@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.FixedBill;
 import mzc.app.view.components.report.ReportEntryView;
+import mzc.app.view.page.PrintOptionView;
 import mzc.app.view_model.base.PageViewModel;
 import mzc.app.view_model.components.report.ReportEntryViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -59,5 +60,13 @@ public class ReportPageViewModel extends PageViewModel {
         for (var fixedBill : fixedBills) {
             createEntry(fixedBill);
         }
+    }
+
+    public void createPrintButton() {
+
+        printButton.setOnAction(event -> {
+            var printOptionView = createView(new PrintOptionView(getRoot()));
+            printOptionView.getView();
+        });
     }
 }
