@@ -39,7 +39,7 @@ public class MainPageViewModel extends PageViewModel {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }, "All files", "*.*");
         createView(fileDialogView);
         Context<String> textContext = useContext(String.class);
         PageContext pageContext = useContext(PageContext.class).getValue();

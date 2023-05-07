@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Getter
@@ -146,10 +147,8 @@ public class EditProductViewModel extends RightSideViewModel {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
-        fileDialogViewEdit.getViewModel().getFileChooser().getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
-        );
+        }, "Image Files", Arrays.asList(new String[]{"*.png", "*.jpg", ".jpeg"}));
+
         createView(fileDialogViewEdit);
         pilihGambar.getStyleClass().add("btn");
 

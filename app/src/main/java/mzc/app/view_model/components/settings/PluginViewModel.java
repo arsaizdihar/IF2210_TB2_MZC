@@ -18,7 +18,7 @@ public class PluginViewModel extends SettingsTabViewModel {
         file -> {
             String absolutePath = file.getAbsolutePath();
             setting.getActivePlugins().add(absolutePath);
-        });
+        }, "jar", "*.jar");
 
     public PluginViewModel() { super(); }
     @Override
