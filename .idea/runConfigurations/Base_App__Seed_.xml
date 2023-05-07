@@ -4,7 +4,7 @@
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="mzc.app.Main" />
     <module name="app" />
-    <option name="PROGRAM_PARAMETERS" value="--seed=&quot;C:\Users\akbar\Downloads\kopi.jpg&quot;" />
+    <option name="PROGRAM_PARAMETERS" value="--seed" />
     <option name="VM_PARAMETERS" value="--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />

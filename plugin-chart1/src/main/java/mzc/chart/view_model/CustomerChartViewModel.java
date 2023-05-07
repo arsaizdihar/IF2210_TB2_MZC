@@ -82,8 +82,8 @@ public class CustomerChartViewModel extends PageViewModel {
         });
 
         basicSeries.setName("Basic");
-        basicSeries.setName("Member");
-        basicSeries.setName("VIP");
+        memberSeries.setName("Member");
+        vipSeries.setName("VIP");
 
         return Arrays.asList(basicSeries, memberSeries, vipSeries);
     }

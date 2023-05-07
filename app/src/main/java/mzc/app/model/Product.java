@@ -66,6 +66,16 @@ public class Product extends BaseModel implements ISoftDelete {
         this.deleted = false;
     }
 
+    public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category) {
+        this.stock = stock;
+        this.name = name;
+        this.price = price;
+        this.buyPrice = buyPrice;
+        this.category = category;
+        this.imagePath = "";
+        this.deleted = false;
+    }
+
     public Product(int stock, String name, BigDecimal price, BigDecimal buyPrice, String category, String imagePath, Boolean deleted) {
         this.stock = stock;
         this.name = name;
@@ -102,21 +112,22 @@ public class Product extends BaseModel implements ISoftDelete {
         imagePath = dstPath;
     }
 
-    public static List<Product> getSeed(String path) {
+    public static List<Product> getSeed() {
+        List<String> images = new ArrayList<>(List.of(new String[]{"coffee.png", "tea.png", "katsu.png", "katsu.png", "fried-rice.png"}));
         List<Product> products = new ArrayList<>();
-        String dstPath = FileManager.getRandomizedDataStorePath(path);
-        try {
-            FileManager.copyFile(path, dstPath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("12000"), "Minuman"));
+        products.add(new Product(5, "Teh Earl Grey", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman"));
+        products.add(new Product(10, "Chicken Katsu Mushroom Butter Chicken", new BigDecimal("24000"), new BigDecimal("16000"), "Makanan"));
+        products.add(new Product(0, "Chicken Katsu Curry Rice", new BigDecimal("28000"), new BigDecimal("20000"), "Makanan"));
+        products.add(new Product(5, "Nasi Goreng Bawang Merah", new BigDecimal("25000"), new BigDecimal("12000"), "Makanan"));
+
+        for (int i = 0; i < products.size(); i++) {
+            try {
+                products.get(i).updateImage(Objects.requireNonNull(FileManager.getResourcePath("/mzc/app/assets/" + images.get(i))).substring(6));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        path = dstPath;
-        products.add(new Product(10, "Kopi Susu Si Eko", new BigDecimal("24000"), new BigDecimal("12000"), "Minuman", path));
-        products.add(new Product(0, "Americano", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", path));
-        products.add(new Product(5, "Teh Earl Grey", new BigDecimal("20000"), new BigDecimal("8000"), "Minuman", path));
-        products.add(new Product(10, "Chicken Katsu Mushroom Butter Chicken", new BigDecimal("24000"), new BigDecimal("16000"), "Makanan", path));
-        products.add(new Product(0, "Chicken Katsu Curry Rice", new BigDecimal("28000"), new BigDecimal("20000"), "Makanan", path));
-        products.add(new Product(5, "Nasi Goreng Bawang Merah", new BigDecimal("25000"), new BigDecimal("12000"), "Makanan", path));
         return products;
     }
 }

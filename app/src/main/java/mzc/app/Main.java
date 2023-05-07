@@ -24,13 +24,7 @@ public class Main {
 
         for (var arg : args) {
             if (arg.startsWith("--seed")) {
-                var split = arg.split("=");
-
-                if (split.length < 2) {
-                    throw new RuntimeException("Invalid command. Format: --seed=\"filepath\"");
-                }
-
-                launchTask.add(new Seed(Datastore.getManager().getAdapter(), split[1]));
+                launchTask.add(new Seed(Datastore.getManager().getAdapter()));
             }
         }
 
