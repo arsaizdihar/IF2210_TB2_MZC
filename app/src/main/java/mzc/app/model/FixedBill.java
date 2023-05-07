@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity(name = "fixedbill")
@@ -32,6 +30,7 @@ public class FixedBill extends BaseModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
     private transient Customer customer;
+
 
     public FixedBill(Customer customer) {
         setCustomer(customer);

@@ -52,4 +52,6 @@ open module mzc.app {
     exports mzc.app.view.components.split_view;
     exports mzc.app.view_model.components.cashier;
     exports mzc.app.view.base;
+    exports mzc.app.view_model.base;
+    exports mzc.app.utils;
 }
