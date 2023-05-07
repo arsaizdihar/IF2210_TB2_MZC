@@ -2,6 +2,7 @@ open module mzc.app {
     uses mzc.app.modules.plugins.Plugin;
     requires transitive javafx.base;
     requires transitive javafx.controls;
+    requires transitive javafx.graphics;
     requires transitive javafx.fxml;
 
     requires transitive org.controlsfx.controls;
