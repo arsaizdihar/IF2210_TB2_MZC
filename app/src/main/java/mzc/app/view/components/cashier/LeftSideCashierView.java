@@ -8,5 +8,6 @@ import mzc.app.view_model.components.cashier.LeftSideCashierViewModel;
 public class LeftSideCashierView extends LeftSideView<LeftSideCashierViewModel> {
     public LeftSideCashierView() {
         super("Daftar Barang");
+        getViewModel().getHBox().getChildren().set(1, getViewModel().getSearchBox());
     }
 }
