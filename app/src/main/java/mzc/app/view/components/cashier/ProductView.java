@@ -1,12 +1,14 @@
 package mzc.app.view.components.cashier;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import mzc.app.annotation.ModelInject;
 import mzc.app.model.ProductBill;
 import mzc.app.view.base.BaseView;
@@ -21,8 +23,8 @@ public class ProductView extends BaseView<ProductViewModel> {
     }
 
     public void init() {
-        getViewModel().getIncrement().setText("+");
-        getViewModel().getDecrement().setText("-");
+//        getViewModel().getIncrement().setText("+");
+//        getViewModel().getDecrement().setText("-");
 
         var product = getViewModel().getProductBill().getProduct();
         var container = getViewModel().getContainer();
@@ -34,10 +36,11 @@ public class ProductView extends BaseView<ProductViewModel> {
         container.getChildren().add(imageView);
 
         var productInfo = getViewModel().getProductInfo();
-        var titleLabel = new Label(product.getName());
-        titleLabel.getStyleClass().add("h4");
-        titleLabel.getStyleClass().add("b");
-        productInfo.getChildren().add(titleLabel);
+        var productNameText = new Text(product.getName());
+        productNameText.setWrappingWidth(490);
+        productNameText.getStyleClass().add("h4");
+        productNameText.getStyleClass().add("b");
+        productInfo.getChildren().add(productNameText);
 
         var categoryLabel = new Label(product.getCategory());
         categoryLabel.getStyleClass().add("h5");
@@ -56,15 +59,31 @@ public class ProductView extends BaseView<ProductViewModel> {
 
         container.getChildren().add(productInfo);
 
+        getViewModel().getMinus().setFitWidth(20);
+        getViewModel().getMinus().setFitHeight(20);
+        getViewModel().getPlus().setFitWidth(20);
+        getViewModel().getPlus().setFitHeight(20);
+        HBox icons = new HBox();
+        icons.setAlignment(Pos.TOP_RIGHT);
+        icons.setSpacing(10);
+
+        getViewModel().getDecrement().setOpacity(0);
+        getViewModel().getIncrement().setOpacity(0);
+        getViewModel().getDecrement().setPrefSize(20, 20);
+        getViewModel().getIncrement().setPrefSize(20, 20);
         var buttonGroup = new HBox();
+        buttonGroup.setAlignment(Pos.TOP_RIGHT);
         buttonGroup.setSpacing(10);
         var counterLabel = getViewModel().getCounterLabel();
+        icons.getChildren().addAll(getViewModel().getMinus(), getViewModel().getCounterLabel1(),getViewModel().getPlus());
         buttonGroup.getChildren().addAll(getViewModel().getDecrement(), counterLabel, getViewModel().getIncrement());
-        container.getChildren().add(buttonGroup);
+        getViewModel().getRoot().getChildren().add(container);
+        getViewModel().getRoot().getChildren().add(icons);
+        getViewModel().getRoot().getChildren().add(buttonGroup);
     }
 
     @Override
     public @NotNull Node getView() {
-        return new StackPane(getViewModel().getContainer());
+        return new StackPane(getViewModel().getRoot());
     }
 }
