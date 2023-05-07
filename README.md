@@ -23,6 +23,10 @@ Secara umum, aplikasi kami bekerja serupa dengan sebuah web browser, dimana terd
 
 ## Screenshots
 
+![Screenshot 1](.\app\src\main\resources\mzc\app\assets\image6.png)
+![Screenshot 2](.\app\src\main\resources\mzc\app\assets\image3.png)
+![Screenshot 3](.\app\src\main\resources\mzc\app\assets\image9.png)
+![Screenshot 4](.\app\src\main\resources\mzc\app\assets\image4.png)
 
 
 ## Running The Program
