@@ -4,6 +4,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tooltip;
 import lombok.Getter;
 import mzc.app.model.CustomerType;
 import mzc.app.utils.Tuple;
@@ -51,6 +52,8 @@ public class CustomerChartViewModel extends PageViewModel {
 
         this.stackedBarChart = new StackedBarChart<>(xAxis, yAxis);
         this.stackedBarChart.setTitle("Banyaknya Sales Berdasarkan Tipe Pelanggan");
+        this.stackedBarChart.setStyle("-fx-font-weight: bold;");
+        this.stackedBarChart.setAnimated(true);
 
         reload();
     }
@@ -58,6 +61,20 @@ public class CustomerChartViewModel extends PageViewModel {
     public void reload() {
         this.stackedBarChart.getData().clear();
         this.stackedBarChart.getData().addAll(this.getCustomerSeries());
+
+        for (var s : stackedBarChart.getData()) {
+            for (var d : s.getData()) {
+                Tooltip.install(d.getNode(), new Tooltip(
+                        d.getXValue() + "\n" +
+                                "Banyaknya penjualan: " + d.getYValue()));
+
+                //Adding class on hover
+                d.getNode().setOnMouseEntered(event -> d.getNode().getStyleClass().add("onHover"));
+
+                //Removing class on exit
+                d.getNode().setOnMouseExited(event -> d.getNode().getStyleClass().remove("onHover"));
+            }
+        }
     }
 
     public List<XYChart.Series<String, Number>> getCustomerSeries() {

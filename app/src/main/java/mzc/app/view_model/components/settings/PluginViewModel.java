@@ -18,6 +18,7 @@ public class PluginViewModel extends SettingsTabViewModel {
             file -> {
                 String absolutePath = file.getAbsolutePath();
                 setting.getActivePlugins().add(absolutePath);
+                reloadList();
             }, "jar", "*.jar");
 
     public PluginViewModel() {
@@ -28,15 +29,20 @@ public class PluginViewModel extends SettingsTabViewModel {
     public void init() {
         super.init();
         createView(addPluginDialog);
-        setting.getActivePlugins().forEach(plugin -> {
-            Label label = new Label(plugin.toString());
-            pluginList.getChildren().add(label);
-        });
+        reloadList();
         getSaveButtonL().setOnAction(
                 event -> {
                     setting.save();
                     showInfoAlert(true);
                 }
         );
+    }
+
+    public void reloadList() {
+        pluginList.getChildren().clear();
+        setting.getActivePlugins().forEach(plugin -> {
+            Label label = new Label(plugin);
+            pluginList.getChildren().add(label);
+        });
     }
 }

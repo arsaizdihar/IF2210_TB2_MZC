@@ -64,6 +64,7 @@ dapat membantu bisnis meningkatkan kinerja dan efisiensi mereka dalam mengelola 
 1. Maven
 2. Java 17 (Temurin Distribution)
 3. Ubuntu 20.04
+4. Mysql8 (for SQL and ORM Adapter) with database name mzc and mzcraw
 
 ### How to Compile
 

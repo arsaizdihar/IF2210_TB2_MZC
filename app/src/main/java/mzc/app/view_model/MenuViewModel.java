@@ -4,16 +4,15 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.bootstrap.App;
 import mzc.app.bootstrap.AppManager;
-import mzc.app.utils.reactive.Context;
+import mzc.app.bootstrap.PageEntry;
 import mzc.app.view.HomeView;
 import mzc.app.view.TabsView;
-import mzc.app.view.page.MainPageView;
 import mzc.app.view_model.base.BaseViewModel;
-import mzc.app.view_model.base.PageViewModel;
+
+import java.util.Comparator;
 
 @Getter
 public class MenuViewModel extends BaseViewModel {
@@ -28,7 +27,7 @@ public class MenuViewModel extends BaseViewModel {
         homeView = createView(HomeView.class);
         App app = AppManager.get();
 
-        var pages = app.getPages().values();
+        var pages = app.getPages().values().stream().sorted(Comparator.comparing(PageEntry::getTitle)).toList();
         var menu = new Menu("Page");
 
         for (var page : pages) {

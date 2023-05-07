@@ -1,9 +1,9 @@
-package mzc.summary.view_model;
+package mzc.summary.view;
 
 import javafx.scene.Node;
 import mzc.app.annotation.ModelInject;
 import mzc.app.view.base.PageView;
-import mzc.summary.view.SummaryViewModel;
+import mzc.summary.view_model.SummaryViewModel;
 import org.jetbrains.annotations.NotNull;
 
 @ModelInject(SummaryViewModel.class)

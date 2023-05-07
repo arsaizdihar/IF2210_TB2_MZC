@@ -1,8 +1,6 @@
 package mzc.app.bootstrap;
 
 import mzc.app.view.page.*;
-import mzc.app.view.page.MainPageView;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +23,9 @@ public class PageEntryFactory {
         var report = new PageEntry("Laporan Penjualan", "report", ReportPageView.class);
         pageEntries.put(report.getKey(), report);
 
-        var defaultPage = createDefaultPage();
+//        var defaultPage = createDefaultPage();
         var settingsPage = createSettingPage();
-        pageEntries.put(defaultPage.getKey(), defaultPage);
+//        pageEntries.put(defaultPage.getKey(), defaultPage);
         pageEntries.put(settingsPage.getKey(), settingsPage);
 
         return pageEntries;
@@ -37,5 +35,7 @@ public class PageEntryFactory {
         return new PageEntry("Main Page", "main", MainPageView.class);
     }
 
-    public static PageEntry createSettingPage() { return new PageEntry("Settings Page", "settings", SettingsPageView.class); }
+    public static PageEntry createSettingPage() {
+        return new PageEntry("Settings Page", "settings", SettingsPageView.class);
+    }
 }

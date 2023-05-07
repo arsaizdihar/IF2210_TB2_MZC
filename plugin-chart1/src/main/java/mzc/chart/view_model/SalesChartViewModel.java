@@ -4,6 +4,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tooltip;
 import lombok.Getter;
 import mzc.app.utils.Tuple;
 import mzc.app.view_model.base.PageViewModel;
@@ -56,6 +57,20 @@ public class SalesChartViewModel extends PageViewModel {
         lineChart.getData().clear();
         lineChart.getData().add(getSalesSeries(true));
         lineChart.getData().add(getSalesSeries(false));
+
+        for (var s : lineChart.getData()) {
+            for (var d : s.getData()) {
+                Tooltip.install(d.getNode(), new Tooltip(
+                        d.getXValue() + "\n" +
+                                "Total profit: " + d.getYValue()));
+
+                //Adding class on hover
+                d.getNode().setOnMouseEntered(event -> d.getNode().getStyleClass().add("onHover"));
+
+                //Removing class on exit
+                d.getNode().setOnMouseExited(event -> d.getNode().getStyleClass().remove("onHover"));
+            }
+        }
     }
 
     public XYChart.Series<String, Number> getSalesSeries(boolean isProfit) {

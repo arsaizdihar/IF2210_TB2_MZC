@@ -5,7 +5,7 @@ import mzc.app.bootstrap.App;
 import mzc.app.bootstrap.PageEntry;
 import mzc.app.modules.plugins.Plugin;
 import mzc.app.modules.setting.AppSetting;
-import mzc.summary.view_model.SummaryView;
+import mzc.summary.view.SummaryView;
 
 public class PiePlugin extends Plugin {
     @Getter

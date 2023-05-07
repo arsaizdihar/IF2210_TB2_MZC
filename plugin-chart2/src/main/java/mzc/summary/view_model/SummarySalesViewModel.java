@@ -1,4 +1,4 @@
-package mzc.summary.view;
+package mzc.summary.view_model;
 
 import javafx.scene.chart.PieChart;
 import mzc.app.model.CustomerType;

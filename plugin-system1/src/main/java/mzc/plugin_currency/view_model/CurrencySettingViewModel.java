@@ -1,5 +1,6 @@
 package mzc.plugin_currency.view_model;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -54,16 +55,14 @@ public class CurrencySettingViewModel extends SettingsTabViewModel {
             var prev = this.currencies.getValue().stream().filter(Currency::isDefaultCurrency).findFirst();
             var adapter = CurrencyManager.getAdapter();
 
-            if (prev.isEmpty()) {
-                this.currencySelector.getValue().setDefaultCurrency(true);
-                adapter.persist(this.currencySelector.getValue());
-            } else {
+            if (prev.isPresent()) {
                 prev.get().setDefaultCurrency(false);
                 adapter.persist(prev.get());
-                this.currencySelector.getValue().setDefaultCurrency(true);
-                adapter.persist(this.currencySelector.getValue());
             }
+            this.currencySelector.getValue().setDefaultCurrency(true);
+            adapter.persist(this.currencySelector.getValue());
 
+            CurrencyManager.loadDefault();
             resetCurrencies();
         });
     }
@@ -83,7 +82,7 @@ public class CurrencySettingViewModel extends SettingsTabViewModel {
         name.getViewModel().getTextField().setMaxWidth(80);
         createView(name);
 
-        var convertion = new TextInputView("Nilai rupiah per satuan", false);
+        var convertion = new TextInputView("Nilai satuan (Rp)", true);
         convertion.getViewModel().getTextField().setMaxWidth(100);
         createView(convertion);
 
@@ -101,8 +100,9 @@ public class CurrencySettingViewModel extends SettingsTabViewModel {
         });
 
         var container = new HBox();
-//        container.setPadding(new Insets(0, 2, 2, 0));
         var addBox = new VBox(add);
+        addBox.setPadding(new Insets(0, 0, 10, 0));
+        add.setPadding(new Insets(0));
         addBox.setAlignment(Pos.BOTTOM_LEFT);
         container.getChildren().addAll(new VBox(symbol.getView()), new VBox(name.getView()), new VBox(convertion.getView()), addBox);
 
@@ -124,7 +124,7 @@ public class CurrencySettingViewModel extends SettingsTabViewModel {
         symbol.getViewModel().getTextField().getStyleClass().add("normal-disabled");
         createView(name);
 
-        var convertion = new TextInputView("Nilai satuan (Rp)", false);
+        var convertion = new TextInputView("Nilai satuan (Rp)", true);
         convertion.getViewModel().getTextField().setMaxWidth(100);
         convertion.getViewModel().getTextField().setText(currency.getConversion().toString());
         convertion.getViewModel().getTextField().setDisable(true);
@@ -150,8 +150,9 @@ public class CurrencySettingViewModel extends SettingsTabViewModel {
         });
 
         var container = new HBox();
-//        container.setPadding(new Insets(0, 2, 2, 0));
         var deleteBox = new VBox(delete);
+        deleteBox.setPadding(new Insets(0, 0, 10, 0));
+        delete.setPadding(new Insets(0));
         deleteBox.setAlignment(Pos.BOTTOM_LEFT);
         container.getChildren().addAll(new VBox(symbol.getView()), new VBox(name.getView()), new VBox(convertion.getView()), deleteBox);
 
