@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -23,8 +22,14 @@ public class ProductView extends BaseView<ProductViewModel> {
     }
 
     public void init() {
-//        getViewModel().getIncrement().setText("+");
-//        getViewModel().getDecrement().setText("-");
+        getViewModel().getMinus().setFitWidth(20);
+        getViewModel().getMinus().setFitHeight(20);
+        getViewModel().getPlus().setFitWidth(20);
+        getViewModel().getPlus().setFitHeight(20);
+        getViewModel().getIncrement().setStyle("-fx-background-color: rgba(255, 255, 255, 0);");
+        getViewModel().getDecrement().setStyle("-fx-background-color: rgba(255, 255, 255, 0);");
+        getViewModel().getIncrement().setGraphic(getViewModel().getPlus());
+        getViewModel().getDecrement().setGraphic(getViewModel().getMinus());
 
         var product = getViewModel().getProductBill().getProduct();
         var container = getViewModel().getContainer();
@@ -58,32 +63,16 @@ public class ProductView extends BaseView<ProductViewModel> {
         productInfo.setPadding(new Insets(0, 0, 0, 10));
 
         container.getChildren().add(productInfo);
-
-        getViewModel().getMinus().setFitWidth(20);
-        getViewModel().getMinus().setFitHeight(20);
-        getViewModel().getPlus().setFitWidth(20);
-        getViewModel().getPlus().setFitHeight(20);
-        HBox icons = new HBox();
-        icons.setAlignment(Pos.TOP_RIGHT);
-        icons.setSpacing(10);
-
-        getViewModel().getDecrement().setOpacity(0);
-        getViewModel().getIncrement().setOpacity(0);
-        getViewModel().getDecrement().setPrefSize(20, 20);
-        getViewModel().getIncrement().setPrefSize(20, 20);
         var buttonGroup = new HBox();
         buttonGroup.setAlignment(Pos.TOP_RIGHT);
         buttonGroup.setSpacing(10);
         var counterLabel = getViewModel().getCounterLabel();
-        icons.getChildren().addAll(getViewModel().getMinus(), getViewModel().getCounterLabel1(),getViewModel().getPlus());
         buttonGroup.getChildren().addAll(getViewModel().getDecrement(), counterLabel, getViewModel().getIncrement());
-        getViewModel().getRoot().getChildren().add(container);
-        getViewModel().getRoot().getChildren().add(icons);
-        getViewModel().getRoot().getChildren().add(buttonGroup);
+        container.getChildren().add(buttonGroup);
     }
 
     @Override
     public @NotNull Node getView() {
-        return new StackPane(getViewModel().getRoot());
+        return new StackPane(getViewModel().getContainer());
     }
 }

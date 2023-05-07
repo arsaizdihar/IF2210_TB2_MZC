@@ -4,6 +4,7 @@ import lombok.Getter;
 
 public class Schema {
     @Getter
+    //language=SQL
     private static final String value = """
             create table if not exists currency
             (

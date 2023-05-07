@@ -21,8 +21,8 @@ public class ProductViewModel extends BaseViewModel {
 
     @Getter
     private final @NotNull Label counterLabel = new Label("");
-    @Getter
-    private final @NotNull Label counterLabel1 = new Label("");
+//    @Getter
+//    private final @NotNull Label counterLabel1 = new Label("");
 
     @Getter
     private final @NotNull State<Integer> counter = new State<Integer>(0);
@@ -39,7 +39,8 @@ public class ProductViewModel extends BaseViewModel {
     @Getter
     private final @NotNull ImageView minus = new ImageView(FileManager.getResourcePath("/mzc/app/assets/minus.png"));
 
-    @Getter StackPane root = new StackPane();
+    @Getter
+    StackPane root = new StackPane();
     @Getter
     private final @NotNull HBox container = new HBox();
 
@@ -55,7 +56,7 @@ public class ProductViewModel extends BaseViewModel {
         super.init();
 
         this.counterLabel.textProperty().bind(Bindings.createObjectBinding(() -> counter.getValue().toString(), counter));
-        this.counterLabel1.textProperty().bind(Bindings.createObjectBinding(() -> counter.getValue().toString(), counter));
+//        this.counterLabel1.textProperty().bind(Bindings.createObjectBinding(() -> counter.getValue().toString(), counter));
 
         this.increment.setOnAction(e -> {
             counter.setValue(counter.getValue() + 1);

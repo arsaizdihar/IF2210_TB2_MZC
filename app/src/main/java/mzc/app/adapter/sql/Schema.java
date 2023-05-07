@@ -6,6 +6,7 @@ import lombok.Setter;
 public class Schema {
     @Getter
     @Setter
+    //language=SQL
     private static String value =
             """
                     create table if not exists customer
