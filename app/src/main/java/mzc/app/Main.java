@@ -7,6 +7,7 @@ import mzc.app.bootstrap.AppManager;
 import mzc.app.bootstrap.GUIApp;
 import mzc.app.modules.task.CleanRedundantCustomer;
 import mzc.app.modules.task.Seed;
+import mzc.app.utils.FileManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +42,7 @@ public class Main {
         threadPool.shutdown();
 
         Application.launch(GUIApp.class);
+
+        FileManager.getImageLoaderExecutor().shutdown();
     }
 }

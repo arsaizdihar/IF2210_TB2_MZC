@@ -21,13 +21,15 @@ public class FileManager {
     @Getter
     private static final Map<String, Image> imageCache = new HashMap<>();
 
-    private static ExecutorService imageLoaderExecutor = Executors.newFixedThreadPool(4);
+    @Getter
+    private static final ExecutorService imageLoaderExecutor = Executors.newFixedThreadPool(4);
 
     private static class BufferResourceLoader {
 
     }
 
-    private static BufferResourceLoader buffer = new BufferResourceLoader();
+    private static final BufferResourceLoader buffer = new BufferResourceLoader();
+
     public static void copyFile(String src, String dst) throws IOException {
         Path dstPath = Paths.get(dst);
         if (!dstPath.getParent().toFile().exists()) {
