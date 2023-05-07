@@ -8,7 +8,7 @@ import mzc.app.modules.pricing.price.PositiveDecimalPrice;
 
 import java.math.BigDecimal;
 
-public class PointPipeline implements IPricePipeline {
+public class PointPipeline extends PricePipeline {
     final private @NonNull Integer userPoints;
 
     public PointPipeline(@NonNull Integer userPoints) {
@@ -25,5 +25,10 @@ public class PointPipeline implements IPricePipeline {
     @Override
     public @NonNull PricePipelineType getType() {
         return PricePipelineType.FIXED;
+    }
+
+    @Override
+    public int getPriority() {
+        return 10;
     }
 }

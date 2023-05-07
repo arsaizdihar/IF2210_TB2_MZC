@@ -3,7 +3,7 @@ package mzc.plugin_charge.view_model;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import lombok.Getter;
-import mzc.app.modules.pricing.pipelines.IPricePipeline;
+import mzc.app.modules.pricing.pipelines.PricePipeline;
 import mzc.app.modules.pricing.pipelines.PricePipelineType;
 import mzc.app.view_model.components.cashier.PaymentSummaryViewModel;
 import mzc.plugin_charge.adapter.ChargeManager;
@@ -43,13 +43,23 @@ public class SubtotalViewModel extends mzc.app.view_model.components.cashier.Sub
     }
 
     @Override
-    protected List<IPricePipeline> getPipelines() {
+    protected List<PricePipeline> getPipelines() {
         var prev = super.getPipelines();
 
         var charges = ChargeManager.getAdapter().getAll();
 
         charges.forEach(each -> {
-            prev.add(new ChargePipeline(each));
+            int priority;
+
+            if (each.getIdentifier().equals("service")) {
+                priority = 30;
+            } else if (each.getIdentifier().equals("tax")) {
+                priority = 5;
+            } else {
+                throw new RuntimeException("Not supported charge");
+            }
+
+            prev.add(new ChargePipeline(each, priority));
         });
 
         if (!Objects.equals(additionalDiscount.getValue(), "Tidak ada")) {
@@ -60,9 +70,9 @@ public class SubtotalViewModel extends mzc.app.view_model.components.cashier.Sub
             } else {
                 type = PricePipelineType.PERCENTAGE;
             }
-            var charge = new Charge(type, new BigDecimal(discountValue.getText()), "additional", "Diskon Tambahan");
+            var charge = new Charge(type, (new BigDecimal(discountValue.getText())).multiply(BigDecimal.valueOf(-1)), "additional", "Diskon Tambahan");
 
-            prev.add(new ChargePipeline(charge));
+            prev.add(new ChargePipeline(charge, 40));
         }
 
         return prev;

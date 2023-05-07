@@ -7,7 +7,7 @@ import mzc.app.modules.pricing.price.IPrice;
 
 import java.math.BigDecimal;
 
-public class VIPDiscountPipeline implements IPricePipeline {
+public class VIPDiscountPipeline extends PricePipeline {
     private final BigDecimal percentage = new BigDecimal("0.1");
 
     @Override
@@ -20,5 +20,10 @@ public class VIPDiscountPipeline implements IPricePipeline {
     @Override
     public @NonNull PricePipelineType getType() {
         return PricePipelineType.PERCENTAGE;
+    }
+
+    @Override
+    public int getPriority() {
+        return 20;
     }
 }

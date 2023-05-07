@@ -14,8 +14,8 @@ import mzc.app.model.ProductHistory;
 import mzc.app.modules.pricing.PriceCalculator;
 import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.PricePipelineResult;
-import mzc.app.modules.pricing.pipelines.IPricePipeline;
 import mzc.app.modules.pricing.pipelines.PointPipeline;
+import mzc.app.modules.pricing.pipelines.PricePipeline;
 import mzc.app.modules.pricing.pipelines.VIPDiscountPipeline;
 import mzc.app.modules.pricing.price.ItemListPrice;
 import mzc.app.modules.pricing.price.ItemPrice;
@@ -96,11 +96,11 @@ public class SubtotalViewModel extends BaseViewModel {
         container.getChildren().add(getCheckoutButton());
     }
 
-    protected List<IPricePipeline> getPipelines() {
+    protected List<PricePipeline> getPipelines() {
         var context = useContext(CashierPageViewModel.CashierContext.class).getValue();
         var customer = context.getBill().getValue().getCustomer();
 
-        List<IPricePipeline> pipelines = new ArrayList<>();
+        List<PricePipeline> pipelines = new ArrayList<>();
 
         if (!this.usePointsCheckbox.isDisabled() && this.usePoints.getValue()) {
             if (customer.getType().equals(CustomerType.BASIC)) {

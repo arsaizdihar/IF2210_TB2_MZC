@@ -27,7 +27,7 @@ public class CurrencyPrice implements IPrice {
     @Override
     public @NonNull String toString() {
         if (this.convertedValue.compareTo(new BigDecimal(0)) < 0) {
-            return this.currency.getSymbol() + "-" + this.currency.getSymbol() + this.convertedValue.abs();
+            return "-" + this.currency.getSymbol() + this.convertedValue.abs();
         }
         return this.currency.getSymbol() + this.convertedValue;
     }
