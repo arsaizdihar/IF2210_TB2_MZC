@@ -1,5 +1,21 @@
 # Tugas Besar 2 Pemrograman Berorientasi Objek
 
+## Table of Contents
+
+- [Tugas Besar 2 Pemrograman Berorientasi Objek](#tugas-besar-2-pemrograman-berorientasi-objek)
+  - [Table of Contents](#table-of-contents)
+  - [Project Description](#project-description)
+  - [General System Description](#general-system-description)
+  - [Program Features](#program-features)
+  - [Screenshot](#screenshot)
+  - [Running The Program](#running-the-program)
+    - [Prerequisites](#prerequisites)
+    - [How to Compile](#how-to-compile)
+  - [Libraries Used](#libraries-used)
+  - [Authors](#authors)
+  - [Acknowledgements](#acknowledgements)
+
+
 ## Project Description
 
 Projek ini adalah sebuah Tugas Besar untuk Mata Kuliah IF2210 Pemrograman Berorientasi Objek, yaitu pembuatan sebuah aplikasi Point of Sales (POS) dalam bahasa Java yang diperuntukkan membantu manajemen dari sebuah usaha.
