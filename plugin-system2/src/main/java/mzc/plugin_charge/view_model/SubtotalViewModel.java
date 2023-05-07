@@ -59,7 +59,7 @@ public class SubtotalViewModel extends mzc.app.view_model.components.cashier.Sub
                 throw new RuntimeException("Not supported charge");
             }
 
-            prev.add(new ChargePipeline(each, priority));
+            prev.add(new ChargePipeline(each, priority, true));
         });
 
         if (!Objects.equals(additionalDiscount.getValue(), "Tidak ada")) {

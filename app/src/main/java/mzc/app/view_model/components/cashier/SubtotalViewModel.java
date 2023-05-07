@@ -95,11 +95,11 @@ public class SubtotalViewModel extends BaseViewModel {
         container.getChildren().add(info);
         container.getChildren().add(getCheckoutButton());
 
-        cashierContext.getCustomer().addListener((observableValue, old, next) -> {
-            if (next.getType() == CustomerType.BASIC) {
+        cashierContext.getBill().addListener((observableValue, old, next) -> {
+            if (next.getCustomer().getType() == CustomerType.BASIC) {
                 getUsePointsCheckbox().setText("Gunakan poin");
             } else {
-                getUsePointsCheckbox().setText("Gunakan poin (tersisa " + next.getPoints() + ")");
+                getUsePointsCheckbox().setText("Gunakan poin (tersisa " + next.getCustomer().getPoints() + ")");
             }
         });
     }
@@ -248,28 +248,23 @@ public class SubtotalViewModel extends BaseViewModel {
         });
 
         // calculate pipelines
-        var calculator = new PriceCalculator(this.getPipelines());
+        var pipelines = this.getPipelines();
+        var calculator = new PriceCalculator(pipelines);
         var pipelineResult = calculator.calculate(new ItemListPrice(productItems));
 
         BigDecimal point = pipelineResult.get(pipelineResult.size() - 1).getTotal().getValue().divide(BigDecimal.valueOf(100), RoundingMode.HALF_EVEN).setScale(0, RoundingMode.HALF_UP);
 
         pipelineResult.forEach(pricePipelineResult -> {
             if (!pricePipelineResult.getName().equals("Subtotal")) {
-                var pipeline = new ProductHistory(pricePipelineResult.getName(),
-                        pricePipelineResult.getNominal().getValue(),
-                        new BigDecimal(0),
-                        pricePipelineResult.getName(),
-                        "",
-                        1,
-                        fixedBill);
-
-                getAdapter().getProductHistory().persist(pipeline);
-
                 if (pricePipelineResult.getName().equals("Poin")) {
                     customer.setPoints(0);
                     getAdapter().getCustomer().persist(customer);
                 }
             }
+        });
+
+        pipelines.forEach(pipeline -> {
+            getAdapter().getProductHistory().persist(pipeline.createHistory());
         });
 
         // add point

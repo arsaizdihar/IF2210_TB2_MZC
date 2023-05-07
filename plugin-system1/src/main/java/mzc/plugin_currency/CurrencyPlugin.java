@@ -24,9 +24,7 @@ public class CurrencyPlugin extends Plugin {
     public void setup(App appContext) {
         appSetting = appContext.getAppSetting();
 
-        if (appSetting.getStorageMethod() == AdapterType.SQLORM) {
-            throw new RuntimeException("Not supported exception");
-        } else if (appSetting.getStorageMethod() == AdapterType.SQLRaw) {
+        if (appSetting.getStorageMethod() == AdapterType.SQLRaw) {
             Schema.setValue(Schema.getValue() + " " + mzc.plugin_currency.adapter.sql.Schema.getValue());
         }
 

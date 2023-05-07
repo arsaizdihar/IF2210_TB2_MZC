@@ -8,8 +8,6 @@ import mzc.plugin_currency.adapter.base.ICurrencyAdapter;
 import mzc.plugin_currency.adapter.file.JSONCurrencyAdapter;
 import mzc.plugin_currency.adapter.file.OBJCurrencyAdapter;
 import mzc.plugin_currency.adapter.file.XMLCurrencyAdapter;
-import mzc.plugin_currency.adapter.orm.CurrencyAdapter;
-import mzc.plugin_currency.adapter.orm.SessionManager;
 import mzc.plugin_currency.adapter.sql.SQLCurrencyAdapter;
 import mzc.plugin_currency.model.Currency;
 import org.jetbrains.annotations.NotNull;
@@ -31,9 +29,7 @@ public class CurrencyManager {
             switch (setting.getStorageMethod()) {
                 case OBJ -> adapter = new OBJCurrencyAdapter();
                 case XML -> adapter = new XMLCurrencyAdapter();
-                case JSON -> adapter = new JSONCurrencyAdapter();
-                case SQLORM -> adapter = new CurrencyAdapter(SessionManager.getSession());
-                case SQLRaw -> adapter = new SQLCurrencyAdapter(ConnectionManager.getDatastore()); // temporary
+                case SQLRaw -> adapter = new SQLCurrencyAdapter(ConnectionManager.getDatastore());
                 default -> adapter = new JSONCurrencyAdapter();
             }
         }
