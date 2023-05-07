@@ -49,8 +49,8 @@ public class EditProductViewModel extends RightSideViewModel {
     @Override
     public void init() {
 
-        Label tambahBarang = new Label("Ubah Data Barang");
-        tambahBarang.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        Label ubahDataBarang = new Label("Ubah Data Barang");
+        ubahDataBarang.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         setupLines();
         setupImage();
         this.addButton = new Button("Kirim");
@@ -60,7 +60,7 @@ public class EditProductViewModel extends RightSideViewModel {
         this.mainCol = new HBox(this.listInput, this.imageHolder);
         this.mainCol.setAlignment(Pos.CENTER);
         this.mainCol.setSpacing(100);
-        this.main = new VBox(tambahBarang, this.mainCol, addButton);
+        this.main = new VBox(ubahDataBarang, this.mainCol, addButton);
         this.main.setAlignment(Pos.CENTER);
         this.main.setSpacing(60);
         this.main.setStyle("-fx-font-size: 16px;");
