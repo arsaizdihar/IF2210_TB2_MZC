@@ -5,7 +5,7 @@
     <option name="MAIN_CLASS_NAME" value="mzc.app.Main" />
     <module name="app" />
     <option name="PROGRAM_PARAMETERS" value="--seed" />
-    <option name="VM_PARAMETERS" value="--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls" />
+    <option name="VM_PARAMETERS" value="--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls --add-opens=javafx.graphics/javafx.scene=org.controlsfx.controls" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />
       <option name="IS_SUBST" value="false" />

@@ -188,6 +188,7 @@
                     <target>17</target>
                     <compilerArgs>
                         <arg>--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls</arg>
+                        <arg>--add-opens=javafx.graphics/javafx.scene=org.controlsfx.controls</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
@@ -202,6 +203,7 @@
                     <!--suppress UnresolvedMavenProperty -->
                     <argLine>${surefireArgLine}</argLine>
                     <argLine>--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls</argLine>
+                    <argLine>--add-opens=javafx.graphics/javafx.scene=org.controlsfx.controls</argLine>
                 </configuration>
             </plugin>
             <plugin>

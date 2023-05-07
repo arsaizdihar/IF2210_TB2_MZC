@@ -12,6 +12,7 @@ import mzc.app.model.Customer;
 import mzc.app.model.CustomerType;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
+import mzc.app.view_model.components.ui.TextInputViewModel;
 
 @Getter
 public class AddMemberViewModel extends RightSideViewModel {
@@ -21,11 +22,17 @@ public class AddMemberViewModel extends RightSideViewModel {
     private HBox mainCol;
     @Getter
     private VBox list;
-    @Getter private  TextInputView name = new TextInputView("Nama", 200, false);
-    @Getter private TextInputView phoneNumber = new TextInputView("Nomor Handphone", 200, true);
-    @Getter private ComboBox<CustomerType> categoryField = new ComboBox<>();
-    @Getter private VBox categoryDropdown;
-    @Getter private Button addCustomerButton;
+    @Getter
+    private TextInputView name = new TextInputView("Nama", 200, false);
+    @Getter
+    private TextInputView phoneNumber = new TextInputView("Nomor Handphone", 200, true);
+    @Getter
+    private ComboBox<CustomerType> categoryField = new ComboBox<>();
+    @Getter
+    private VBox categoryDropdown;
+    @Getter
+    private Button addCustomerButton;
+
     @Override
     public void init() {
         super.init();
@@ -35,33 +42,23 @@ public class AddMemberViewModel extends RightSideViewModel {
         setupLines();
         addCustomerButton = new Button("Kirim");
         addCustomerButton.setOnAction(event -> {
-            if (name.getViewModel().getTextField().getText().isEmpty() || phoneNumber.getViewModel().getTextField().getText().isEmpty() || categoryField.getValue() == null) {
-                System.out.println("Tidak boleh kosong");
-
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Penambahan Member Gagal");
-                alert.setContentText(name.getViewModel().getTextField().getText().isEmpty() ? "Nama tidak boleh kosong" : phoneNumber.getViewModel().getTextField().getText().isEmpty() ? "Nomor Handphone tidak boleh kosong" : "Kategori tidak boleh kosong");
-
-                alert.showAndWait();
-            } else {
-                Customer customer = new Customer();
-                customer.setName(name.getViewModel().getTextField().getText());
-                customer.setPhone(phoneNumber.getViewModel().getTextField().getText());
-                customer.setType(categoryField.getValue());
-                getAdapter().getCustomer().persist(customer);
-                System.out.println("Nama: " + name.getViewModel().getTextField().getText());
-                System.out.println("Nomor Handphone: " + phoneNumber.getViewModel().getTextField().getText());
-                System.out.println("Kategori: " + categoryField.getValue());
-                main.getChildren().clear();
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Penambahan Member Berhasil");
-                alert.setHeaderText(null);
-                alert.setContentText("Silahkan tutup laman informasi ini");
-                alert.show();
-
-                reload.reload();
+            if (!TextInputViewModel.isAllValid(new TextInputViewModel[]{name.getViewModel(), phoneNumber.getViewModel()})) {
+                return;
             }
+            Customer customer = new Customer();
+            customer.setName(name.getViewModel().getVal().trim());
+            customer.setPhone(phoneNumber.getViewModel().getVal());
+            customer.setType(categoryField.getValue());
+            getAdapter().getCustomer().persist(customer);
+            main.getChildren().clear();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Penambahan Member Berhasil");
+            alert.setHeaderText(null);
+            alert.setContentText("Silahkan tutup laman informasi ini");
+            alert.show();
+
+            reload.reload();
         });
         addCustomerButton.setPrefWidth(100);
         addCustomerButton.getStyleClass().addAll("btn", "btn-success");
@@ -76,11 +73,24 @@ public class AddMemberViewModel extends RightSideViewModel {
     }
 
     private void setupLines() {
+        name.getViewModel().addValidation(
+                "^\\s*(\\S+\\s*)+$",
+                "Nama tidak boleh kosong"
+        );
+        name.getViewModel().addValidation(
+                "^.{0,50}$",
+                "Nama tidak boleh lebih dari 50 karakter"
+        );
         createView(name);
+
+        phoneNumber.getViewModel().addValidation(
+                "^\\+?\\d{10,15}$",
+                "Nomor Handphone tidak valid"
+        );
         createView(phoneNumber);
+
         Label categoryLabel = new Label("Tipe Anggota");
 
-        categoryField.getItems().add(CustomerType.BASIC);
         categoryField.getItems().add(CustomerType.MEMBER);
         categoryField.getItems().add(CustomerType.VIP);
         categoryField.setPrefWidth(200);

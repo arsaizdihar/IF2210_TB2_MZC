@@ -17,6 +17,7 @@ import mzc.app.utils.FileManager;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
+import mzc.app.view_model.components.ui.TextInputViewModel;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
@@ -63,7 +64,10 @@ public class EditProductViewModel extends RightSideViewModel {
 
         LeftSideProductViewModel.ReloadContext reload = useContext(LeftSideProductViewModel.ReloadContext.class).getValue();
         setOnButtonClicked((e) -> {
-            if (!this.namaBarang.getViewModel().getVal().trim().equals("")) {
+            try {
+                if (!TextInputViewModel.isAllValid(new TextInputViewModel[]{namaBarang.getViewModel(), stok.getViewModel(), hargaBeli.getViewModel(), hargaJual.getViewModel(), kategoriField.getViewModel()})) {
+                    return;
+                }
                 product.setName(this.namaBarang.getViewModel().getVal().trim());
                 product.setStock(Integer.parseInt(this.stok.getViewModel().getVal()));
                 product.setPrice(new BigDecimal(this.hargaJual.getViewModel().getVal()));
@@ -78,12 +82,11 @@ public class EditProductViewModel extends RightSideViewModel {
                 System.out.println("Saved!");
                 this.main.getChildren().clear();
                 reload.reload();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Validation Failed");
-                alert.setHeaderText("Name field cannot be empty");
-                alert.setContentText("Pastikan nama produk tidak kosong");
-
+            } catch (NumberFormatException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("Angka tidak valid");
                 alert.showAndWait();
             }
         });
@@ -94,20 +97,48 @@ public class EditProductViewModel extends RightSideViewModel {
 
         namaBarang = new TextInputView("Nama Barang", 200, false);
         namaBarang.getViewModel().getTextField().setText(product.getName());
+        namaBarang.getViewModel().addValidation(
+                "^\\s*(\\S+\\s*)+$",
+                "Nama barang tidak boleh kosong"
+        );
+        namaBarang.getViewModel().addValidation(
+                "^.{0,50}$",
+                "Nama barang tidak boleh lebih dari 50 karakter"
+        );
         createView(namaBarang);
 
         kategoriField = new TextInputView("Kategori", 200, false);
         kategoriField.getViewModel().getTextField().setText(product.getCategory());
+        kategoriField.getViewModel().addValidation(
+                "^\\s*(\\S+\\s*)+$",
+                "Kategori barang tidak boleh kosong"
+        );
+        kategoriField.getViewModel().addValidation(
+                "^.{0,50}$",
+                "Kategori barang tidak boleh lebih dari 50 karakter"
+        );
         createView(kategoriField);
         TextFields.bindAutoCompletion(kategoriField.getViewModel().getTextField(), categories);
 
         hargaBeli = new TextInputView("Harga Beli", 200, true);
+        hargaBeli.getViewModel().addValidation(
+                ".+",
+                "Harga jual harus diisi"
+        );
         hargaBeli.getViewModel().getTextField().setText(product.getBuyPrice().toString());
         createView(hargaBeli);
         hargaJual = new TextInputView("Harga Jual", 200, true);
         hargaJual.getViewModel().getTextField().setText(product.getPrice().toString());
+        hargaJual.getViewModel().addValidation(
+                ".+",
+                "Harga jual harus diisi"
+        );
         createView(hargaJual);
         stok = new TextInputView("Stok", 200, true);
+        stok.getViewModel().addValidation(
+                "^\\d+$",
+                "Stok harus berupa angka"
+        );
         stok.getViewModel().getTextField().setText(Integer.toString(product.getStock()));
         createView(stok);
         this.listInput = new VBox(namaBarang.getView(), kategoriField.getView(), hargaBeli.getView(), hargaJual.getView(), stok.getView());

@@ -16,6 +16,7 @@ import mzc.app.utils.FileManager;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
+import mzc.app.view_model.components.ui.TextInputViewModel;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
@@ -64,7 +65,10 @@ public class AddProductViewModel extends RightSideViewModel {
             if (this.imagePath.startsWith("file:/")) {
                 this.imagePath = this.imagePath.substring("file:/".length());
             }
-            if (!this.namaBarang.getViewModel().getVal().trim().equals("")) {
+            if (!TextInputViewModel.isAllValid(new TextInputViewModel[]{namaBarang.getViewModel(), stok.getViewModel(), hargaBeli.getViewModel(), hargaJual.getViewModel(), kategoriField.getViewModel()})) {
+                return;
+            }
+            try {
                 Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal().trim(), new BigDecimal(this.hargaJual.getViewModel().getVal()), new BigDecimal(this.hargaBeli.getViewModel().getVal()), this.kategoriField.getViewModel().getVal(), "");
                 try {
                     product.updateImage(this.imagePath);
@@ -74,12 +78,11 @@ public class AddProductViewModel extends RightSideViewModel {
                 getAdapter().getProduct().persist(product);
                 this.main.getChildren().clear();
                 reload.reload();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Validation Failed");
-                alert.setHeaderText("Name field cannot be empty");
-                alert.setContentText("Pastikan nama produk tidak kosong");
-
+            } catch (NumberFormatException ignored) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error");
+                alert.setContentText("Angka tidak valid");
                 alert.showAndWait();
             }
         });
@@ -89,17 +92,45 @@ public class AddProductViewModel extends RightSideViewModel {
         var categories = getAdapter().getProduct().getCategories();
 
         namaBarang = new TextInputView("Nama Barang", 200, false);
+        namaBarang.getViewModel().addValidation(
+                "^\\s*(\\S+\\s*)+$",
+                "Nama barang tidak boleh kosong"
+        );
+        namaBarang.getViewModel().addValidation(
+                "^.{0,50}$",
+                "Nama barang tidak boleh lebih dari 50 karakter"
+        );
         createView(namaBarang);
 
         kategoriField = new TextInputView("Kategori", 200, false);
+        kategoriField.getViewModel().addValidation(
+                "^\\s*(\\S+\\s*)+$",
+                "Kategori barang tidak boleh kosong"
+        );
+        kategoriField.getViewModel().addValidation(
+                "^.{0,50}$",
+                "Kategori barang tidak boleh lebih dari 50 karakter"
+        );
         createView(kategoriField);
         TextFields.bindAutoCompletion(kategoriField.getViewModel().getTextField(), categories);
 
         hargaBeli = new TextInputView("Harga Beli", 200, true);
+        hargaBeli.getViewModel().addValidation(
+                ".+",
+                "Harga jual harus diisi"
+        );
         createView(hargaBeli);
         hargaJual = new TextInputView("Harga Jual", 200, true);
+        hargaJual.getViewModel().addValidation(
+                ".+",
+                "Harga jual harus diisi"
+        );
         createView(hargaJual);
         stok = new TextInputView("Stok", 200, true);
+        stok.getViewModel().addValidation(
+                "^\\d+$",
+                "Stok harus berupa bilangan bulat"
+        );
         createView(stok);
         this.listInput = new VBox(namaBarang.getView(), kategoriField.getView(), hargaBeli.getView(), hargaJual.getView(), stok.getView());
         this.listInput.setSpacing(15);

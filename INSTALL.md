@@ -29,6 +29,7 @@ Extract the zip and remember the extracted path
 java \
 --module-path javafx-sdk-18.0.2\lib \
 --add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls \
+--add-opens=javafx.graphics/javafx.scene=org.controlsfx.controls \
 -jar app-1.0-SNAPSHOT-shaded.jar
 `
 

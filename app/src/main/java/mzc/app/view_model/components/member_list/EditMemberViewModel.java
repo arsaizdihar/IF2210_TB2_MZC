@@ -13,25 +13,34 @@ import mzc.app.model.Customer;
 import mzc.app.model.CustomerType;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
+import mzc.app.view_model.components.ui.TextInputViewModel;
 import org.jetbrains.annotations.NotNull;
 
-public class EditMemberViewModel extends RightSideViewModel  {
-    @Getter @Setter
+public class EditMemberViewModel extends RightSideViewModel {
+    @Getter
+    @Setter
     private Customer customer;
     @Getter
     private VBox root = new VBox();
     @Getter
     private HBox detailsBox;
-    @Getter final @NotNull VBox customerInfoBox = new VBox();
-    @Getter final @NotNull Label title = new Label("Edit Member");
-    @Getter private TextInputView name = new TextInputView("Nama", 200, false);
-    @Getter private TextInputView phoneNumber = new TextInputView("Nomor Handphone", 200, true);
-    @Getter private ComboBox<CustomerType> categoryField = new ComboBox<>();
-    @Getter private VBox categoryDropdown;
-    @Getter private Button editCustomerButton;
+    @Getter
+    final @NotNull VBox customerInfoBox = new VBox();
+    @Getter
+    final @NotNull Label title = new Label("Edit Member");
+    @Getter
+    private TextInputView name = new TextInputView("Nama", 200, false);
+    @Getter
+    private TextInputView phoneNumber = new TextInputView("Nomor Handphone", 200, true);
+    @Getter
+    private ComboBox<CustomerType> categoryField = new ComboBox<>();
+    @Getter
+    private VBox categoryDropdown;
+    @Getter
+    private Button editCustomerButton;
+
     @Override
-    public void init()
-    {
+    public void init() {
         super.init();
         LeftSideMemberListViewModel.ReloadContext reload = useContext(LeftSideMemberListViewModel.ReloadContext.class).getValue();
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
@@ -39,32 +48,24 @@ public class EditMemberViewModel extends RightSideViewModel  {
         editCustomerButton = new Button("Kirim");
         editCustomerButton.setOnAction(
                 event -> {
-                    if (name.getViewModel().getTextField().getText().isEmpty() || phoneNumber.getViewModel().getTextField().getText().isEmpty() || categoryField.getValue() == null) {
-                        System.out.println("Tidak boleh kosong");
-
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Pengubahan Data Member Gagal");
-                        alert.setContentText(name.getViewModel().getTextField().getText().isEmpty() ? "Nama tidak boleh kosong" : phoneNumber.getViewModel().getTextField().getText().isEmpty() ? "Nomor Handphone tidak boleh kosong" : "Kategori tidak boleh kosong");
-
-                        alert.showAndWait();
-                    } else {
-                        customer.setName(name.getViewModel().getTextField().getText());
-                        customer.setPhone(phoneNumber.getViewModel().getTextField().getText());
-                        customer.setType(categoryField.getValue());
-                        getAdapter().getCustomer().persist(customer);
-                        System.out.println("Nama: " + name.getViewModel().getTextField().getText());
-                        System.out.println("Nomor Handphone: " + phoneNumber.getViewModel().getTextField().getText());
-                        System.out.println("Kategori: " + categoryField.getValue());
-                        root.getChildren().clear();
-
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Pengubahan Data Member Berhasil");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Silahkan tutup laman informasi ini");
-                        alert.show();
-
-                        reload.reload();
+                    if (!TextInputViewModel.isAllValid(new TextInputViewModel[]{name.getViewModel(), phoneNumber.getViewModel()})) {
+                        return;
                     }
+
+                    customer.setName(name.getViewModel().getVal().trim());
+                    customer.setPhone(phoneNumber.getViewModel().getVal());
+                    customer.setType(categoryField.getValue());
+                    getAdapter().getCustomer().persist(customer);
+                    root.getChildren().clear();
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Pengubahan Data Member Berhasil");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Silahkan tutup laman informasi ini");
+                    alert.show();
+
+                    reload.reload();
+
                 }
         );
         editCustomerButton.setPrefWidth(100);
@@ -80,16 +81,28 @@ public class EditMemberViewModel extends RightSideViewModel  {
         root.setSpacing(100);
         root.setStyle("-fx-font-size: 16px;");
     }
+
     private void customerDetails() {
+        name.getViewModel().addValidation(
+                "^\\s*(\\S+\\s*)+$",
+                "Nama tidak boleh kosong"
+        );
+        name.getViewModel().addValidation(
+                "^.{0,50}$",
+                "Nama tidak boleh lebih dari 50 karakter"
+        );
         name.getViewModel().getTextField().setText(customer.getName());
         phoneNumber.getViewModel().getTextField().setText(customer.getPhone());
 
+        phoneNumber.getViewModel().addValidation(
+                "^\\+?\\d{10,15}$",
+                "Nomor Handphone tidak valid"
+        );
         createView(name);
         createView(phoneNumber);
 
         Label categoryLabel = new Label("Tipe Anggota");
 
-        categoryField.getItems().add(CustomerType.BASIC);
         categoryField.getItems().add(CustomerType.MEMBER);
         categoryField.getItems().add(CustomerType.VIP);
         categoryField.setPrefWidth(200);
