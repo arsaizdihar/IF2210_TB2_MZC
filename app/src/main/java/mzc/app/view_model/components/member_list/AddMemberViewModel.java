@@ -3,6 +3,7 @@ package mzc.app.view_model.components.member_list;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -33,6 +34,7 @@ public class AddMemberViewModel extends RightSideViewModel {
     @Override
     public void init() {
         super.init();
+        LeftSideMemberListViewModel.ReloadContext reload = useContext(LeftSideMemberListViewModel.ReloadContext.class).getValue();
         Label tambahAnggota = new Label("Tambah Anggota");
         tambahAnggota.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         setupLines();
@@ -40,7 +42,12 @@ public class AddMemberViewModel extends RightSideViewModel {
         addCustomerButton.setOnAction(event -> {
             if (name.getViewModel().getTextField().getText().isEmpty() || phoneNumber.getViewModel().getTextField().getText().isEmpty() || categoryField.getValue() == null) {
                 System.out.println("Tidak boleh kosong");
-                // TODO tampilkan alert gagal
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Penambahan Member Gagal");
+                alert.setContentText(name.getViewModel().getTextField().getText().isEmpty() ? "Nama tidak boleh kosong" : phoneNumber.getViewModel().getTextField().getText().isEmpty() ? "Nomor Handphone tidak boleh kosong" : "Kategori tidak boleh kosong");
+
+                alert.showAndWait();
             } else {
                 Customer customer = new Customer();
                 customer.setName(name.getViewModel().getTextField().getText());
@@ -50,8 +57,15 @@ public class AddMemberViewModel extends RightSideViewModel {
                 System.out.println("Nama: " + name.getViewModel().getTextField().getText());
                 System.out.println("Nomor Handphone: " + phoneNumber.getViewModel().getTextField().getText());
                 System.out.println("Kategori: " + categoryField.getValue());
-                // TODO tampilkan alert berhasil
                 main.getChildren().clear();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Penambahan Member Berhasil");
+                alert.setHeaderText(null);
+                alert.setContentText("Silahkan tutup laman informasi ini");
+                alert.show();
+
+                reload.reload();
             }
         });
         addCustomerButton.setPrefWidth(100);
