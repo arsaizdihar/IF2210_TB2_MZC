@@ -19,10 +19,8 @@ open module mzc.app {
     requires transitive com.zaxxer.hikari;
     requires transitive org.mybatis;
     requires com.fasterxml.jackson.annotation;
-
-//    opens mzc.app.view_model to javafx.fxml;
-//    opens mzc.app.bootstrap to javafx.graphics;
-//    opens mzc.app.model to org.hibernate.orm.core, com.google.gson, com.fasterxml.jackson.databind;
+    requires boxable;
+    requires org.apache.pdfbox;
 
     exports mzc.app;
     exports mzc.app.adapter.base;

@@ -1,3 +1,3 @@
-module mzc.sales_summary {
+module mzc.chart {
     requires transitive mzc.app;
 }
