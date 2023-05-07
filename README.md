@@ -23,11 +23,11 @@ Secara umum, aplikasi kami bekerja serupa dengan sebuah web browser, dimana terd
 
 ## Screenshot
 
-![Screenshot 1](.\images\image6.png)
-![Screenshot 2](.\images\image3.png)
-![Screenshot 3](.\images\image9.png)
-![Screenshot 4](.\images\image4.png)
-![Screenshot 5](.\images\screenshot_cashier.jpg)
+![Screenshot 1](images/image6.png)
+![Screenshot 2](images/image3.png)
+![Screenshot 3](images/image9.png)
+![Screenshot 4](images/image4.png)
+![Screenshot 5](images/screenshot_cashier.jpg)
 
 
 ## Running The Program
