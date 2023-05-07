@@ -1,5 +1,7 @@
 package mzc.app.view_model.components.cashier;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.model.Bill;
@@ -41,6 +43,15 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
     public void init() {
         super.init();
 
+        Label pembelian = new Label("Pembelian");
+        pembelian.setStyle("-fx-font-weight: bold; -fx-font-size: 2em;");
+        pembelian.setAlignment(Pos.TOP_CENTER);
+
+        Label pelanggan = new Label("Pelanggan");
+        pelanggan.setStyle("-fx-font-weight: bold; -fx-font-size: 0.9em;");
+        pelanggan.setAlignment(Pos.TOP_LEFT);
+        this.getContainer().getChildren().add(pembelian);
+        this.getContainer().getChildren().add(pelanggan);
         var paymentContext = new Context<>(new PaymentSummaryContext());
         addContext(paymentContext);
 
