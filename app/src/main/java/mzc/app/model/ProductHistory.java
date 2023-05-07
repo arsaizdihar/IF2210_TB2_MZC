@@ -52,7 +52,7 @@ public class ProductHistory extends BaseModel {
 
     @Transient
     @JsonIgnore
-    private static final Map<String, Image> imageCache = new HashMap<>();
+    private transient static final Map<String, Image> imageCache = new HashMap<>();
 
     public ProductHistory(String name, BigDecimal price, BigDecimal buyPrice, String category, String image, Integer amount, FixedBill bill) {
         this.name = name;
@@ -88,6 +88,7 @@ public class ProductHistory extends BaseModel {
         }
         return imagePath;
     }
+
     @JsonIgnore
     public IPrice getPriceView() {
         return PriceFactory.createPriceView(this.price);
