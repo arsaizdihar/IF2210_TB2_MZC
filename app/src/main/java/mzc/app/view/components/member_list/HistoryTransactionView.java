@@ -40,6 +40,7 @@ public class HistoryTransactionView extends RightSideView<HistoryTransactionView
 
         var printButton = getViewModel().getPrintButton();
         infoBox.getChildren().add(printButton);
+        getViewModel().createPrintButton();
         printButton.getStyleClass().add("btn");
 
 

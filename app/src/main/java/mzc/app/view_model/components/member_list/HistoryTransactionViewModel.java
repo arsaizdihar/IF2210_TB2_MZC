@@ -9,11 +9,14 @@ import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Customer;
 import mzc.app.model.FixedBill;
+import mzc.app.modules.report.PrintReport;
+import mzc.app.modules.report.PrintTransactionHistory;
 import mzc.app.view.components.member_list.HistoryTransactionEntryView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Set;
 
 @Getter @Setter
@@ -64,5 +67,22 @@ public class HistoryTransactionViewModel extends RightSideViewModel {
             }
         }
     }
+    public void createPrintButton() {
+
+        printButton.setOnAction(event -> {
+            PrintTransactionHistory printTransactionHistory = new PrintTransactionHistory();
+            try {
+                var fixedBills = getAdapter().getFixedBill().getByCustomerId(getCustomer().getId());
+                for (var bill : fixedBills) {
+                    printTransactionHistory.printPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()), getCustomer().getName());
+                }
+                printTransactionHistory.toPrint("Dummy");
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
 
 }

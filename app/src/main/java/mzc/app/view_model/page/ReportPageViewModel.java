@@ -11,11 +11,14 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.FixedBill;
+import mzc.app.modules.report.PrintReport;
 import mzc.app.view.components.report.ReportEntryView;
 import mzc.app.view.page.PrintOptionView;
 import mzc.app.view_model.base.PageViewModel;
 import mzc.app.view_model.components.report.ReportEntryViewModel;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 @Getter @Setter
 public class ReportPageViewModel extends PageViewModel {
@@ -65,8 +68,17 @@ public class ReportPageViewModel extends PageViewModel {
     public void createPrintButton() {
 
         printButton.setOnAction(event -> {
-            var printOptionView = createView(new PrintOptionView(getRoot()));
-            printOptionView.getView();
+            PrintReport printReport = new PrintReport();
+            try {
+                var fixedBill = getAdapter().getFixedBill().getAll();
+                for (var bill : fixedBill) {
+                    printReport.setNewPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()));
+                }
+                printReport.toPrint("Dummy");
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 }
