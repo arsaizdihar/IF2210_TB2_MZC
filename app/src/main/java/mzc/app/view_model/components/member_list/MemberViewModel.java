@@ -22,7 +22,7 @@ import java.util.Objects;
 public class MemberViewModel extends BaseViewModel {
     @Getter @Setter
     private Customer customer;
-    private final ImageView avatar = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/user.png")).toExternalForm());
+    private final ImageView avatar = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/user.png"));
     @Getter StackPane root = new StackPane();
     @Getter private HBox memberBox = new HBox();
     @Getter private VBox memberInfo = new VBox();
@@ -30,10 +30,10 @@ public class MemberViewModel extends BaseViewModel {
     @Getter private Text customerType = new Text();
     @Getter private Text customerPhone = new Text();
     @Getter private Text customerPoints = new Text();
-    private final ImageView edit = new ImageView(FileManager.getResourcePath("/mzc/app/assets/edit.png"));
-    private final ImageView history = new ImageView(FileManager.getResourcePath("/mzc/app/assets/list-1.png"));
-    private final ImageView active = new ImageView(FileManager.getResourcePath("/mzc/app/assets/checkmark.png"));
-    private final ImageView inactive = new ImageView(FileManager.getResourcePath("/mzc/app/assets/cross.png"));
+    private final ImageView edit = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/edit.png"));
+    private final ImageView history = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/list-1.png"));
+    private final ImageView active = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/checkmark.png"));
+    private final ImageView inactive = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/cross.png"));
     @Getter private Button transactionButton = new Button();
     @Getter private Button editButton = new Button();
     @Getter private Button setActiveButton = new Button();

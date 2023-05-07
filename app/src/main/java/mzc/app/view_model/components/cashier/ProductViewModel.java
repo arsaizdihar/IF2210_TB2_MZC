@@ -31,13 +31,13 @@ public class ProductViewModel extends BaseViewModel {
     private final @NotNull Button increment = new Button();
 
     @Getter
-    private final @NotNull ImageView plus = new ImageView(FileManager.getResourcePath("/mzc/app/assets/plus.png"));
+    private final @NotNull ImageView plus = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/plus.png"));
 
     @Getter
     private final @NotNull Button decrement = new Button();
 
     @Getter
-    private final @NotNull ImageView minus = new ImageView(FileManager.getResourcePath("/mzc/app/assets/minus.png"));
+    private final @NotNull ImageView minus = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/minus.png"));
 
     @Getter
     StackPane root = new StackPane();
@@ -106,12 +106,7 @@ public class ProductViewModel extends BaseViewModel {
         });
 
 //        load image non blocking
-        var imageTask = getProductBill().getProduct().getImageTask();
-        imageTask.setOnSucceeded(e -> {
-            var image = imageTask.getValue();
-            imageView.setImage(image);
-        });
-        FileManager.runImageTask(imageTask);
+        getProductBill().getProduct().getImageAsync(imageView::setImage);
 
 //        load image blocking
 //        var image = getProductBill().getProduct().getImage();

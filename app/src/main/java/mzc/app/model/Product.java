@@ -16,6 +16,7 @@ import mzc.app.utils.FileManager;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Consumer;
 
 @Entity(name = "product")
 @Table(name = "product")
@@ -91,8 +92,8 @@ public class Product extends BaseModel implements ISoftDelete {
     }
 
     @JsonIgnore
-    public Task<Image> getImageTask() {
-        return FileManager.getImageAsync(this.imagePath);
+    public void getImageAsync(Consumer<Image> callback) {
+        FileManager.getImageAsync(this.imagePath, callback);
     }
 
     public void updateImage(String realPath) throws IOException {

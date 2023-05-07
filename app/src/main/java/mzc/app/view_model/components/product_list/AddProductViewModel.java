@@ -1,37 +1,33 @@
 package mzc.app.view_model.components.product_list;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.stage.FileChooser;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.model.Product;
 import mzc.app.utils.FileManager;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
-import mzc.app.view_model.components.member_list.LeftSideMemberListViewModel;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
 import org.controlsfx.control.textfield.TextFields;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 @Getter
 public class AddProductViewModel extends RightSideViewModel {
     private VBox main;
     private HBox mainCol;
     private VBox listInput;
-    private VBox imageHolder = new VBox();
+    private final VBox imageHolder = new VBox();
     private Button addButton;
 
     private TextInputView namaBarang;
@@ -68,8 +64,13 @@ public class AddProductViewModel extends RightSideViewModel {
             if (this.imagePath.startsWith("file:/")) {
                 this.imagePath = this.imagePath.substring("file:/".length());
             }
-            if (this.namaBarang.getViewModel().getVal() != "") {
-                Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), new BigDecimal(this.hargaJual.getViewModel().getVal()), new BigDecimal(this.hargaBeli.getViewModel().getVal()), this.kategoriField.getViewModel().getVal(), this.imagePath);
+            if (!this.namaBarang.getViewModel().getVal().trim().equals("")) {
+                Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal().trim(), new BigDecimal(this.hargaJual.getViewModel().getVal()), new BigDecimal(this.hargaBeli.getViewModel().getVal()), this.kategoriField.getViewModel().getVal(), "");
+                try {
+                    product.updateImage(this.imagePath);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 getAdapter().getProduct().persist(product);
                 this.main.getChildren().clear();
                 reload.reload();
@@ -105,35 +106,17 @@ public class AddProductViewModel extends RightSideViewModel {
     }
 
     private void setupImage() {
-        this.imagePath = FileManager.getResourcePath("/mzc/app/assets/product.png");
-        Image placeholder = new Image(this.imagePath);
-        this.imageFile = placeholder;
-        ImageView imageView = new ImageView(placeholder);
+        ImageView imageView = new ImageView();
+        FileManager.getImageAsync(FileManager.getResourcePath("/mzc/app/assets/product.png"), imageView::setImage);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
         this.imageHolder.getChildren().add(imageView);
         Button pilihGambar = new Button("Pilih Gambar");
         var fileDialogView = new FileDialogView(pilihGambar, file -> {
-            try {
-                imageFile = new Image(new FileInputStream(file));
-                imageView.setImage(imageFile);
-                System.out.println(imageFile);
-            } catch (FileNotFoundException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("File Error");
-                alert.setHeaderText("File is not found or is not valid");
-                alert.setContentText("Pastikan file yang dipilih merupakan file gambar yang valid");
-
-                alert.showAndWait();
-            }
+            imageView.setImage(null);
+            FileManager.getImageAsync(file.getAbsolutePath(), imageView::setImage);
             this.imagePath = file.getAbsolutePath();
-            Product product = new Product();
-            try {
-                product.updateImage(this.imagePath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }, "Image Files", Arrays.asList(new String[]{"*.png", "*.jpg", ".jpeg"}));
+        }, "Image Files", Arrays.asList("*.png", "*.jpg", ".jpeg"));
 
         createView(fileDialogView);
         pilihGambar.getStyleClass().add("btn");

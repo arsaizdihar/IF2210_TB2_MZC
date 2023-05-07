@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import lombok.Getter;
 import mzc.app.model.Product;
+import mzc.app.utils.FileManager;
 import mzc.app.view_model.base.BaseViewModel;
 
 import java.math.BigDecimal;
@@ -21,9 +22,8 @@ import java.util.Objects;
 public class ProductDisplayViewModel extends BaseViewModel {
 
     private Product produk;
-    private Image productImage;
-    private HBox mainRow = new HBox();
-    private StackPane main = new StackPane();
+    private final HBox mainRow = new HBox();
+    private final StackPane main = new StackPane();
 
     private Text namaBarang;
     private Label kategori;
@@ -31,15 +31,16 @@ public class ProductDisplayViewModel extends BaseViewModel {
     private Label hargaJual;
     private Label stok;
 
-    private ImageView edit = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/edit.png")).toExternalForm());
-    private ImageView bin = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/bin.png")).toExternalForm());
+    private final ImageView edit = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/edit.png"));
+    private final ImageView bin = new ImageView(FileManager.getImageFromResource("/mzc/app/assets/bin.png"));
 
-    private Button editButton = new Button();
-    private Button binButton = new Button();
+    private final Button editButton = new Button();
+    private final Button binButton = new Button();
     @Override
     public void init() {
         super.init();
-        ImageView imageView = new ImageView(this.productImage);
+        ImageView imageView = new ImageView();
+        produk.getImageAsync(imageView::setImage);
         imageView.setFitWidth(90);
         imageView.setFitHeight(90);
         this.mainRow.getChildren().add(imageView);
@@ -91,7 +92,6 @@ public class ProductDisplayViewModel extends BaseViewModel {
         hargaBeli = new Label("Beli "+product.getBuyPriceView());
         hargaJual = new Label(" Jual "+product.getPriceView());
         stok = new Label("Stok "+Integer.toString(product.getStock()));
-        productImage = product.getImage();
     }
 
     private void setstyle() {
@@ -109,12 +109,6 @@ public class ProductDisplayViewModel extends BaseViewModel {
     }
 
     public void setOnButtonClicked(EventHandler<ActionEvent> handler1, EventHandler<ActionEvent> handler2) {
-        if (this.editButton == null) {
-            throw new RuntimeException("Must set button first");
-        }
-        if (this.binButton == null) {
-            throw new RuntimeException("Must set button first");
-        }
         this.binButton.setOnAction(handler2);
     }
 }

@@ -1,32 +1,27 @@
 package mzc.app.view_model.components.product_list;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Product;
+import mzc.app.utils.FileManager;
 import mzc.app.view.components.FileDialogView;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
 import org.controlsfx.control.textfield.TextFields;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -68,8 +63,8 @@ public class EditProductViewModel extends RightSideViewModel {
 
         LeftSideProductViewModel.ReloadContext reload = useContext(LeftSideProductViewModel.ReloadContext.class).getValue();
         setOnButtonClicked((e) -> {
-            if (this.namaBarang.getViewModel().getVal() != "") {
-                product.setName(this.namaBarang.getViewModel().getVal());
+            if (!this.namaBarang.getViewModel().getVal().trim().equals("")) {
+                product.setName(this.namaBarang.getViewModel().getVal().trim());
                 product.setStock(Integer.parseInt(this.stok.getViewModel().getVal()));
                 product.setPrice(new BigDecimal(this.hargaJual.getViewModel().getVal()));
                 product.setBuyPrice(new BigDecimal(this.hargaBeli.getViewModel().getVal()));
@@ -120,34 +115,18 @@ public class EditProductViewModel extends RightSideViewModel {
     }
 
     private void setupImage() {
-        Image placeholder = this.product.getImage();
         this.imagePath = product.getImagePath();
-        ImageView imageView = new ImageView(placeholder);
+        ImageView imageView = new ImageView();
+        product.getImageAsync(imageView::setImage);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
 
         Button pilihGambar = new Button("Pilih Gambar");
         var fileDialogViewEdit = new FileDialogView(pilihGambar, file -> {
-            try {
-                imageFile = new Image(new FileInputStream(file));
-                imageView.setImage(imageFile);
-                System.out.println(imageFile);
-            } catch (FileNotFoundException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("File Error");
-                alert.setHeaderText("File is not found or is not valid");
-                alert.setContentText("Pastikan file yang dipilih merupakan file gambar yang valid");
-
-                alert.showAndWait();
-            }
+            imageView.setImage(null);
+            FileManager.getImageAsync(file.getAbsolutePath(), imageView::setImage);
             this.imagePath = file.getAbsolutePath();
-            Product product = new Product();
-            try {
-                product.updateImage(this.imagePath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }, "Image Files", Arrays.asList(new String[]{"*.png", "*.jpg", ".jpeg"}));
+        }, "Image Files", Arrays.asList("*.png", "*.jpg", ".jpeg"));
 
         createView(fileDialogViewEdit);
         pilihGambar.getStyleClass().add("btn");

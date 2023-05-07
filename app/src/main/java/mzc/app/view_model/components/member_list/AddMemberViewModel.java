@@ -1,7 +1,5 @@
 package mzc.app.view_model.components.member_list;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -12,11 +10,8 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.model.Customer;
 import mzc.app.model.CustomerType;
-import mzc.app.model.Product;
 import mzc.app.view.components.ui.TextInputView;
 import mzc.app.view_model.components.split_page.RightSideViewModel;
-
-import java.math.BigDecimal;
 
 @Getter
 public class AddMemberViewModel extends RightSideViewModel {

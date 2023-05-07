@@ -2,6 +2,7 @@ package mzc.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,10 +11,12 @@ import lombok.Setter;
 import mzc.app.annotation.EqualCheck;
 import mzc.app.modules.pricing.PriceFactory;
 import mzc.app.modules.pricing.price.IPrice;
+import mzc.app.utils.FileManager;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Entity
 @Table(name = "producthistory")
@@ -37,7 +40,7 @@ public class ProductHistory extends BaseModel {
     private String category;
 
     @Column
-    private String image;
+    private String imagePath;
 
     @Column
     private Integer amount;
@@ -50,16 +53,12 @@ public class ProductHistory extends BaseModel {
     @JoinColumn(name = "billId", nullable = false, referencedColumnName = "id")
     private transient FixedBill bill;
 
-    @Transient
-    @JsonIgnore
-    private transient static final Map<String, Image> imageCache = new HashMap<>();
-
     public ProductHistory(String name, BigDecimal price, BigDecimal buyPrice, String category, String image, Integer amount, FixedBill bill) {
         this.name = name;
         this.price = price;
         this.buyPrice = buyPrice;
         this.category = category;
-        this.image = image;
+        this.imagePath = image;
         this.amount = amount;
         setBill(bill);
     }
@@ -69,7 +68,7 @@ public class ProductHistory extends BaseModel {
         this.price = product.getPrice();
         this.buyPrice = product.getBuyPrice();
         this.category = product.getCategory();
-        this.image = product.getImagePath();
+        this.imagePath = product.getImagePath();
         this.amount = amount;
         setBill(bill);
     }
@@ -80,13 +79,13 @@ public class ProductHistory extends BaseModel {
     }
 
     @JsonIgnore
-    public Image getImageView() {
-        var imagePath = imageCache.get(image);
-        if (imagePath == null) {
-            imagePath = new Image("file:" + image);
-            imageCache.put(image, imagePath);
-        }
-        return imagePath;
+    public Image getImage() {
+        return FileManager.getImage(this.imagePath);
+    }
+
+    @JsonIgnore
+    public void getImageAsync(Consumer<Image> callback) {
+        FileManager.getImageAsync(this.imagePath, callback);
     }
 
     @JsonIgnore

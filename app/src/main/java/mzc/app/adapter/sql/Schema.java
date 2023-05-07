@@ -78,7 +78,7 @@ public class Schema {
                         billId   bigint         null,
                         buyPrice decimal(38, 2) null,
                         category varchar(255)   null,
-                        image    varchar(255)   null,
+                        imagePath    varchar(255)   null,
                         name     varchar(255)   null,
                         price    decimal(38, 2) null,
                         foreign key (billId) references fixedbill (id)

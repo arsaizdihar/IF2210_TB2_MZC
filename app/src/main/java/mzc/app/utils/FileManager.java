@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 public class FileManager {
     @Getter
@@ -63,11 +64,14 @@ public class FileManager {
 
     public static Image getImage(String path) {
         Image image;
+        if (!path.startsWith("file:")){
+            path = "file:" + path;
+        }
         synchronized (imageCache) {
             image = imageCache.get(path);
         }
         if (image == null) {
-            image = new Image("file:" + path);
+            image = new Image(path);
             synchronized (imageCache) {
                 imageCache.put(path, image);
             }
@@ -75,16 +79,18 @@ public class FileManager {
         return image;
     }
 
-    public static Task<Image> getImageAsync(String path) {
-        return new Task<>() {
+    public static void getImageAsync(String path, Consumer<Image> callback) {
+        Task<Image> task = new Task<>() {
             @Override
             protected Image call() {
                 return getImage(path);
             }
         };
+        task.setOnSucceeded(event -> callback.accept(task.getValue()));
+        imageLoaderExecutor.submit(task);
     }
 
-    public static void runImageTask(Task<Image> task) {
-        imageLoaderExecutor.submit(task);
+    public static Image getImageFromResource(String path) {
+        return FileManager.getImage(FileManager.getResourcePath(path));
     }
 }

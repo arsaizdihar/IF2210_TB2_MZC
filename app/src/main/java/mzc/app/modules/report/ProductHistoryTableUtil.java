@@ -1,17 +1,14 @@
 package mzc.app.modules.report;
 
-import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mzc.app.model.ProductHistory;
 
-import java.util.List;
 import java.util.Set;
 
 public class ProductHistoryTableUtil {
@@ -32,7 +29,8 @@ public class ProductHistoryTableUtil {
                             this.setGraphic(null);
                             if (!empty) {
                                 ProductHistory productHistory = this.getTableView().getItems().get(this.getIndex());
-                                ImageView imageView = new ImageView(productHistory.getImageView());
+                                ImageView imageView = new ImageView();
+                                productHistory.getImageAsync(imageView::setImage);
                                 imageView.setFitWidth(100);
                                 imageView.setFitHeight(100);
                                 this.setGraphic(imageView);
