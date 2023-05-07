@@ -1,7 +1,10 @@
 package mzc.app.view_model.components.cashier;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import mzc.app.model.Bill;
@@ -42,16 +45,6 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
     @Override
     public void init() {
         super.init();
-
-        Label pembelian = new Label("Pembelian");
-        pembelian.setStyle("-fx-font-weight: bold; -fx-font-size: 2em;");
-        pembelian.setAlignment(Pos.TOP_CENTER);
-
-        Label pelanggan = new Label("Pelanggan");
-        pelanggan.setStyle("-fx-font-weight: bold; -fx-font-size: 0.9em;");
-        pelanggan.setAlignment(Pos.TOP_LEFT);
-        this.getContainer().getChildren().add(pembelian);
-        this.getContainer().getChildren().add(pelanggan);
         var paymentContext = new Context<>(new PaymentSummaryContext());
         addContext(paymentContext);
 
@@ -66,9 +59,22 @@ public class PaymentSummaryViewModel extends RightSideViewModel {
         createView(this.totalView);
         reloadSummary(cashierContext.getBill().getValue());
 
-        getContainer().getChildren().add(getCustomerSelector().getView());
-        getContainer().getChildren().add(getItemsView().getView());
-        getContainer().getChildren().add(getTotalView().getView());
+        var title = new Label("Penjualan");
+        title.getStyleClass().add("h3");
+        title.setStyle("-fx-font-weight: bold;");
+
+        var titleBox = new VBox(title);
+        titleBox.setAlignment(Pos.CENTER);
+
+        container.setPadding(new Insets(10, 5, 10, 5));
+
+        container.getChildren().add(titleBox);
+        container.getChildren().add(getCustomerSelector().getView());
+        container.getChildren().add(getItemsView().getView());
+        var spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        container.getChildren().add(spacer);
+        container.getChildren().add(getTotalView().getView());
     }
 
     public void reloadSummary(Bill bill) {

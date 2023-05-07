@@ -1,11 +1,15 @@
 package mzc.app.view_model.components.cashier;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.NonNull;
 import mzc.app.model.CustomerType;
@@ -38,6 +42,12 @@ public class SubtotalViewModel extends BaseViewModel {
 
     @Getter
     protected VBox pipelineContainer = new VBox();
+
+    @Getter
+    protected VBox pipelineNameContainer = new VBox();
+
+    @Getter
+    protected VBox pipelineValueContainer = new VBox();
 
     @Getter
     protected VBox actionsContainer = new VBox();
@@ -84,16 +94,45 @@ public class SubtotalViewModel extends BaseViewModel {
 
         this.checkoutButton.setDisable(true);
 
+        container.setMinHeight(200);
+
         HBox info = new HBox();
+        info.setPadding(new Insets(10, 30, 20, 10));
         info.getChildren().add(getActionsContainer());
-        info.getChildren().add(getPipelineContainer());
+        var spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        info.getChildren().add(spacer);
+        info.getChildren().add(pipelineNameContainer);
+        info.getChildren().add(pipelineValueContainer);
+
+        pipelineNameContainer.getStyleClass().add("h5");
+        pipelineValueContainer.getStyleClass().add("h5");
 
         getUsePointsCheckbox().setText("Gunakan poin");
         getCheckoutButton().setText("Checkout");
         getActionsContainer().getChildren().add(getUsePointsCheckbox());
 
+        actionsContainer.setMinWidth(275);
+        getUsePointsCheckbox().getStyleClass().add("h5");
+
+
+        var actionTitle = new Text("Opsi Tambahan");
+        actionTitle.getStyleClass().add("h4");
+        actionTitle.setStyle("-fx-font-weight: bold");
+        container.getChildren().add(0, actionTitle);
+
         container.getChildren().add(info);
-        container.getChildren().add(getCheckoutButton());
+
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        container.getChildren().add(spacer);
+
+        getCheckoutButton().getStyleClass().add("btn");
+        getCheckoutButton().getStyleClass().add("btn-primary");
+
+        var checkoutBox = new VBox(getCheckoutButton());
+        checkoutBox.setAlignment(Pos.CENTER);
+        checkoutBox.setPadding(new Insets(10, 0, 10, 0));
+        container.getChildren().add(checkoutBox);
 
         cashierContext.getBill().addListener((observableValue, old, next) -> {
             if (next.getCustomer().getType() == CustomerType.BASIC) {
@@ -129,15 +168,25 @@ public class SubtotalViewModel extends BaseViewModel {
         var calculator = new PriceCalculator(this.getPipelines());
         this.pipelineResults.setValue(calculator.calculate(new ItemListPrice(productItems)));
 
-        this.pipelineContainer.getChildren().clear();
+        this.pipelineNameContainer.getChildren().clear();
+        this.pipelineValueContainer.getChildren().clear();
 
         this.getPipelineResults().getValue().forEach(result -> {
-            this.pipelineContainer.getChildren().add(new Label(result.getName() + " " + result.getNominal()));
+            this.pipelineNameContainer.getChildren().add(new Text(result.getName()));
+            var text = "";
+
+            if (result.getNominal().toString().startsWith("-")) {
+                text = " " + result.getNominal();
+            } else {
+                text = "  " + result.getNominal();
+            }
+
+            this.pipelineValueContainer.getChildren().add(new Text(text));
         });
 
         var lastResult = this.pipelineResults.getValue().get(this.pipelineResults.getValue().size() - 1);
-
-        this.pipelineContainer.getChildren().add(new Label("Total " + PriceFactory.createPriceView(lastResult.getTotal())));
+        this.pipelineNameContainer.getChildren().add(new Text("Total"));
+        this.pipelineValueContainer.getChildren().add(new Text("  " + PriceFactory.createPriceView(lastResult.getTotal())));
     }
 
     protected void checkout() {

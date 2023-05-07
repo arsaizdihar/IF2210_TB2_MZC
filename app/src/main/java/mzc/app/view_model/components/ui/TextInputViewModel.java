@@ -52,6 +52,8 @@ public class TextInputViewModel extends BaseViewModel {
     public void numberOnly(boolean bool) {
 
         if (bool) {
+            textField.setText("0");
+
             textField.textProperty().addListener(new ChangeListener<>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue,

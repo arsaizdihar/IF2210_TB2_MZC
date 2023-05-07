@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import lombok.Getter;
 import mzc.app.modules.pricing.pipelines.PricePipeline;
 import mzc.app.modules.pricing.pipelines.PricePipelineType;
+import mzc.app.view.components.ui.FormGroupView;
 import mzc.app.view_model.components.cashier.PaymentSummaryViewModel;
 import mzc.plugin_charge.adapter.ChargeManager;
 import mzc.plugin_charge.models.Charge;
@@ -28,8 +29,18 @@ public class SubtotalViewModel extends mzc.app.view_model.components.cashier.Sub
         additionalDiscount.getItems().addAll("Tidak ada", "Tetap", "Persen");
         additionalDiscount.setValue("Tidak ada");
 
-        actionsContainer.getChildren().add(additionalDiscount);
-        actionsContainer.getChildren().add(discountValue);
+        var discountGroup = new FormGroupView(additionalDiscount);
+        discountGroup.setLabel("Diskon Tambahan");
+        createView(discountGroup);
+
+        var discountValueGroup = new FormGroupView(discountValue);
+        discountValueGroup.setLabel("Nilai Diskon Tambahan");
+        createView(discountValueGroup);
+        discountValue.setMaxWidth(100);
+        discountValue.setMinWidth(100);
+
+        actionsContainer.getChildren().add(discountGroup.getView());
+        actionsContainer.getChildren().add(discountValueGroup.getView());
 
         this.additionalDiscount.setOnAction(e -> {
             var context = useContext(PaymentSummaryViewModel.PaymentSummaryContext.class).getValue();
