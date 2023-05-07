@@ -67,7 +67,7 @@ public class AddProductViewModel extends RightSideViewModel {
                 this.imagePath = this.imagePath.substring("file:/".length());
             }
             if (this.namaBarang.getViewModel().getVal() != "") {
-                Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())), BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())), this.kategoriField.getViewModel().getVal(), this.imagePath);
+                Product product = new Product(Integer.parseInt(this.stok.getViewModel().getVal()), this.namaBarang.getViewModel().getVal(), new BigDecimal(this.hargaJual.getViewModel().getVal()), new BigDecimal(this.hargaBeli.getViewModel().getVal()), this.kategoriField.getViewModel().getVal(), this.imagePath);
                 getAdapter().getProduct().persist(product);
                 this.main.getChildren().clear();
                 reload.reload();

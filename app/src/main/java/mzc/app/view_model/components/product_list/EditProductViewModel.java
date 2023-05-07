@@ -70,8 +70,8 @@ public class EditProductViewModel extends RightSideViewModel {
             if (this.namaBarang.getViewModel().getVal() != "") {
                 product.setName(this.namaBarang.getViewModel().getVal());
                 product.setStock(Integer.parseInt(this.stok.getViewModel().getVal()));
-                product.setPrice(BigDecimal.valueOf(Integer.parseInt(this.hargaJual.getViewModel().getVal())));
-                product.setBuyPrice(BigDecimal.valueOf(Integer.parseInt(this.hargaBeli.getViewModel().getVal())));
+                product.setPrice(new BigDecimal(this.hargaJual.getViewModel().getVal()));
+                product.setBuyPrice(new BigDecimal(this.hargaBeli.getViewModel().getVal()));
                 product.setCategory(this.kategoriField.getViewModel().getVal());
                 try {
                     product.updateImage(this.imagePath);
