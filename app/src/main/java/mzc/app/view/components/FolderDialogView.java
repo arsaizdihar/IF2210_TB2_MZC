@@ -15,6 +15,7 @@ public class FolderDialogView extends BaseView<FolderDialogViewModel> {
     public FolderDialogView(@NotNull Button triggerButton, @NotNull Consumer<File> onFileSelected) {
         triggerButton.getStyleClass().addAll("btn", "btn-primary");
         getViewModel().setButton(triggerButton);
+        getViewModel().getDirectoryChooser().setInitialDirectory(new File(System.getProperty("user.dir")));
         triggerButton.setOnAction((e) -> {
             File file = getViewModel().getDirectoryChooser().showDialog(triggerButton.getScene().getWindow());
             if (file != null) {
@@ -22,6 +23,7 @@ public class FolderDialogView extends BaseView<FolderDialogViewModel> {
             }
         });
     }
+
     @Override
     public @NotNull Node getView() {
         return getViewModel().getButton();
