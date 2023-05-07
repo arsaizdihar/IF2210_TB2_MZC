@@ -1,6 +1,7 @@
 package mzc.app.view_model.components.member_list;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -40,7 +41,12 @@ public class EditMemberViewModel extends RightSideViewModel  {
                 event -> {
                     if (name.getViewModel().getTextField().getText().isEmpty() || phoneNumber.getViewModel().getTextField().getText().isEmpty() || categoryField.getValue() == null) {
                         System.out.println("Tidak boleh kosong");
-                        // TODO tampilkan alert gagal
+
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Pengubahan Data Member Gagal");
+                        alert.setContentText(name.getViewModel().getTextField().getText().isEmpty() ? "Nama tidak boleh kosong" : phoneNumber.getViewModel().getTextField().getText().isEmpty() ? "Nomor Handphone tidak boleh kosong" : "Kategori tidak boleh kosong");
+
+                        alert.showAndWait();
                     } else {
                         customer.setName(name.getViewModel().getTextField().getText());
                         customer.setPhone(phoneNumber.getViewModel().getTextField().getText());
@@ -50,7 +56,13 @@ public class EditMemberViewModel extends RightSideViewModel  {
                         System.out.println("Nomor Handphone: " + phoneNumber.getViewModel().getTextField().getText());
                         System.out.println("Kategori: " + categoryField.getValue());
                         root.getChildren().clear();
-                        // TODO tampilkan alert berhasil
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Pengubahan Data Member Berhasil");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Silahkan tutup laman informasi ini");
+                        alert.show();
+
                         reload.reload();
                     }
                 }
