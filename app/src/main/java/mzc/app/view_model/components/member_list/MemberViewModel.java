@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Customer;
+import mzc.app.utils.FileManager;
 import mzc.app.view_model.base.BaseViewModel;
 
 import java.util.Objects;
@@ -29,10 +30,10 @@ public class MemberViewModel extends BaseViewModel {
     @Getter private Text customerType = new Text();
     @Getter private Text customerPhone = new Text();
     @Getter private Text customerPoints = new Text();
-    private final ImageView edit = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/edit.png")).toExternalForm());
-    private final ImageView history = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/list-1.png")).toExternalForm());
-    private final ImageView active = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/checkmark.png")).toExternalForm());
-    private final ImageView inactive = new ImageView(Objects.requireNonNull(getClass().getResource("/mzc/app/assets/cross.png")).toExternalForm());
+    private final ImageView edit = new ImageView(FileManager.getResourcePath("/mzc/app/assets/edit.png"));
+    private final ImageView history = new ImageView(FileManager.getResourcePath("/mzc/app/assets/list-1.png"));
+    private final ImageView active = new ImageView(FileManager.getResourcePath("/mzc/app/assets/checkmark.png"));
+    private final ImageView inactive = new ImageView(FileManager.getResourcePath("/mzc/app/assets/cross.png"));
     @Getter private Button transactionButton = new Button();
     @Getter private Button editButton = new Button();
     @Getter private Button setActiveButton = new Button();
