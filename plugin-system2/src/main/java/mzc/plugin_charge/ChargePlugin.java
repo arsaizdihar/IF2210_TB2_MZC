@@ -9,6 +9,7 @@ import mzc.app.modules.plugins.Plugin;
 import mzc.app.modules.setting.AppSetting;
 import mzc.plugin_charge.adapter.ChargeManager;
 import mzc.plugin_charge.view.CashierPageView;
+import mzc.plugin_charge.view.ChargeSettingView;
 
 public class ChargePlugin extends Plugin {
     @Getter
@@ -31,6 +32,8 @@ public class ChargePlugin extends Plugin {
         var pageEntry = new PageEntry("Kasir", "cashier", CashierPageView.class);
 
         appContext.getPages().put("cashier", pageEntry);
+
+        appContext.getSettingTabs().put("Charges", ChargeSettingView.class);
     }
 
     @Override

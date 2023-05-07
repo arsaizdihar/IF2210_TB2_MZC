@@ -2,8 +2,9 @@ package mzc.app.view_model.components.ui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import lombok.Getter;
 import mzc.app.view.components.ui.FormGroupView;
 import mzc.app.view_model.base.BaseViewModel;
@@ -55,8 +56,8 @@ public class TextInputViewModel extends BaseViewModel {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue,
                                     String newValue) {
-                    if (!newValue.matches("\\d*")) {
-                        textField.setText(newValue.replaceAll("[^\\d]", ""));
+                    if (!newValue.matches("\\d*\\.?\\d*")) {
+                        textField.setText(newValue.replaceAll("[^\\d*\\.?\\d*]", ""));
                     }
                 }
             });
