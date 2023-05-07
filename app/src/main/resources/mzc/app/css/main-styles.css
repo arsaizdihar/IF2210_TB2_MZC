@@ -84,6 +84,21 @@
     -fx-border-color: -fx-gray-300;
 }
 
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-gray-300;
+    -fx-border-radius: 8px;
+}
+
+#split-page *.left-side *.container > * {
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-gray-300;
+    -fx-padding: 0 0 4px 0;
+}
+
 .text-field, .combo-box {
     -fx-background-color: white;
     -fx-border-style: solid;

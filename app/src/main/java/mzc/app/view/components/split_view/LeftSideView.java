@@ -1,7 +1,5 @@
 package mzc.app.view.components.split_view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -9,13 +7,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import mzc.app.utils.reactive.State;
 import mzc.app.view.base.BaseView;
 import mzc.app.view_model.components.split_page.LeftSideViewModel;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LeftSideView<T extends LeftSideViewModel> extends BaseView<T> {
 
@@ -44,17 +38,23 @@ public class LeftSideView<T extends LeftSideViewModel> extends BaseView<T> {
         } else {
 //            tak ada tapi berguna apakah itu?
 //            kalo ga percaya  coba hapus ini
-            var button  =  new Button();
+            var button = new Button();
             button.setVisible(false);
             hBox.getChildren().add(button);
         }
         var vbox = getViewModel().getVBox();
         vbox.getChildren().addAll(hBox);
-        vbox.setPadding(new Insets(20));
         vbox.getStyleClass().add("left-side");
         vbox.getChildren().add(getViewModel().getScrollPane());
-        getViewModel().getScrollPane().setFitToWidth(true);
+        vbox.setPadding(new Insets(20));
+
+        var scrollView = getViewModel().getScrollPane();
+        scrollView.getStyleClass().add("scroll-pane");
+        VBox.setVgrow(scrollView, Priority.ALWAYS);
+        scrollView.setPadding(new Insets(20));
+        scrollView.setFitToWidth(true);
         getViewModel().getContainer().setFillWidth(true);
+        getViewModel().getContainer().getStyleClass().add("container");
     }
 
 

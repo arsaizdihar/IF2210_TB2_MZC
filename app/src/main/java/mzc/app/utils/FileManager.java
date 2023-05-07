@@ -64,7 +64,7 @@ public class FileManager {
 
     public static Image getImage(String path) {
         Image image;
-        if (!path.startsWith("file:")){
+        if (!path.startsWith("file:") && !path.startsWith("jar:file:")) {
             path = "file:" + path;
         }
         synchronized (imageCache) {
