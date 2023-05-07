@@ -8,6 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -38,12 +39,34 @@ public class FileManager {
                 throw new IOException("Cannot create directory " + dstPath.getParent().toString());
             }
         }
-        try (InputStream is = new FileInputStream(src); OutputStream os = new FileOutputStream(dst)) {
+        URL url;
+        try {
+            url = new URL(src);
+        } catch (Exception e) {
+            url = null;
+        }
+        InputStream is;
+
+//        if path is from jar file, then use getResourceAsStream
+        if (url != null && url.getProtocol().equals("jar")) {
+            var urlPath = url.getPath();
+            var index = urlPath.indexOf("/mzc/app/");
+            var resourcePath = urlPath.substring(index);
+            is = buffer.getClass().getResourceAsStream(resourcePath);
+        } else {
+            is = new FileInputStream(src);
+        }
+        if (is == null) {
+            throw new IOException("Cannot open file " + src);
+        }
+        try (OutputStream os = new FileOutputStream(dst)) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = is.read(buffer)) > 0) {
                 os.write(buffer, 0, length);
             }
+        } finally {
+            is.close();
         }
     }
 
@@ -53,8 +76,7 @@ public class FileManager {
     }
 
     public static String getRandomizedDataStorePath(String realPath) {
-        Path path = Paths.get(realPath);
-        String filename = UUID.randomUUID() + "." + FilenameUtils.getExtension(path.getFileName().toString());
+        String filename = UUID.randomUUID() + "." + FilenameUtils.getExtension(realPath);
         return Paths.get(AdapterConfig.getBaseDataPath(), "files", filename).toAbsolutePath().toString();
     }
 

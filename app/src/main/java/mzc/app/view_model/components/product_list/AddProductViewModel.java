@@ -108,7 +108,6 @@ public class AddProductViewModel extends RightSideViewModel {
     private void setupImage() {
         ImageView imageView = new ImageView();
         imagePath = FileManager.getResourcePath("/mzc/app/assets/product.png");
-        System.out.println(imagePath);
         FileManager.getImageAsync(imagePath, imageView::setImage);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
