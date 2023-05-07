@@ -94,6 +94,14 @@ public class SubtotalViewModel extends BaseViewModel {
 
         container.getChildren().add(info);
         container.getChildren().add(getCheckoutButton());
+
+        cashierContext.getCustomer().addListener((observableValue, old, next) -> {
+            if (next.getType() == CustomerType.BASIC) {
+                getUsePointsCheckbox().setText("Gunakan poin");
+            } else {
+                getUsePointsCheckbox().setText("Gunakan poin (tersisa " + next.getPoints() + ")");
+            }
+        });
     }
 
     protected List<PricePipeline> getPipelines() {

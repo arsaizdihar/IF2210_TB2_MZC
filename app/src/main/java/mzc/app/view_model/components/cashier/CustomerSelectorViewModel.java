@@ -32,7 +32,7 @@ public class CustomerSelectorViewModel extends BaseViewModel {
         }
 
         this.customerSelector.getItems().add(customer);
-        this.customerSelector.getItems().addAll(getAdapter().getCustomer().getRegisteredCustomer());
+        this.customerSelector.getItems().addAll(getAdapter().getCustomer().getRegisteredCustomer().stream().filter(cust -> !cust.isDeactivated()).toList());
         this.customerSelector.setValue(customer);
         this.customer.setValue(customer);
 //
