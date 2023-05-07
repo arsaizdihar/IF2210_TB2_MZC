@@ -1,8 +1,13 @@
 package mzc.app.utils;
 
+import lombok.Getter;
+
 public class Tuple<X, Y> {
-    public final X x;
-    public final Y y;
+    @Getter
+    public X x;
+
+    @Getter
+    public Y y;
 
     public Tuple(X x, Y y) {
         this.x = x;
