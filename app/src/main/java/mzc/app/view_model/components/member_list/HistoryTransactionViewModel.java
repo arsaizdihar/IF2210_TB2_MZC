@@ -4,7 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.Customer;
@@ -28,42 +30,43 @@ public class HistoryTransactionViewModel extends RightSideViewModel {
     @Getter
     private VBox root = new VBox();
     @Getter
-    private final @NotNull Label title = new Label("Riwayat Transaksi");
+    private final @NotNull VBox entryBox = new VBox();
     @Getter
-    final @NotNull HBox infoBox = new HBox();
+    private final @NotNull Label title = new Label("Riwayat Transaksi");
     @Getter
     private final @NotNull Pane spaser = new Pane();
     @Getter
-    private final @NotNull Label infoUser = new Label("Riwatat Transaksi User");
+    private Label infoUser = new Label();
     @Getter
     private Button printButton = new Button("Print To PDF");
     @Getter
     final @NotNull ListView<Node> listView = new ListView<>();
     @Getter
     private final @NotNull VBox tableBox = new VBox();
+    @Getter
+    private final @NotNull ScrollPane scPane = new ScrollPane();
 
     @Override
     public void init() {
         super.init();
+        infoUser.setText("Riwayat Transaksi " + customer.getName());
+
     }
 
     public void showFixedBills() {
-        System.out.println(getCustomer().getName());
         var fixedBills = getAdapter().getFixedBill().getByCustomerId(getCustomer().getId());
-        System.out.println(fixedBills);
 
         if (fixedBills.isEmpty()){
             Label emptyLabel = new Label("Tidak ada riwayat transaksi");
-            root.getChildren().add(emptyLabel);
+            entryBox.getChildren().add(emptyLabel);
+            scPane.setContent(entryBox);
         } else {
             for (var fixedBill: fixedBills) {
                 var productHistories = getAdapter().getFixedBill().getProducts(fixedBill);
-                var historyTransactionEntryView = new HistoryTransactionEntryView(productHistories);
+                var historyTransactionEntryView = new HistoryTransactionEntryView(productHistories, fixedBill);
                 createView(historyTransactionEntryView);
-//                System.out.println(fixedBill.getProducts());
-//                historyTransactionEntryView.getViewModel().setFixedBill(fixedBill);
-//                System.out.println(historyTransactionEntryView.getViewModel().getFixedBill().getProducts());
-                root.getChildren().add(historyTransactionEntryView.getView());
+                entryBox.getChildren().add(historyTransactionEntryView.getView());
+                scPane.setContent(entryBox);
             }
         }
     }
@@ -83,6 +86,4 @@ public class HistoryTransactionViewModel extends RightSideViewModel {
             }
         });
     }
-
-
 }

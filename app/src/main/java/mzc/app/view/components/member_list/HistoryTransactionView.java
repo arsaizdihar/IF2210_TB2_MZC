@@ -1,7 +1,10 @@
 package mzc.app.view.components.member_list;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import mzc.app.annotation.ModelInject;
@@ -20,39 +23,38 @@ public class HistoryTransactionView extends RightSideView<HistoryTransactionView
     }
 
     public void init() {
+
+
         var root = getViewModel().getRoot();
         root.setAlignment(Pos.TOP_CENTER);
+        root.setSpacing(20);
 
         var title = getViewModel().getTitle();
         title.getStyleClass().add("history-title");
         root.getChildren().add(title);
 
-        var infoBox = getViewModel().getInfoBox();
+        var infoBox = new BorderPane();
         root.getChildren().add(infoBox);
-
-        var spacer = getViewModel().getSpaser();
-        infoBox.getChildren().add(spacer);
-        HBox.setHgrow(spacer, Priority.ALWAYS);
+        infoBox.setLeft(getViewModel().getInfoUser());
+        infoBox.setPadding(new Insets(0, 20, 0, 20));
 
         var infoUser = getViewModel().getInfoUser();
-        spacer.getChildren().add(infoUser);
-        infoUser.getStyleClass().add("info-user-history");
+        infoUser.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
 
         var printButton = getViewModel().getPrintButton();
-        infoBox.getChildren().add(printButton);
         getViewModel().createPrintButton();
         printButton.getStyleClass().add("btn");
+        infoBox.setRight(printButton);
 
+        getViewModel().getScPane().setFitToWidth(true);
+        root.getChildren().add(getViewModel().getScPane());
 
         getViewModel().showFixedBills();
     }
 
     @Override
     public @NotNull Node getView() {
-//        button.setPrefWidth(200);
-//        button.setPrefHeight(50);
-//        button.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//        main.getChildren().add(button);
+
         return getViewModel().getRoot();
     }
 }

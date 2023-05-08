@@ -23,59 +23,29 @@ import java.util.Set;
 
 @ModelInject(HistoryTransactionEntryViewModel.class)
 public class HistoryTransactionEntryView extends BaseView<HistoryTransactionEntryViewModel> {
-    public HistoryTransactionEntryView(Set<ProductHistory> productHistories) {
+    public HistoryTransactionEntryView(Set<ProductHistory> productHistories, FixedBill fixedBill) {
         super();
         getViewModel().setProductHistories(productHistories);
+        getViewModel().setFixedBill(fixedBill);
     }
     @Override
     public @NotNull Node getView() {
         var root = getViewModel().getRoot();
-        root.setMinWidth(0);
-        root.setPrefWidth(1);
+        root.setPadding(new javafx.geometry.Insets(5));
 
+        root.getChildren().add(getViewModel().getPadder());
         var titleEntryBox = getViewModel().getTitleEntryBox();
         titleEntryBox.setMinWidth(0);
         titleEntryBox.setPrefWidth(1);
-        titleEntryBox.setLeft(getViewModel().getInvoiceIdLabel());
-        titleEntryBox.setRight(getViewModel().getDateLabel());
         root.getChildren().add(titleEntryBox);
 
-        var itemsLabel = getViewModel().getItemsLabel();
-        root.getChildren().add(itemsLabel);
+        getViewModel().setEntryHeader();
 
-        this.reloadSummary();
+
+        getViewModel().reloadSummary();
 
         var totalLabel = getViewModel().getTotalLabel();
 
-
         return root;
     }
-
-    public void reloadSummary() {
-
-        List<ItemPrice> itemPrices = new ArrayList<>();
-
-        BigDecimal total = BigDecimal.ZERO;
-        for (ProductHistory productHistory : getViewModel().getProductHistories()) {
-            BorderPane container = new BorderPane();
-
-            ItemPrice itemPrice = new ItemPrice(productHistory.getAmount(), productHistory.getPriceView());
-            Label nameLabel = new Label(productHistory.getName());
-            Label price = new Label(itemPrice.toString());
-
-            itemPrices.add(itemPrice);
-
-
-            container.setLeft(nameLabel);
-            container.setRight(price);
-            getViewModel().getRoot().getChildren().add(container);
-        }
-
-        var subtotal = (new ItemListPrice(itemPrices).getValue());
-        var subtotalView = PriceFactory.createPriceView(subtotal);
-        getViewModel().getTotalLabel().setText(subtotalView.toString());
-        getViewModel().getRoot().getChildren().add(getViewModel().getTotalLabel());
-
-    }
-
 }
