@@ -1,5 +1,6 @@
 package mzc.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,11 @@ public class Customer extends BaseModel {
     private String phone = "";
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
     private transient Set<Bill> bills = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
     private transient Set<FixedBill> fixedBills = new LinkedHashSet<>();
 
     @EqualCheck
@@ -44,9 +47,11 @@ public class Customer extends BaseModel {
     private int points = 0;
 
     @Transient
+    @JsonIgnore
     private transient boolean billsLoaded = false;
 
     @Transient
+    @JsonIgnore
     private transient boolean fixedBillsLoaded = false;
 
     public Customer(String name, String phone) {
@@ -65,6 +70,7 @@ public class Customer extends BaseModel {
         return this.name + " (" + this.getType() + ")";
     }
 
+    @JsonIgnore
     public static List<Customer> getSeeder() {
         List<Customer> customers = new ArrayList<>();
         customers.add(new Customer("Arsa Izdihar Islam", "089512341234", CustomerType.MEMBER));

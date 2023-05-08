@@ -2,7 +2,6 @@ package mzc.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,8 +13,6 @@ import mzc.app.modules.pricing.price.IPrice;
 import mzc.app.utils.FileManager;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Entity
@@ -51,6 +48,7 @@ public class ProductHistory extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "billId", nullable = false, referencedColumnName = "id")
+    @JsonIgnore
     private transient FixedBill bill;
 
     public ProductHistory(String name, BigDecimal price, BigDecimal buyPrice, String category, String image, Integer amount, FixedBill bill) {

@@ -1,5 +1,6 @@
 package mzc.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class ProductBill extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId", referencedColumnName = "id")
+    @JsonIgnore
     private transient Product product;
 
     @EqualCheck
@@ -29,6 +31,7 @@ public class ProductBill extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "billId", referencedColumnName = "id")
+    @JsonIgnore
     private transient Bill bill;
 
     @EqualCheck

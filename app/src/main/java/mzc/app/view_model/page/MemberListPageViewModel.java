@@ -1,9 +1,6 @@
 package mzc.app.view_model.page;
 
-import lombok.Getter;
-import mzc.app.adapter.base.IMainAdapter;
-import mzc.app.model.Customer;
-import mzc.app.utils.reactive.State;
+import mzc.app.modules.task.CleanRedundantCustomer;
 import mzc.app.view.components.member_list.LeftSideMemberListView;
 import mzc.app.view_model.components.member_list.LeftSideMemberListViewModel;
 
@@ -20,9 +17,12 @@ public class MemberListPageViewModel extends SplitPageViewModel {
 
     @Override
     public void onTabFocus() {
+        new CleanRedundantCustomer(getAdapter()).run();
         LeftSideMemberListViewModel.ReloadContext reload = getLeft().getViewModel().getContext(LeftSideMemberListViewModel.ReloadContext.class).getValue();
         reload.reload();
     }
+
     @Override
-    public void onTabClose() { }
+    public void onTabClose() {
+    }
 }

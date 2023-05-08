@@ -2,7 +2,6 @@ package mzc.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -50,6 +49,7 @@ public class Product extends BaseModel implements ISoftDelete {
     private String imagePath;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private transient Set<ProductBill> bills = new LinkedHashSet<>();
 
     @EqualCheck
@@ -112,6 +112,7 @@ public class Product extends BaseModel implements ISoftDelete {
         imagePath = dstPath;
     }
 
+    @JsonIgnore
     public static List<Product> getSeed() {
         List<String> images = new ArrayList<>(List.of(new String[]{"coffee.png", "tea.png", "katsu.png", "katsu.png", "fried-rice.png"}));
         List<Product> products = new ArrayList<>();

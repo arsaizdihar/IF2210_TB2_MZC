@@ -106,7 +106,11 @@ public class EditMemberViewModel extends RightSideViewModel {
         categoryField.getItems().add(CustomerType.MEMBER);
         categoryField.getItems().add(CustomerType.VIP);
         categoryField.setPrefWidth(200);
-        categoryField.setValue(customer.getType());
+        if (customer.getType() == null || customer.getType() == CustomerType.BASIC) {
+            customer.setType(CustomerType.MEMBER);
+        } else {
+            categoryField.setValue(customer.getType());
+        }
         categoryDropdown = new VBox(categoryLabel, categoryField);
 
         customerInfoBox.getChildren().addAll(name.getView(), phoneNumber.getView(), categoryDropdown);

@@ -23,6 +23,7 @@ open module mzc.app {
     requires boxable;
     requires org.apache.pdfbox;
     requires java.desktop;
+    requires com.fasterxml.jackson.databind;
 
     exports mzc.app;
     exports mzc.app.adapter.base;

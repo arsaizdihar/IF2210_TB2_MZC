@@ -1,14 +1,13 @@
 package mzc.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity(name = "bill")
@@ -18,9 +17,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class Bill extends BaseModel {
     @Transient
+    @JsonIgnore
     private transient boolean productsLoaded = false;
 
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
+    @JsonIgnore
     private transient Set<ProductBill> products = new LinkedHashSet<>();
 
     @Setter(AccessLevel.NONE)
@@ -29,6 +30,7 @@ public class Bill extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
+    @JsonIgnore
     private transient Customer customer;
 
     public Bill(Customer customer) {

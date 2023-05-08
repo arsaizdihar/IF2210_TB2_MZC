@@ -1,5 +1,6 @@
 package mzc.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class FixedBill extends BaseModel {
     private transient boolean productsLoaded = false;
 
     @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private transient Set<ProductHistory> products = new LinkedHashSet<>();
 
     @EqualCheck
@@ -30,6 +32,7 @@ public class FixedBill extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
+    @JsonIgnore
     private transient Customer customer;
 
     @Column
