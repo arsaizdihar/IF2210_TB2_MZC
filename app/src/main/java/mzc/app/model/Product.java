@@ -14,7 +14,10 @@ import mzc.app.utils.FileManager;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 @Entity(name = "product")
@@ -124,7 +127,7 @@ public class Product extends BaseModel implements ISoftDelete {
 
         for (int i = 0; i < products.size(); i++) {
             try {
-                products.get(i).updateImage(Objects.requireNonNull(FileManager.getResourcePath("/mzc/app/assets/" + images.get(i))).substring(6));
+                products.get(i).updateImage(FileManager.getResourcePath("/mzc/app/assets/" + images.get(i)));
             } catch (Exception e) {
                 e.printStackTrace();
             }

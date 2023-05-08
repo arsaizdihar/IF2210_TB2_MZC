@@ -53,6 +53,8 @@ public class FileManager {
             var index = urlPath.indexOf("/mzc/app/");
             var resourcePath = urlPath.substring(index);
             is = buffer.getClass().getResourceAsStream(resourcePath);
+        } else if (url != null) {
+            is = new FileInputStream(url.getPath());
         } else {
             is = new FileInputStream(src);
         }
@@ -114,5 +116,32 @@ public class FileManager {
 
     public static Image getImageFromResource(String path) {
         return FileManager.getImage(FileManager.getResourcePath(path));
+    }
+
+    public static void copyFileUsingStream(String sourcePath, String destPath) throws IOException {
+        File source = new File(sourcePath);
+        File dest = new File(destPath);
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new BufferedInputStream(new URL(sourcePath).openStream());
+//            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+
+            if (os != null) {
+                os.close();
+            }
+        }
     }
 }
