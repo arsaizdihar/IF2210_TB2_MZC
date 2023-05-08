@@ -313,7 +313,9 @@ public class SubtotalViewModel extends BaseViewModel {
         });
 
         pipelines.forEach(pipeline -> {
-            getAdapter().getProductHistory().persist(pipeline.createHistory());
+            var history = pipeline.createHistory();
+            history.setBill(fixedBill);
+            getAdapter().getProductHistory().persist(history);
         });
 
         // add point

@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import mzc.app.annotation.ModelInject;
 import mzc.app.model.ProductBill;
@@ -69,10 +68,11 @@ public class ProductView extends BaseView<ProductViewModel> {
         var counterLabel = getViewModel().getCounterLabel();
         buttonGroup.getChildren().addAll(getViewModel().getDecrement(), counterLabel, getViewModel().getIncrement());
         container.getChildren().add(buttonGroup);
+//        container.setPadding(new Insets(0, 50, 0, 0));
     }
 
     @Override
     public @NotNull Node getView() {
-        return new StackPane(getViewModel().getContainer());
+        return getViewModel().getContainer();
     }
 }

@@ -63,7 +63,7 @@ public class ChargePipeline extends PricePipeline {
         history.setPrice(this.lastResult.getNominal().getValue());
 
         if (sumZero) {
-            history.setBuyPrice(history.getBuyPrice().multiply(BigDecimal.valueOf(-1)));
+            history.setBuyPrice(history.getPrice().multiply(BigDecimal.valueOf(-1)));
         } else {
             history.setBuyPrice(new BigDecimal(0));
         }

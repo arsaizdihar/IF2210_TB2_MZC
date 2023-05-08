@@ -1,5 +1,6 @@
 package mzc.app.view_model.components.cashier;
 
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -12,9 +13,13 @@ public class ItemsViewModel extends BaseViewModel {
     @Getter
     private VBox itemList = new VBox(15);
 
+    @Getter
+    private ScrollPane scrollable = new ScrollPane();
+
     @Override
     public void init() {
         super.init();
+        scrollable.setContent(itemList);
 
         VBox.setVgrow(itemList, Priority.ALWAYS);
 

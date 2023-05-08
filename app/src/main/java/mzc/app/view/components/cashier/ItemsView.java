@@ -22,7 +22,8 @@ public class ItemsView extends BaseView<ItemsViewModel> {
         var items = getViewModel().getItemList();
         items.setPadding(new Insets(0, 30, 20, 10));
         container.getChildren().add(title);
-        container.getChildren().add(items);
+        container.getChildren().add(getViewModel().getScrollable());
+        container.setMaxHeight(300);
 
         return container;
     }
