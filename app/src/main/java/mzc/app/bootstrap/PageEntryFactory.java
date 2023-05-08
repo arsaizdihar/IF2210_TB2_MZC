@@ -12,10 +12,8 @@ public class PageEntryFactory {
         var productList = new PageEntry("Daftar Barang", "product_list", ProductListPageView.class);
         var memberList = new PageEntry("Daftar Member", "member_list", MemberListPageView.class);
 
-        var main = new PageEntry("Main", "main", MainPageView.class);
         pageEntries.put(productList.getKey(), productList);
         pageEntries.put(memberList.getKey(), memberList);
-        pageEntries.put(main.getKey(), main);
 
         var cashier = new PageEntry("Kasir", "cashier", CashierPageView.class);
         pageEntries.put(cashier.getKey(), cashier);
@@ -29,10 +27,6 @@ public class PageEntryFactory {
         pageEntries.put(settingsPage.getKey(), settingsPage);
 
         return pageEntries;
-    }
-
-    public static PageEntry createDefaultPage() {
-        return new PageEntry("Main Page", "main", MainPageView.class);
     }
 
     public static PageEntry createSettingPage() {

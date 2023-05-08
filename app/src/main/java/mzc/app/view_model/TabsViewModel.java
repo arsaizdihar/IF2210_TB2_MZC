@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import mzc.app.bootstrap.PageEntry;
 import mzc.app.view.base.PageView;
-import mzc.app.view.page.MainPageView;
 import mzc.app.view_model.base.BaseViewModel;
 import mzc.app.view_model.base.PageViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -60,17 +59,6 @@ public class TabsViewModel extends BaseViewModel {
                 return tabs.createView(page);
             }
         });
-
-        public PageTab(@NotNull TabsViewModel tabs) {
-            this.tabs = tabs;
-            currentPage = new MainPageView();
-            addContext(currentPage);
-            tabs.createView(currentPage);
-            tab = new Tab();
-            setupListeners(currentPage);
-            tab.textProperty().bind(currentPage.getViewModel().getTitle());
-            tab.setContent(currentPage.getView());
-        }
 
         public PageTab(@NotNull TabsViewModel tabs, PageEntry entry) {
             this.tabs = tabs;
