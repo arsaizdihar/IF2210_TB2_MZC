@@ -1,25 +1,26 @@
 package mzc.app.view_model.page;
 
 import javafx.application.Platform;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import lombok.Getter;
 import lombok.Setter;
 import mzc.app.model.FixedBill;
 import mzc.app.modules.report.PrintReport;
 import mzc.app.view.components.report.ReportEntryView;
-import mzc.app.view.page.PrintOptionView;
 import mzc.app.view_model.base.PageViewModel;
-import mzc.app.view_model.components.report.ReportEntryViewModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
 
-@Getter @Setter
+@Getter
+@Setter
 public class ReportPageViewModel extends PageViewModel {
     @Getter
     private final @NotNull VBox root = new VBox();
@@ -33,12 +34,15 @@ public class ReportPageViewModel extends PageViewModel {
     private final @NotNull ScrollPane scrollPane = new ScrollPane();
     @Getter
     private final @NotNull VBox container = new VBox();
+
     public ReportPageViewModel() {
         super("Laporan Penjualan");
     }
+
     public void init() {
         super.init();
     }
+
     @Override
     public void onTabFocus() {
 
@@ -61,6 +65,7 @@ public class ReportPageViewModel extends PageViewModel {
             createEntry(fixedBill);
         }
     }
+
     private void sendDialogStart() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Print Success");
@@ -69,38 +74,45 @@ public class ReportPageViewModel extends PageViewModel {
         alert.show();
     }
 
-    private void sendDialogEnd() {
+    private void sendDialogEnd(String path) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Print Success");
         alert.setHeaderText(null);
-        alert.setContentText("Print berhasil, file tersimpan di app/src/main/resources/mzc/app/assets/Report.pdf");
+        alert.setContentText("Print berhasil, file tersimpan di " + path);
         alert.showAndWait();
     }
 
     public void createPrintButton() {
         printButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save");
+            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF File", "*.pdf"));
+            fileChooser.setInitialFileName("report.pdf");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+            File file = fileChooser.showSaveDialog(root.getScene().getWindow());
             sendDialogStart();
             Thread updateTimeThread = new Thread(() -> {
+                try {
+                    Thread.sleep(10000);
+                    PrintReport printReport = new PrintReport();
                     try {
-                        Thread.sleep(10000);
-                        PrintReport printReport = new PrintReport();
-                        try {
-                            var fixedBill = getAdapter().getFixedBill().getAll();
-                            for (var bill : fixedBill) {
-                                printReport.setNewPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()));
-                            }
-                            printReport.toPrint("app/src/main/resources/mzc/app/assets/Report.pdf");
-
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                        var fixedBill = getAdapter().getFixedBill().getAll();
+                        for (var bill : fixedBill) {
+                            printReport.setNewPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()));
                         }
+                        printReport.toPrint(file.getAbsolutePath());
 
-
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-                Platform.runLater(this::sendDialogEnd);
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(() -> {
+                    sendDialogEnd(file.getAbsolutePath());
+                });
             });
             updateTimeThread.setDaemon(true);
             updateTimeThread.start();
