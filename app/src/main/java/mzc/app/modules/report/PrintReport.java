@@ -133,9 +133,9 @@ public class PrintReport extends PrintToPDF{
         contentTable[0] = "Gambar";
         contentTable[1] = productHistory.getName();
         contentTable[2] = productHistory.getCategory();
-        contentTable[3] = String.valueOf(productHistory.getBuyPrice());
-        contentTable[4] = String.valueOf(productHistory.getPrice());
-        contentTable[5] = String.valueOf(productHistory.getAmount());
+        contentTable[3] = productHistory.getBuyPriceView().toString();
+        contentTable[4] = productHistory.getPriceView().toString();
+        contentTable[5] = productHistory.getAmount().toString();
 
         if (productHistory.getImagePath() != null && !productHistory.getImagePath().equals("")) {
             PDImageXObject pdImage = PDImageXObject.createFromFile(productHistory.getImagePath(), document);
