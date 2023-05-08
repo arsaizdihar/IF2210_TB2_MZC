@@ -30,7 +30,7 @@ public class PrintReport extends PrintToPDF{
     }
 
     public void toPrint(String path) throws IOException {
-        document.save("testfile.pdf");
+        document.save(path);
         document.close();
     }
 
@@ -149,31 +149,5 @@ public class PrintReport extends PrintToPDF{
             contentStream.showText(cutText(contentTable[i], getXTable()[i], getXTable()[i + 1]));
             contentStream.endText();
         }
-    }
-
-    public void setInfomation(PDDocument document) {
-        //Creating a blank page
-        PDPage blankPage = new PDPage();
-
-        //Creating the PDDocumentInformation object
-        PDDocumentInformation pdd = document.getDocumentInformation();
-
-        //Setting the author of the document
-        pdd.setAuthor("MZC");
-
-        // Setting the title of the document
-        pdd.setTitle("Laporan Pembayaran");
-
-        //Setting the creator of the document
-        pdd.setCreator("MZC");
-
-        //Setting the subject of the document
-        pdd.setSubject("Berisi laporan pembayaran yang dilakukan oleh aplikasi yang dibuat oleh MZC");
-
-        //Setting the created date of the document
-        Calendar date = new GregorianCalendar();
-        date.getTime();
-        pdd.setCreationDate(date);
-        pdd.setModificationDate(date);
     }
 }

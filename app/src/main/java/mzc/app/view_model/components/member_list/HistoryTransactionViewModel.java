@@ -1,10 +1,8 @@
 package mzc.app.view_model.components.member_list;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import lombok.Getter;
@@ -70,20 +68,62 @@ public class HistoryTransactionViewModel extends RightSideViewModel {
             }
         }
     }
+//    public void createPrintButton() {
+//
+//        printButton.setOnAction(event -> {
+//            PrintTransactionHistory printTransactionHistory = new PrintTransactionHistory();
+//            try {
+//                var fixedBills = getAdapter().getFixedBill().getByCustomerId(getCustomer().getId());
+//                for (var bill : fixedBills) {
+//                    printTransactionHistory.printPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()), getCustomer().getName());
+//                }
+//                printTransactionHistory.toPrint("app/src/main/resources/mzc/app/assets/HistoryTransaction.pdf");
+//
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//    }
+    private void sendDialogStart() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Print Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Proses print sedang berlangsung, mohon tunggu");
+        alert.show();
+    }
+
+    private void sendDialogEnd() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Print Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Print berhasil, file tersimpan di app/src/main/resources/mzc/app/assets/HistoryTransaction.pdf");
+        alert.showAndWait();
+    }
+
     public void createPrintButton() {
-
         printButton.setOnAction(event -> {
-            PrintTransactionHistory printTransactionHistory = new PrintTransactionHistory();
-            try {
-                var fixedBills = getAdapter().getFixedBill().getByCustomerId(getCustomer().getId());
-                for (var bill : fixedBills) {
-                    printTransactionHistory.printPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()), getCustomer().getName());
-                }
-                printTransactionHistory.toPrint("Dummy");
+            sendDialogStart();
+            Thread updateTimeThread = new Thread(() -> {
+                try {
+                    Thread.sleep(10000);
+                    PrintTransactionHistory printTransactionHistory = new PrintTransactionHistory();
+                    try {
+                        var fixedBills = getAdapter().getFixedBill().getByCustomerId(getCustomer().getId());
+                        for (var bill : fixedBills) {
+                            printTransactionHistory.printPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()), getCustomer().getName());
+                        }
+                        printTransactionHistory.toPrint("app/src/main/resources/mzc/app/assets/HistoryTransaction.pdf");
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(this::sendDialogEnd);
+            });
+            updateTimeThread.setDaemon(true);
+            updateTimeThread.start();
         });
     }
 }

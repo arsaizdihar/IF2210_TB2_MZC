@@ -1,10 +1,9 @@
 package mzc.app.view_model.page;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -25,11 +24,9 @@ public class ReportPageViewModel extends PageViewModel {
     @Getter
     private final @NotNull VBox root = new VBox();
     @Getter
-    private final @NotNull HBox headerBox = new HBox();
+    private final @NotNull BorderPane padder = new BorderPane();
     @Getter
-    private final @NotNull Pane spaser = new Pane();
-    @Getter
-    private final @NotNull Label titleLabel = new Label("Laporan");
+    private final @NotNull Label titleLabel = new Label("Laporan Penjualan");
     @Getter
     private final @NotNull Button printButton = new Button("Print To PDF");
     @Getter
@@ -64,21 +61,49 @@ public class ReportPageViewModel extends PageViewModel {
             createEntry(fixedBill);
         }
     }
+    private void sendDialogStart() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Print Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Proses print sedang berlangsung, mohon tunggu");
+        alert.show();
+    }
+
+    private void sendDialogEnd() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Print Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Print berhasil, file tersimpan di app/src/main/resources/mzc/app/assets/Report.pdf");
+        alert.showAndWait();
+    }
 
     public void createPrintButton() {
-
         printButton.setOnAction(event -> {
-            PrintReport printReport = new PrintReport();
-            try {
-                var fixedBill = getAdapter().getFixedBill().getAll();
-                for (var bill : fixedBill) {
-                    printReport.setNewPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()));
-                }
-                printReport.toPrint("Dummy");
+            sendDialogStart();
+            Thread updateTimeThread = new Thread(() -> {
+                    try {
+                        Thread.sleep(10000);
+                        PrintReport printReport = new PrintReport();
+                        try {
+                            var fixedBill = getAdapter().getFixedBill().getAll();
+                            for (var bill : fixedBill) {
+                                printReport.setNewPage(bill, getAdapter().getProductHistory().getByBillId(bill.getId()));
+                            }
+                            printReport.toPrint("app/src/main/resources/mzc/app/assets/Report.pdf");
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                Platform.runLater(this::sendDialogEnd);
+            });
+            updateTimeThread.setDaemon(true);
+            updateTimeThread.start();
         });
     }
 }

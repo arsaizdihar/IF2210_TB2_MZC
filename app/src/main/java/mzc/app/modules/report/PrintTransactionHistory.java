@@ -101,7 +101,7 @@ public class PrintTransactionHistory extends PrintToPDF{
     }
 
     public void toPrint(String path) throws IOException {
-        document.save("TransactionHistory.pdf");
+        document.save(path);
         document.close();
     }
 }

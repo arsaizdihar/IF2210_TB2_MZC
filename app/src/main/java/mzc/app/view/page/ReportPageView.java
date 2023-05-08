@@ -1,5 +1,6 @@
 package mzc.app.view.page;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -16,23 +17,23 @@ public class ReportPageView extends PageView<ReportPageViewModel> {
         var root = getViewModel().getRoot();
         root.setAlignment(Pos.TOP_CENTER);
 
-        var headerBox = getViewModel().getHeaderBox();
-        root.getChildren().add(headerBox);
-
-        var spaser = getViewModel().getSpaser();
-        headerBox.getChildren().add(spaser);
-        HBox.setHgrow(spaser, javafx.scene.layout.Priority.ALWAYS);
+        var padder = getViewModel().getPadder();
+        root.getChildren().add(padder);
+        padder.setPadding(new Insets(0, 30, 5, 20));
 
         var title = getViewModel().getTitleLabel();
-        spaser.getChildren().add(title);
+        title.getStyleClass().add("history-title");
+        padder.setLeft(title);
 
-        headerBox.getChildren().add(getViewModel().getPrintButton());
         getViewModel().createPrintButton();
         getViewModel().getPrintButton().getStyleClass().add("btn");
+        padder.setRight(getViewModel().getPrintButton());
 
         var scrollPane = getViewModel().getScrollPane();
         root.getChildren().add(scrollPane);
         scrollPane.setContent(getViewModel().getContainer());
+
+        getViewModel().getContainer().setPadding(new Insets(0, 30, 0, 20));
 
 
         getViewModel().iterateFixedBill();
