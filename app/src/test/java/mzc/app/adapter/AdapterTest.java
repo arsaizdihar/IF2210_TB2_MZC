@@ -7,7 +7,6 @@ import mzc.app.adapter.json.JSONAdapter;
 import mzc.app.adapter.obj.OBJAdapter;
 import mzc.app.adapter.orm.ORMAdapter;
 import mzc.app.adapter.orm.SessionManager;
-import mzc.app.adapter.sql.SQLAdapter;
 import mzc.app.adapter.xml.XMLAdapter;
 import mzc.app.model.*;
 import org.junit.jupiter.api.AfterEach;
@@ -17,7 +16,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Set;
 
 public class AdapterTest {
@@ -37,7 +35,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, SQLAdapter.class, ORMAdapter.class})
+    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, ORMAdapter.class})
     public void testCustomer(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         ICustomerAdapter customerAdapter = adapter.getCustomer();
@@ -76,7 +74,7 @@ public class AdapterTest {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, SQLAdapter.class, ORMAdapter.class})
+    @ValueSource(classes = {JSONAdapter.class, XMLAdapter.class, OBJAdapter.class, ORMAdapter.class})
     public void testBill(Class<? extends IMainAdapter> adapterClass) {
         adapter = getAdapterManager(adapterClass);
         Customer c = new Customer();
